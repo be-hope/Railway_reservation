@@ -48,3 +48,21 @@ TEST(ErrorCatalogue, FormatsStandardErrorLine) {
     EXPECT_EQ(formatError({ErrorCode::Validation, "Invalid age: must be between 1 and 120."}),
               "ERROR [E1001]: Invalid age: must be between 1 and 120. Please re-enter.");
 }
+
+TEST(ErrorCatalogue, EveryCodeHasANameAndMessage) {
+    const ErrorCode all[] = {ErrorCode::None,          ErrorCode::Validation,       ErrorCode::DuplicateUser,
+                             ErrorCode::AuthInvalid,   ErrorCode::AccountLocked,    ErrorCode::SessionExpired,
+                             ErrorCode::Forbidden,     ErrorCode::TrainNotFound,    ErrorCode::NoCapacity,
+                             ErrorCode::PnrNotFound,   ErrorCode::AlreadyCancelled, ErrorCode::CancelDeparted,
+                             ErrorCode::TrainInUse,    ErrorCode::CapacityBelowBooked, ErrorCode::Database,
+                             ErrorCode::Internal};
+    for (ErrorCode c : all) {
+        EXPECT_EQ(errorName(c).rfind(c == ErrorCode::None ? "OK" : "ERR-", 0), 0u) << errorCodeString(c);
+        EXPECT_FALSE(errorMessage(c).empty()) << errorCodeString(c);
+        EXPECT_EQ(formatError({c, ""}).rfind("ERROR [E", 0), 0u);
+    }
+    EXPECT_EQ(errorCodeString(ErrorCode::CapacityBelowBooked), "E5002");
+    // Storage details are never shown to the user.
+    EXPECT_EQ(formatError({ErrorCode::Database, "UNIQUE constraint failed"}).find("UNIQUE"), std::string::npos);
+    EXPECT_NE(formatError({ErrorCode::NoCapacity, "detail"}).find("(detail)"), std::string::npos);
+}

@@ -2,3 +2,6 @@ build/
 build-*/
 *.db
 audit.log
+*.gcov
+*.gcda
+*.gcno

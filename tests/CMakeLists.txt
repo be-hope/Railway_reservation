@@ -44,3 +44,13 @@ add_executable(rrs_integration_tests
 )
 target_link_libraries(rrs_integration_tests PRIVATE rrs_test_support GTest::gtest_main)
 gtest_discover_tests(rrs_integration_tests PROPERTIES LABELS integration)
+
+# Performance, soak and retry tests (PERF-01/02, REL-01/02) on a generated
+# large database: 200 trains, 40 stations, 20,000 reservations.
+add_executable(rrs_perf_tests
+  perf/large_data.cpp
+  perf/test_performance.cpp
+  perf/test_reliability.cpp
+)
+target_link_libraries(rrs_perf_tests PRIVATE rrs_test_support GTest::gtest_main)
+gtest_discover_tests(rrs_perf_tests PROPERTIES LABELS perf DISCOVERY_TIMEOUT 60)
