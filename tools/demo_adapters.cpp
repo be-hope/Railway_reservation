@@ -87,4 +87,12 @@ Status RepositoryProfile::update(const Session& session, const Account& changes)
     return users_.updateProfile(changes);
 }
 
+Result<Reservation> InterimCancellation::cancel(const Session& session, const std::string& pnr) {
+    auto ticket = booking_.getTicket(session, pnr);   // session, format and ownership checks
+    if (!ticket.ok()) return ticket.error();
+    auto released = release_.cancelAndRelease(pnr, std::nullopt, session.accountId);
+    if (!released.ok()) return released.error();
+    return released.value().cancelled;
+}
+
 }  // namespace rrs::demo
