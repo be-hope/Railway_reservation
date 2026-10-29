@@ -58,6 +58,8 @@ add_library(rrs_core STATIC
   src/common/money.cpp
   src/common/result.cpp
   src/common/session.cpp
+  src/booking/seat_allocator.cpp
+  src/booking/availability.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
 target_link_libraries(rrs_core PUBLIC rrs_options)
