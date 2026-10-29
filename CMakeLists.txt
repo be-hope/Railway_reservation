@@ -58,8 +58,12 @@ add_library(rrs_core STATIC
   src/common/money.cpp
   src/common/result.cpp
   src/common/session.cpp
+  src/booking/fare_policy.cpp
   src/booking/seat_allocator.cpp
+  src/booking/pnr_generator.cpp
   src/booking/availability.cpp
+  src/booking/booking_request_validator.cpp
+  src/booking/booking_service.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
 target_link_libraries(rrs_core PUBLIC rrs_options)
@@ -75,6 +79,12 @@ add_library(rrs_dal STATIC
   src/dal/sqlite_user_repository.cpp
 )
 target_link_libraries(rrs_dal PUBLIC rrs_core ${RRS_SQLITE_TARGET})
+
+# Presentation layer (C1).
+add_library(rrs_ui STATIC
+  src/ui/ticket_view.cpp
+)
+target_link_libraries(rrs_ui PUBLIC rrs_core)
 
 # Seed data shared by the tests (and later the demo).
 add_library(rrs_tools STATIC

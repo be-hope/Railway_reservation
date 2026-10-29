@@ -14,8 +14,11 @@ include(GoogleTest)
 # no file or database can be opened (NFR-006 / TST-01).
 add_executable(rrs_unit_tests
   unit/test_money_date.cpp
+  unit/test_fare_policy.cpp
   unit/test_seat_allocator.cpp
+  unit/test_pnr_generator.cpp
   unit/test_availability.cpp
+  unit/test_booking_validator.cpp
 )
 target_link_libraries(rrs_unit_tests PRIVATE rrs_core GTest::gtest_main)
 gtest_discover_tests(rrs_unit_tests PROPERTIES LABELS unit)
@@ -32,6 +35,7 @@ target_link_libraries(rrs_test_support PUBLIC rrs_dal rrs_tools GTest::gtest)
 add_executable(rrs_integration_tests
   integration/test_sqlite_schema.cpp
   integration/test_repositories.cpp
+  integration/test_booking_service.cpp
 )
 target_link_libraries(rrs_integration_tests PRIVATE rrs_test_support GTest::gtest_main)
 gtest_discover_tests(rrs_integration_tests PROPERTIES LABELS integration)
