@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "cancel/seat_release_service.h"
 #include "common/clock.h"
 #include "dal/repositories.h"
 #include "ui/passenger_menu.h"
@@ -46,6 +47,20 @@ public:
 private:
     IUserRepository& users_;
     const IClock& clock_;
+};
+
+// Cancels through SeatReleaseService after the ownership check of
+// BookingService::getTicket. The departure-time rule and the refund belong to
+// CancellationService (#47, #48); until it exists no refund is recorded.
+class InterimCancellation : public ICancellationPort {
+public:
+    InterimCancellation(IBookingService& booking, SeatReleaseService& release)
+        : booking_(booking), release_(release) {}
+    Result<Reservation> cancel(const Session& session, const std::string& pnr) override;
+
+private:
+    IBookingService& booking_;
+    SeatReleaseService& release_;
 };
 
 }  // namespace rrs::demo

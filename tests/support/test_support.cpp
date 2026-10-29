@@ -68,6 +68,11 @@ Status FaultInjectingReservationRepository::update(const Reservation& r) {
         --failNextUpdates;
         return Status::failure(ErrorCode::Database, "injected update fault");
     }
+    if (updatesBeforeFault == 0) {
+        updatesBeforeFault = -1;
+        return Status::failure(ErrorCode::Database, "injected update fault");
+    }
+    if (updatesBeforeFault > 0) --updatesBeforeFault;
     return inner_.update(r);
 }
 

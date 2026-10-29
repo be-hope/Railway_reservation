@@ -49,6 +49,7 @@ public:
 
     int failNextInserts = 0;   // the next N insert() calls fail with E9001
     int failNextUpdates = 0;   // the next N update() calls fail with E9001
+    int updatesBeforeFault = -1;   // when >= 0: let this many updates pass, then fail one
 
     Status insert(const Reservation& r) override;
     Status update(const Reservation& r) override;
