@@ -1,0 +1,35 @@
+# GoogleTest: system package if installed, otherwise fetched at configure time.
+find_package(GTest QUIET)
+if(NOT GTest_FOUND)
+  FetchContent_Declare(googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.14.0)
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+  FetchContent_MakeAvailable(googletest)
+endif()
+include(GoogleTest)
+
+# Unit tests: business logic only, linked without the data-access layer, so
+# no file or database can be opened (NFR-006 / TST-01).
+add_executable(rrs_unit_tests
+  unit/test_money_date.cpp
+)
+target_link_libraries(rrs_unit_tests PRIVATE rrs_core GTest::gtest_main)
+gtest_discover_tests(rrs_unit_tests PROPERTIES LABELS unit)
+
+# Shared helpers: in-memory fakes, storage backends, fault injection.
+add_library(rrs_test_support STATIC
+  fakes/in_memory_store.cpp
+  support/test_support.cpp
+)
+target_include_directories(rrs_test_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(rrs_test_support PUBLIC rrs_dal rrs_tools GTest::gtest)
+
+# Integration tests: services against both the fakes and real SQLite.
+add_executable(rrs_integration_tests
+  integration/test_sqlite_schema.cpp
+  integration/test_repositories.cpp
+)
+target_link_libraries(rrs_integration_tests PRIVATE rrs_test_support GTest::gtest_main)
+gtest_discover_tests(rrs_integration_tests PROPERTIES LABELS integration)
