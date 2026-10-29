@@ -82,16 +82,23 @@ target_link_libraries(rrs_dal PUBLIC rrs_core ${RRS_SQLITE_TARGET})
 
 # Presentation layer (C1).
 add_library(rrs_ui STATIC
+  src/ui/console_io.cpp
   src/ui/ticket_view.cpp
+  src/ui/passenger_menu.cpp
 )
 target_link_libraries(rrs_ui PUBLIC rrs_core)
 
-# Seed data shared by the tests (and later the demo).
+# Seed data and interim port adapters, shared by the demo and the tests.
 add_library(rrs_tools STATIC
+  tools/demo_adapters.cpp
   tools/seed_data.cpp
 )
 target_include_directories(rrs_tools PUBLIC tools)
-target_link_libraries(rrs_tools PUBLIC rrs_core)
+target_link_libraries(rrs_tools PUBLIC rrs_ui rrs_core)
+
+# Interactive demo of the passenger menu on the seed data.
+add_executable(rrs_passenger_demo tools/passenger_demo.cpp)
+target_link_libraries(rrs_passenger_demo PRIVATE rrs_tools rrs_dal)
 
 if(RRS_BUILD_TESTS)
   enable_testing()
