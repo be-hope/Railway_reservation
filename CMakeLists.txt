@@ -64,6 +64,7 @@ add_library(rrs_core STATIC
   src/booking/availability.cpp
   src/booking/booking_request_validator.cpp
   src/booking/booking_service.cpp
+  src/cancel/waitlist_manager.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
 target_link_libraries(rrs_core PUBLIC rrs_options)
