@@ -39,6 +39,7 @@ add_executable(rrs_integration_tests
   integration/test_booking_service.cpp
   integration/test_passenger_menu.cpp
   integration/test_seat_release.cpp
+  integration/test_schedule_coach_service.cpp
 )
 target_link_libraries(rrs_integration_tests PRIVATE rrs_test_support GTest::gtest_main)
 gtest_discover_tests(rrs_integration_tests PROPERTIES LABELS integration)

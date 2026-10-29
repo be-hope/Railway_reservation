@@ -66,6 +66,7 @@ add_library(rrs_core STATIC
   src/booking/booking_service.cpp
   src/cancel/waitlist_manager.cpp
   src/cancel/seat_release_service.cpp
+  src/admin/schedule_coach_service.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
 target_link_libraries(rrs_core PUBLIC rrs_options)
