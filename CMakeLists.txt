@@ -67,6 +67,7 @@ add_library(rrs_core STATIC
   src/cancel/waitlist_manager.cpp
   src/cancel/seat_release_service.cpp
   src/admin/schedule_coach_service.cpp
+  src/admin/report_service.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
 target_link_libraries(rrs_core PUBLIC rrs_options)
@@ -88,6 +89,7 @@ add_library(rrs_ui STATIC
   src/ui/console_io.cpp
   src/ui/ticket_view.cpp
   src/ui/passenger_menu.cpp
+  src/ui/report_view.cpp
 )
 target_link_libraries(rrs_ui PUBLIC rrs_core)
 
