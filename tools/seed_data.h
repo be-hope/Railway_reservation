@@ -5,7 +5,7 @@
 //
 // NOTE: the official seed script and test accounts are issue #22. Accounts
 // created here have a disabled password hash ("!") - they cannot log in
-// until AuthService (#58) stores real PBKDF2 hashes.
+// unless enableDemoLogins is explicitly selected (test-only Test@1234 credentials).
 
 #pragma once
 
@@ -24,6 +24,6 @@ inline constexpr const char* kO1 = "acc-o1";   // ops01
 
 // Stations, trains, class configuration and accounts; every train gets a
 // schedule for each day from `firstDay` to firstDay + scheduleDays - 1.
-Status loadSeedData(DataAccess& data, const Date& firstDay, int scheduleDays = 121);
+Status loadSeedData(DataAccess& data, const Date& firstDay, int scheduleDays = 121, bool enableDemoLogins = false);
 
 }  // namespace rrs::seed

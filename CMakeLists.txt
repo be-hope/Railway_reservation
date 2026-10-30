@@ -12,6 +12,7 @@ option(RRS_COVERAGE "Build with gcov instrumentation" OFF)
 option(RRS_BUILD_TESTS "Build the GoogleTest suites" ON)
 
 include(FetchContent)
+find_package(OpenSSL REQUIRED COMPONENTS Crypto)
 
 # ---------------------------------------------------------------------------
 # SQLite (ADR-002). Use a vendored amalgamation in third_party/sqlite if it is
@@ -37,9 +38,17 @@ endif()
 # Common compile options for our own code only (not third-party sources).
 # ---------------------------------------------------------------------------
 add_library(rrs_options INTERFACE)
-target_compile_options(rrs_options INTERFACE -Wall -Wextra -Wpedantic)
+if(MSVC)
+  target_compile_options(rrs_options INTERFACE /W4)
+else()
+  target_compile_options(rrs_options INTERFACE -Wall -Wextra -Wpedantic -fstack-protector-strong)
+endif()
 if(RRS_WERROR)
-  target_compile_options(rrs_options INTERFACE -Werror)
+  if(MSVC)
+    target_compile_options(rrs_options INTERFACE /WX)
+  else()
+    target_compile_options(rrs_options INTERFACE -Werror)
+  endif()
 endif()
 if(RRS_SANITIZE)
   target_compile_options(rrs_options INTERFACE -fsanitize=address,undefined -fno-omit-frame-pointer)
@@ -58,6 +67,12 @@ add_library(rrs_core STATIC
   src/common/money.cpp
   src/common/result.cpp
   src/common/session.cpp
+  src/auth/password_hasher.cpp
+  src/auth/auth_service.cpp
+  src/auth/profile_service.cpp
+  src/admin/reservation_admin_service.cpp
+  src/security/input_validator.cpp
+  src/security/access_control.cpp
   src/booking/fare_policy.cpp
   src/booking/seat_allocator.cpp
   src/booking/pnr_generator.cpp
@@ -70,12 +85,13 @@ add_library(rrs_core STATIC
   src/admin/report_service.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
-target_link_libraries(rrs_core PUBLIC rrs_options)
+target_link_libraries(rrs_core PUBLIC rrs_options OpenSSL::Crypto)
 
 # Data access layer (C7) and file-backed audit log.
 add_library(rrs_dal STATIC
   src/common/audit.cpp
   src/dal/schema.cpp
+  src/dal/retention.cpp
   src/dal/sqlite_database.cpp
   src/dal/sqlite_train_repository.cpp
   src/dal/sqlite_config_repository.cpp

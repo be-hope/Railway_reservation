@@ -288,7 +288,7 @@ Status InMemoryUserRepository::insert(const Account& a) {
 
 Result<std::optional<Account>> InMemoryUserRepository::findByLoginId(const std::string& loginId) {
     for (const auto& kv : s_.accounts) {
-        if (kv.second.loginId == loginId) return std::optional<Account>(kv.second);
+        if (kv.second.loginId == loginId || (!loginId.empty() && (kv.second.contactNumber == loginId || kv.second.email == loginId))) return std::optional<Account>(kv.second);
     }
     return std::optional<Account>();
 }

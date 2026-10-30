@@ -1,6 +1,7 @@
-build/
-build-*/
+build*/
+tmp/
 *.db
+*.db-*
 audit.log
 *.gcov
 *.gcda

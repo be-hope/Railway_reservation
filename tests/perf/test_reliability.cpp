@@ -10,6 +10,7 @@
 #include <set>
 
 #include "booking/booking_service.h"
+#include "auth/password_hasher.h"
 #include "cancel/seat_release_service.h"
 #include "dal/sqlite_repositories.h"
 #include "perf/large_data.h"
@@ -23,7 +24,7 @@ using namespace rrs;
 namespace {
 
 std::string tempDb(const std::string& name) {
-    std::string path = ::testing::TempDir() + name;
+    std::string path = ::testing::TempDir() + PasswordHasher::randomToken().value() + "_" + name;
     std::remove(path.c_str());
     return path;
 }

@@ -1,0 +1,27 @@
+name: Security and regression checks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        sanitize: ['OFF', 'ON']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y ninja-build libsqlite3-dev libssl-dev libgtest-dev cppcheck
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DRRS_SANITIZE=${{ matrix.sanitize }}
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Test
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+        run: ctest --test-dir build --output-on-failure
+      - name: Verify interactive demo
+        if: matrix.sanitize == 'OFF'
+        run: python3 tools/verify_demo.py
+      - name: Static analysis
+        if: matrix.sanitize == 'OFF'
+        run: cppcheck --enable=warning,performance,portability --error-exitcode=1 --suppress=missingIncludeSystem --inline-suppr -Isrc src tools

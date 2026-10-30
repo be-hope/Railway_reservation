@@ -37,7 +37,7 @@ Status SqliteUserRepository::insert(const Account& a) {
     // Duplicate check first so the caller gets E1002 instead of a raw
     // constraint error (FR-004); the UNIQUE constraints remain the backstop.
     Statement dup(db_,
-                  "SELECT 1 FROM account WHERE login_id = ? OR contact_number = ? OR email = ?");
+                  "SELECT 1 FROM account WHERE login_id = ?1 COLLATE NOCASE OR contact_number = ?2 OR email = ?3 COLLATE NOCASE OR login_id = ?2 OR login_id = ?3 COLLATE NOCASE OR contact_number = ?1 OR email = ?1 COLLATE NOCASE");
     dup.bind(1, a.loginId).bindOptional(2, a.contactNumber).bindOptional(3, a.email);
     if (dup.step()) return Status::failure(ErrorCode::DuplicateUser);
     if (!dup.status().ok()) return dup.status();
@@ -67,7 +67,7 @@ Result<std::optional<Account>> SqliteUserRepository::findOne(const char* where, 
 }
 
 Result<std::optional<Account>> SqliteUserRepository::findByLoginId(const std::string& loginId) {
-    return findOne("WHERE login_id = ?", loginId);
+    return findOne("WHERE login_id = ?1 OR contact_number = ?1 OR email = ?1 COLLATE NOCASE", loginId);
 }
 
 Result<std::optional<Account>> SqliteUserRepository::findById(const std::string& accountId) {
@@ -81,6 +81,11 @@ Status SqliteUserRepository::updateAttempts(const std::string& accountId, int fa
 }
 
 Status SqliteUserRepository::updateProfile(const Account& a) {
+    Statement duplicate(db_, "SELECT 1 FROM account WHERE account_id <> ? AND (contact_number = ? OR email = ? COLLATE NOCASE OR login_id = ? OR login_id = ? COLLATE NOCASE)");
+    duplicate.bind(1, a.accountId).bindOptional(2, a.contactNumber).bindOptional(3, a.email)
+        .bindOptional(4, a.contactNumber).bindOptional(5, a.email);
+    if (duplicate.step()) return Status::failure(ErrorCode::DuplicateUser);
+    if (!duplicate.status().ok()) return duplicate.status();
     Statement st(db_,
                  "UPDATE account SET name = ?, age = ?, gender = ?, contact_number = ?, email = ?, "
                  "id_proof_type = ?, id_proof_number = ? WHERE account_id = ?");

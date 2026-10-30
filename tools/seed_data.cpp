@@ -3,6 +3,7 @@
 #include "seed_data.h"
 
 #include <vector>
+#include "auth/password_hasher.h"
 
 namespace rrs::seed {
 
@@ -48,7 +49,7 @@ Account account(const char* id, Role role, const char* login, const char* name,
 
 }  // namespace
 
-Status loadSeedData(DataAccess& data, const Date& firstDay, int scheduleDays) {
+Status loadSeedData(DataAccess& data, const Date& firstDay, int scheduleDays, bool enableDemoLogins) {
     TransactionGuard tx(data.unitOfWork);
     if (!tx.started().ok()) return tx.started();
 
@@ -102,7 +103,12 @@ Status loadSeedData(DataAccess& data, const Date& firstDay, int scheduleDays) {
         account(kA1, Role::Admin, "admin01", "System Administrator", ""),
         account(kO1, Role::Ops, "ops01", "Railway Operations", ""),
     };
-    for (const Account& a : accounts) {
+    for (Account a : accounts) {
+        if (enableDemoLogins) {
+            auto digest = PasswordHasher::hash("Test@1234");
+            if (!digest.ok()) return digest.error();
+            a.passwordHash = digest->hash; a.salt = digest->salt;
+        }
         Status st = data.users.insert(a);
         if (!st.ok()) return st;
     }

@@ -63,6 +63,8 @@ void PassengerMenu::run() {
         io_.line("0 Logout");
         auto choice = io_.readInt("Choice: ", 0, 8);
         if (!choice || *choice == 0) break;
+        auto access = requireRole(session_, {Role::Passenger}, clock_);
+        if (!access.ok()) { io_.line(formatError(access.error())); break; }
         switch (*choice) {
             case 1: searchTrains(); break;
             case 2: showRoute(); break;
