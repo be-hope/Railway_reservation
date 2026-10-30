@@ -10,6 +10,7 @@
 #include <random>
 
 #include "booking/booking_service.h"
+#include "auth/password_hasher.h"
 #include "dal/sqlite_repositories.h"
 #include "perf/large_data.h"
 #include "seed_data.h"
@@ -36,7 +37,9 @@ void report(const std::string& name, const std::vector<double>& ms) {
 class PerformanceTest : public ::testing::Test {
 protected:
     static void SetUpTestSuite() {
-        path_ = ::testing::TempDir() + "rrs_perf.db";
+        auto token = PasswordHasher::randomToken();
+        ASSERT_TRUE(token.ok());
+        path_ = ::testing::TempDir() + "rrs_perf_" + token.value() + ".db";
         std::remove(path_.c_str());
         auto store = SqliteDataStore::open(path_);
         ASSERT_TRUE(store.ok());
