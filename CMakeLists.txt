@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(RRS_WERROR "Treat warnings as errors" ON)
+option(RRS_BUILD_TESTS "Build GoogleTest suites" ON)
 option(RRS_SANITIZE "Build with AddressSanitizer + UBSan" OFF)
 option(RRS_COVERAGE "Build with gcov instrumentation" OFF)
 option(RRS_BUILD_TESTS "Build the GoogleTest suites" ON)

@@ -1,0 +1,52 @@
+name: Railway Reservation CI
+
+on:
+  push:
+    branches: [main, master, sprint-2-issue-20]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            libsqlite3-dev \
+            libgtest-dev \
+            cppcheck \
+            gcovr
+
+      - name: Configure project
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DRRS_BUILD_TESTS=ON \
+            -DRRS_WERROR=ON
+
+      - name: Build
+        run: cmake --build build --parallel 2
+
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Static analysis
+        run: |
+          cppcheck --enable=warning,performance,portability \
+            --error-exitcode=1 \
+            --suppress=missingIncludeSystem \
+            --std=c++17 \
+            -I src -I tools -I tests \
+            src tools tests/fakes tests/support

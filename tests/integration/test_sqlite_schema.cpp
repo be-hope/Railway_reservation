@@ -3,6 +3,7 @@
 // cannot be inserted even if the application logic has a defect.
 
 #include <gtest/gtest.h>
+#include <algorithm>
 
 #include <cstdio>
 
