@@ -303,6 +303,40 @@ TEST_P(BookingServiceTest, OwnerAndStaffCanViewTicketOthersCannot) {
     EXPECT_EQ(service_->getTicket(p1_, "' OR 1=1").code(), ErrorCode::Validation);
 }
 
+// UT-CAN-05 / Issue #35: malformed PNRs must be rejected
+// before the reservation repository is queried.
+TEST_P(BookingServiceTest, UT_CAN_05_InvalidPnrRejectedBeforeDatabaseLookup) {
+    const int initialLookups = faulty_->findByPnrCalls;
+
+    const std::vector<std::string> malformedPnrs = {
+        "",
+        "12AB",
+        "123456789",
+        "12345678901",
+        "0123456789",
+        "' OR 1=1"
+    };
+
+    for (const std::string& pnr : malformedPnrs) {
+        SCOPED_TRACE("PNR: " + pnr);
+
+        EXPECT_EQ(
+            service_->getTicket(p1_, pnr).code(),
+            ErrorCode::Validation
+        );
+    }
+
+    // Malformed input must never reach the repository.
+    EXPECT_EQ(faulty_->findByPnrCalls, initialLookups);
+
+    // A valid-format but unknown PNR must reach the repository.
+    EXPECT_EQ(
+        service_->getTicket(p1_, "9999999999").code(),
+        ErrorCode::PnrNotFound
+    );
+
+    EXPECT_EQ(faulty_->findByPnrCalls, initialLookups + 1);
+}
 
 // IT-CAN-06 / Issue #34: PNR lookup must display the actual stored status.
 TEST_P(BookingServiceTest, IT_CAN_06_PnrLookupDisplaysStoredReservationStatus) {
