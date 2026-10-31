@@ -2,6 +2,8 @@
 // #28, #30, #31). Runs on the in-memory fakes and on SQLite (issue #21
 // "services work with SQLite and test fakes").
 
+#include "cancel/seat_release_service.h"
+#include "ui/ticket_view.h"
 #include <gtest/gtest.h>
 
 #include <set>
@@ -299,6 +301,113 @@ TEST_P(BookingServiceTest, OwnerAndStaffCanViewTicketOthersCannot) {
     EXPECT_EQ(service_->getTicket(test::sessionFor(seed::kO1, Role::Ops, clock_), pnr).code(), ErrorCode::Forbidden);
     EXPECT_EQ(service_->getTicket(p1_, "9999999999").code(), ErrorCode::PnrNotFound);
     EXPECT_EQ(service_->getTicket(p1_, "' OR 1=1").code(), ErrorCode::Validation);
+}
+
+
+// IT-CAN-06 / Issue #34: PNR lookup must display the actual stored status.
+TEST_P(BookingServiceTest, IT_CAN_06_PnrLookupDisplaysStoredReservationStatus) {
+
+    // 1. Create a confirmed Sleeper reservation.
+    auto confirmed = service_->createBooking(
+        p1_, single("issue34-confirmed", ClassCode::SL));
+    ASSERT_TRUE(confirmed.ok()) << formatError(confirmed.error());
+
+    // 2. AC3 has capacity for 2 Confirmed, 1 RAC and 2 Waitlisted.
+    auto ac3First = service_->createBooking(
+        p1_, single("issue34-ac3-1", ClassCode::AC3));
+    auto ac3Second = service_->createBooking(
+        p1_, single("issue34-ac3-2", ClassCode::AC3));
+    auto rac = service_->createBooking(
+        p1_, single("issue34-rac", ClassCode::AC3));
+    auto waitlist1 = service_->createBooking(
+        p1_, single("issue34-wl-1", ClassCode::AC3));
+    auto waitlist2 = service_->createBooking(
+        p1_, single("issue34-wl-2", ClassCode::AC3));
+
+    ASSERT_TRUE(ac3First.ok()) << formatError(ac3First.error());
+    ASSERT_TRUE(ac3Second.ok()) << formatError(ac3Second.error());
+    ASSERT_TRUE(rac.ok()) << formatError(rac.error());
+    ASSERT_TRUE(waitlist1.ok()) << formatError(waitlist1.error());
+    ASSERT_TRUE(waitlist2.ok()) << formatError(waitlist2.error());
+
+    // 3. Create a separate booking and cancel it.
+    BookingRequest cancelRequest = request(
+        "issue34-cancel",
+        "20003",
+        "SBC",
+        "MYS",
+        ClassCode::SL,
+        {traveller("Cancelled passenger")},
+        8);
+
+    auto cancelledBooking = service_->createBooking(p1_, cancelRequest);
+    ASSERT_TRUE(cancelledBooking.ok())
+        << formatError(cancelledBooking.error());
+
+    SeatReleaseService release(*data_, clock_, audit_);
+    auto cancellation = release.cancelAndRelease(
+        cancelledBooking.value().pnr, std::nullopt, seed::kP1);
+
+    ASSERT_TRUE(cancellation.ok()) << formatError(cancellation.error());
+
+    // 4. Retrieve each ticket and compare its stored, retrieved and displayed
+    // status. This verifies the complete PNR lookup path.
+const auto verifyStatus =
+    [this](const Reservation& booking,
+           TicketStatus expectedStatus,
+           const std::string& expectedText,
+           int expectedWaitlistPosition = 0) {
+
+        auto stored = data_->reservations.findByPnr(booking.pnr);
+        ASSERT_TRUE(stored.ok());
+        ASSERT_TRUE(stored.value().has_value());
+
+        auto ticket = service_->getTicket(p1_, booking.pnr);
+        ASSERT_TRUE(ticket.ok()) << formatError(ticket.error());
+
+        EXPECT_EQ(stored.value()->status, expectedStatus);
+        EXPECT_EQ(ticket.value().status, stored.value()->status);
+
+        const std::string displayed =
+            formatTicket(ticket.value(), "Test Train");
+
+        EXPECT_NE(
+            displayed.find("Status  : " + expectedText),
+            std::string::npos
+        );
+
+        if (expectedStatus == TicketStatus::Waitlisted) {
+            EXPECT_EQ(ticket.value().waitlistPosition,
+                      expectedWaitlistPosition);
+        }
+    };
+
+verifyStatus(
+    confirmed.value(),
+    TicketStatus::Confirmed,
+    "Confirmed");
+
+verifyStatus(
+    rac.value(),
+    TicketStatus::Rac,
+    "RAC");
+
+verifyStatus(
+    waitlist1.value(),
+    TicketStatus::Waitlisted,
+    "Waitlisted - position 1",
+    1);
+
+verifyStatus(
+    waitlist2.value(),
+    TicketStatus::Waitlisted,
+    "Waitlisted - position 2",
+    2);
+
+verifyStatus(
+    cancelledBooking.value(),
+    TicketStatus::Cancelled,
+    "Cancelled");
 }
 
 INSTANTIATE_TEST_SUITE_P(Backends, BookingServiceTest, ::testing::ValuesIn(test::backendKinds()),
