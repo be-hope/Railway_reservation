@@ -106,6 +106,10 @@ target_link_libraries(rrs_tools PUBLIC rrs_ui rrs_core)
 add_executable(rrs_passenger_demo tools/passenger_demo.cpp)
 target_link_libraries(rrs_passenger_demo PRIVATE rrs_tools rrs_dal)
 
+# Standalone utility for creating a reproducible demo database.
+add_executable(rrs_seed_database tools/seed_database.cpp)
+target_link_libraries(rrs_seed_database PRIVATE rrs_tools rrs_dal)
+
 if(RRS_BUILD_TESTS)
   enable_testing()
   add_subdirectory(tests)

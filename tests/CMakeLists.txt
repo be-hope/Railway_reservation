@@ -34,6 +34,7 @@ target_link_libraries(rrs_test_support PUBLIC rrs_dal rrs_tools GTest::gtest)
 
 # Integration tests: services against both the fakes and real SQLite.
 add_executable(rrs_integration_tests
+  integration/test_seed_data.cpp
   integration/test_sqlite_schema.cpp
   integration/test_repositories.cpp
   integration/test_booking_service.cpp

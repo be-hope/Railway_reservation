@@ -7,6 +7,9 @@
 // created here have a disabled password hash ("!") - they cannot log in
 // until AuthService (#58) stores real PBKDF2 hashes.
 
+// seed_data.h
+// Deterministic baseline and demo data for the Railway Reservation System.
+
 #pragma once
 
 #include "common/date.h"
@@ -15,15 +18,20 @@
 
 namespace rrs::seed {
 
-// Account ids of the seed users.
-inline constexpr const char* kP1 = "acc-p1";   // Asha Rao, 9876500001
-inline constexpr const char* kP2 = "acc-p2";   // Ravi Kumar, 9876500002
-inline constexpr const char* kS1 = "acc-s1";   // staff01
-inline constexpr const char* kA1 = "acc-a1";   // admin01
-inline constexpr const char* kO1 = "acc-o1";   // ops01
+// Stable IDs of the seed users.
+inline constexpr const char* kP1 = "acc-p1";  // Asha Rao
+inline constexpr const char* kP2 = "acc-p2";  // Ravi Kumar
+inline constexpr const char* kS1 = "acc-s1";  // Reservation staff
+inline constexpr const char* kA1 = "acc-a1";  // Administrator
+inline constexpr const char* kO1 = "acc-o1";  // Operations
 
-// Stations, trains, class configuration and accounts; every train gets a
-// schedule for each day from `firstDay` to firstDay + scheduleDays - 1.
+// Loads stations, trains, class configurations, schedules and accounts.
+// Does not insert reservations. Used by integration tests.
 Status loadSeedData(DataAccess& data, const Date& firstDay, int scheduleDays = 121);
+
+// Loads the complete deterministic demo dataset, including sample reservations.
+// Repeated calls with the same date do not duplicate seed records.
+// scheduleDays must be at least 6.
+Status loadDemoSeedData(DataAccess& data, const Date& firstDay, int scheduleDays = 121);
 
 }  // namespace rrs::seed
