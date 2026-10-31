@@ -1,0 +1,48 @@
+name: Railway Reservation Docker CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docker-ci:
+    name: Docker Build, Test and Analysis
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker CI image
+        run: |
+          docker build --pull \
+            --tag railway-reservation-ci:${{ github.sha }} .
+
+      - name: Run CI inside Docker
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/artifacts"
+
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            -e BUILD_DIR=/tmp/rrs-build \
+            -e ARTIFACTS_DIR=/workspace/artifacts \
+            -v "$GITHUB_WORKSPACE/artifacts:/workspace/artifacts" \
+            railway-reservation-ci:${{ github.sha }}
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: railway-reservation-coverage
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14

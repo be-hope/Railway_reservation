@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(RRS_WERROR "Treat warnings as errors" ON)
+option(RRS_BUILD_TESTS "Build GoogleTest suites" ON)
 option(RRS_SANITIZE "Build with AddressSanitizer + UBSan" OFF)
 option(RRS_COVERAGE "Build with gcov instrumentation" OFF)
 option(RRS_BUILD_TESTS "Build the GoogleTest suites" ON)
@@ -104,6 +105,10 @@ target_link_libraries(rrs_tools PUBLIC rrs_ui rrs_core)
 # Interactive demo of the passenger menu on the seed data.
 add_executable(rrs_passenger_demo tools/passenger_demo.cpp)
 target_link_libraries(rrs_passenger_demo PRIVATE rrs_tools rrs_dal)
+
+# Standalone utility for creating a reproducible demo database.
+add_executable(rrs_seed_database tools/seed_database.cpp)
+target_link_libraries(rrs_seed_database PRIVATE rrs_tools rrs_dal)
 
 if(RRS_BUILD_TESTS)
   enable_testing()

@@ -3,17 +3,47 @@
 // steps), fare rejection, field-level re-prompts and booking history.
 
 #include <gtest/gtest.h>
-
 #include <sstream>
 
 #include "demo_adapters.h"
 #include "seed_data.h"
 #include "support/test_support.h"
 #include "ui/passenger_menu.h"
+#include "ui/ticket_view.h"
 
 using namespace rrs;
 
 namespace {
+
+Reservation historyReservation(
+    const std::string& pnr,
+    const std::string& account,
+    const Date& date,
+    TicketStatus status,
+    std::int64_t sequence,
+    const std::string& seat) {
+
+    Reservation r;
+    r.pnr = pnr;
+    r.requestId = "history-" + pnr;
+    r.accountId = account;
+    r.bookedBy = account;
+    r.trainNumber = "20003";
+    r.journeyDate = date;
+    r.classCode = ClassCode::SL;
+    r.sourceCode = "SBC";
+    r.destinationCode = "MYS";
+    r.status = status;
+    r.waitlistPosition = status == TicketStatus::Waitlisted ? 1 : 0;
+    r.fare = Money::fromRupees(140);
+    r.queueSeq = sequence;
+
+    Traveller passenger = test::traveller("History Passenger");
+    passenger.seatNumber = seat;
+    r.travellers.push_back(passenger);
+
+    return r;
+}
 
 class PassengerMenuTest : public ::testing::Test {
 protected:
@@ -194,4 +224,73 @@ TEST_F(PassengerMenuTest, ProfileIsShownMaskedAndCanBeEdited) {
     EXPECT_NE(out.find("OK: Profile saved."), std::string::npos);
     EXPECT_NE(out.find("ID proof : Aadhaar ********1234"), std::string::npos);
     EXPECT_EQ(data_->users.findById(seed::kP1).value()->age, 29);
+}
+
+TEST_F(PassengerMenuTest, FR_015_IT_BKG_07_ShowsOnlyOwnPastAndUpcomingBookings) {
+    const Date past = test::testToday().plusDays(-2);
+    const Date upcoming1 = test::testToday().plusDays(5);
+    const Date upcoming2 = test::testToday().plusDays(9);
+    const Date otherPassengerDate = test::testToday().plusDays(7);
+
+    for (const Date& date : {past, upcoming1, upcoming2, otherPassengerDate}) {
+        ASSERT_TRUE(data_->trains.addSchedule("20003", date).ok());
+    }
+
+    ASSERT_TRUE(data_->reservations.insert(
+        historyReservation("1111111111", seed::kP1, past,
+                           TicketStatus::Confirmed, 1, "S1-01")).ok());
+
+    ASSERT_TRUE(data_->reservations.insert(
+        historyReservation("2222222222", seed::kP1, upcoming1,
+                           TicketStatus::Confirmed, 2, "S1-01")).ok());
+
+    ASSERT_TRUE(data_->reservations.insert(
+        historyReservation("3333333333", seed::kP1, upcoming2,
+                           TicketStatus::Cancelled, 3, "S1-01")).ok());
+
+    ASSERT_TRUE(data_->reservations.insert(
+        historyReservation("4444444444", seed::kP2, otherPassengerDate,
+                           TicketStatus::Confirmed, 4, "S1-01")).ok());
+
+    const std::string out = run("5\n0\n");
+
+    // All three of P1's bookings must be visible.
+    EXPECT_NE(out.find("1111111111"), std::string::npos);
+    EXPECT_NE(out.find("2222222222"), std::string::npos);
+    EXPECT_NE(out.find("3333333333"), std::string::npos);
+
+    // P2's booking must never appear in P1's history.
+    EXPECT_EQ(out.find("4444444444"), std::string::npos);
+
+    // Past and upcoming dates must be labelled.
+    EXPECT_NE(out.find("Past"), std::string::npos);
+    EXPECT_NE(out.find("Upcoming"), std::string::npos);
+
+    // The cancelled reservation must remain in booking history.
+    EXPECT_NE(out.find("Cancelled"), std::string::npos);
+
+    // Journey-date ordering.
+    const auto pastPosition = out.find("1111111111");
+    const auto upcomingPosition = out.find("2222222222");
+    const auto cancelledPosition = out.find("3333333333");
+
+    EXPECT_LT(pastPosition, upcomingPosition);
+    EXPECT_LT(upcomingPosition, cancelledPosition);
+}
+
+TEST(TicketStatusView, FR_020_IT_CAN_06_FormatsAllReservationStatuses) {
+    Reservation r;
+
+    r.status = TicketStatus::Confirmed;
+    EXPECT_EQ(statusText(r), "Confirmed");
+
+    r.status = TicketStatus::Rac;
+    EXPECT_EQ(statusText(r), "RAC");
+
+    r.status = TicketStatus::Waitlisted;
+    r.waitlistPosition = 2;
+    EXPECT_EQ(statusText(r), "Waitlisted - position 2");
+
+    r.status = TicketStatus::Cancelled;
+    EXPECT_EQ(statusText(r), "Cancelled");
 }

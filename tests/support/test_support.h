@@ -47,13 +47,18 @@ class FaultInjectingReservationRepository : public IReservationRepository {
 public:
     explicit FaultInjectingReservationRepository(IReservationRepository& inner) : inner_(inner) {}
 
+    int findByPnrCalls = 0;
     int failNextInserts = 0;   // the next N insert() calls fail with E9001
     int failNextUpdates = 0;   // the next N update() calls fail with E9001
     int updatesBeforeFault = -1;   // when >= 0: let this many updates pass, then fail one
 
     Status insert(const Reservation& r) override;
     Status update(const Reservation& r) override;
-    Result<std::optional<Reservation>> findByPnr(const std::string& pnr) override { return inner_.findByPnr(pnr); }
+    Result<std::optional<Reservation>> findByPnr(
+    const std::string& pnr) override {
+    ++findByPnrCalls;
+    return inner_.findByPnr(pnr);
+}
     Result<std::optional<Reservation>> findByRequestId(const std::string& id) override {
         return inner_.findByRequestId(id);
     }
