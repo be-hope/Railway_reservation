@@ -1,62 +1,70 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
     options {
         timestamps()
-        timeout(time: 20, unit: 'MINUTES')
+        timeout(time: 30, unit: 'MINUTES')
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Verify Docker') {
+            steps {
+                sh 'docker version'
+            }
+        }
+
+        stage('Build Docker Image') {
             steps {
                 sh '''
-                    sudo apt-get update
-                    sudo apt-get install -y \
-                        build-essential \
-                        cmake \
-                        libsqlite3-dev \
-                        libgtest-dev
+                    docker build --pull \
+                        --tag railway-reservation-ci:${BUILD_NUMBER} .
                 '''
             }
         }
 
-        stage('Configure') {
+        stage('Docker Build, Tests and Analysis') {
             steps {
                 sh '''
-                    cmake -S . -B build \
-                        -DRRS_BUILD_TESTS=ON \
-                        -DRRS_WERROR=ON
+                    mkdir -p "$WORKSPACE/artifacts"
+
+                    docker run --rm \
+                        --user "$(id -u):$(id -g)" \
+                        -e BUILD_DIR=/tmp/rrs-build \
+                        -e ARTIFACTS_DIR=/workspace/artifacts \
+                        -v "$WORKSPACE/artifacts:/workspace/artifacts" \
+                        railway-reservation-ci:${BUILD_NUMBER}
                 '''
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'cmake --build build --parallel 2'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'ctest --test-dir build --output-on-failure'
             }
         }
     }
 
     post {
+        always {
+            archiveArtifacts artifacts: 'artifacts/**',
+                             allowEmptyArchive: true
+
+            sh '''
+                docker image rm \
+                    railway-reservation-ci:${BUILD_NUMBER} || true
+            '''
+        }
+
         success {
-            echo 'Railway Reservation build and tests passed!'
+            echo 'Railway Reservation Docker CI passed!'
         }
 
         failure {
-            echo 'Build or tests failed. Check console output.'
+            echo 'Docker build, tests or analysis failed. Check console output.'
         }
     }
 }

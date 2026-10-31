@@ -1,0 +1,12 @@
+.git
+.github
+build
+build-*
+artifacts
+*.db
+*.db-wal
+*.db-shm
+audit.log
+*.gcov
+*.gcda
+*.gcno

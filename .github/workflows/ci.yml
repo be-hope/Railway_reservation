@@ -1,52 +1,48 @@
-name: Railway Reservation CI
+name: Railway Reservation Docker CI
 
 on:
   push:
-    branches: [main, master, sprint-2-issue-20]
+    branches:
+      - "**"
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  build-and-test:
+  docker-ci:
+    name: Docker Build, Test and Analysis
     runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Build Docker CI image
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential \
-            cmake \
-            libsqlite3-dev \
-            libgtest-dev \
-            cppcheck \
-            gcovr
+          docker build --pull \
+            --tag railway-reservation-ci:${{ github.sha }} .
 
-      - name: Configure project
+      - name: Run CI inside Docker
         run: |
-          cmake -S . -B build \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DRRS_BUILD_TESTS=ON \
-            -DRRS_WERROR=ON
+          mkdir -p "$GITHUB_WORKSPACE/artifacts"
 
-      - name: Build
-        run: cmake --build build --parallel 2
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            -e BUILD_DIR=/tmp/rrs-build \
+            -e ARTIFACTS_DIR=/workspace/artifacts \
+            -v "$GITHUB_WORKSPACE/artifacts:/workspace/artifacts" \
+            railway-reservation-ci:${{ github.sha }}
 
-      - name: Run tests
-        run: ctest --test-dir build --output-on-failure
-
-      - name: Static analysis
-        run: |
-          cppcheck --enable=warning,performance,portability \
-            --error-exitcode=1 \
-            --suppress=missingIncludeSystem \
-            --std=c++17 \
-            -I src -I tools -I tests \
-            src tools tests/fakes tests/support
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: railway-reservation-coverage
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14
