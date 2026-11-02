@@ -13,6 +13,17 @@ CancellationService::CancellationService(IBookingService& booking,
                                          const IClock& clock)
     : booking_(booking), trains_(trains), release_(release), clock_(clock) {}
 
+Status CancellationService::validateEligibility(
+    TicketStatus status, EpochSeconds departureAt, EpochSeconds now) {
+    if (status == TicketStatus::Cancelled) {
+        return Status::failure(ErrorCode::AlreadyCancelled);
+    }
+    if (departureAt <= now) {
+        return Status::failure(ErrorCode::CancelDeparted);
+    }
+    return Status::success();
+}
+
 Result<EpochSeconds> CancellationService::departureTime(
     const Reservation& reservation) const {
 
@@ -75,18 +86,14 @@ Result<Reservation> CancellationService::cancel(
 
     const Reservation& reservation = ticket.value();
 
-    if (reservation.status == TicketStatus::Cancelled) {
-        return R::failure(ErrorCode::AlreadyCancelled);
-    }
-
     auto departure = departureTime(reservation);
     if (!departure.ok()) return departure.error();
 
-    const EpochSeconds remaining = departure.value() - clock_.now();
+    Status eligibility = validateEligibility(
+        reservation.status, departure.value(), clock_.now());
+    if (!eligibility.ok()) return eligibility.error();
 
-    if (remaining <= 0) {
-        return R::failure(ErrorCode::CancelDeparted);
-    }
+    const EpochSeconds remaining = departure.value() - clock_.now();
 
     const Money refund = RefundCalculator::calculate(
         reservation.fare, reservation.status, remaining);

@@ -16,6 +16,11 @@ public:
 
     Result<Reservation> cancel(const Session& session, const std::string& pnr);
 
+    // Pure eligibility rule, independently testable without database I/O.
+    static Status validateEligibility(TicketStatus status,
+                                      EpochSeconds departureAt,
+                                      EpochSeconds now);
+
 private:
     Result<EpochSeconds> departureTime(const Reservation& reservation) const;
 

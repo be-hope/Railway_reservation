@@ -21,6 +21,7 @@ add_executable(rrs_unit_tests
   unit/test_booking_validator.cpp
   unit/test_waitlist_plan.cpp
   unit/test_refund_calculator.cpp
+  unit/test_cancellation_eligibility.cpp
 )
 target_link_libraries(rrs_unit_tests PRIVATE rrs_core GTest::gtest_main)
 gtest_discover_tests(rrs_unit_tests PROPERTIES LABELS unit)
