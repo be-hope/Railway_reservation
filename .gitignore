@@ -5,3 +5,6 @@ audit.log
 *.gcov
 *.gcda
 *.gcno
+
+# Generated coverage reports
+/artifacts/
