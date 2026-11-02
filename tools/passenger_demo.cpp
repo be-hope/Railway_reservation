@@ -43,7 +43,8 @@ int main(int argc, char** argv) {
     demo::RepositoryBookingHistory history(data.reservations, clock);
     demo::RepositoryProfile profile(data.users, clock);
     SeatReleaseService release(data, clock, audit);
-    demo::InterimCancellation cancellation(booking, release);
+    CancellationService cancellation(booking, data.trains, release, clock);
+    demo::CancellationAdapter cancellationAdapter(cancellation);
 
     Session session;
     session.sessionId = "demo";
@@ -53,7 +54,7 @@ int main(int argc, char** argv) {
 
     ConsoleIO io(std::cin, std::cout);
     io.line("Railway Reservation System - passenger demo (logged in as Asha Rao)");
-    PassengerMenu menu(io, PassengerPorts{booking, trains, history, profile, &cancellation}, session, clock,
+    PassengerMenu menu(io, PassengerPorts{booking, trains, history, profile, &cancellationAdapter}, session, clock,
                        randomRequestId);
     menu.run();
     return 0;

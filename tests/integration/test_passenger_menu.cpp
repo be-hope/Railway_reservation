@@ -28,7 +28,10 @@ protected:
         history_ = std::make_unique<demo::RepositoryBookingHistory>(data_->reservations, clock_);
         profile_ = std::make_unique<demo::RepositoryProfile>(data_->users, clock_);
         release_ = std::make_unique<SeatReleaseService>(*data_, clock_, audit_);
-        cancellation_ = std::make_unique<demo::InterimCancellation>(*booking_, *release_);
+        cancellationService_ = std::make_unique<CancellationService>(
+            *booking_, data_->trains, *release_, clock_);
+        cancellation_ = std::make_unique<demo::CancellationAdapter>(
+            *cancellationService_);
     }
 
     // Runs the menu as P1 with the given keyboard input; returns the output.
@@ -60,7 +63,8 @@ protected:
     std::unique_ptr<demo::RepositoryBookingHistory> history_;
     std::unique_ptr<demo::RepositoryProfile> profile_;
     std::unique_ptr<SeatReleaseService> release_;
-    std::unique_ptr<demo::InterimCancellation> cancellation_;
+    std::unique_ptr<CancellationService> cancellationService_;
+    std::unique_ptr<demo::CancellationAdapter> cancellation_;
 };
 
 }  // namespace
