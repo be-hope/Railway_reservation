@@ -4,7 +4,7 @@
 
 using namespace rrs;
 
-TEST(RefundCalculatorTest, RefundSlabBoundaries) {
+TEST(RefundCalculatorTest, UT_CAN_01_RefundSlabBoundaries) {
     const Money fare = Money::fromRupees(1000);
     const std::int64_t hour = 60 * 60;
 
