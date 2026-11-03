@@ -36,6 +36,7 @@ enum class TicketStatus { Confirmed, Rac, Waitlisted, Cancelled };
 std::string ticketStatusString(TicketStatus s);        // "CONFIRMED" ... (stored form)
 std::optional<TicketStatus> parseTicketStatus(const std::string& s);
 bool isActive(TicketStatus s);                         // anything but CANCELLED
+bool canTransitionTicketStatus(TicketStatus from, TicketStatus to);
 
 enum class Role { Passenger, Staff, Admin, Ops };
 
