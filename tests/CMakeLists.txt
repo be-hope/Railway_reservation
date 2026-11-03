@@ -20,6 +20,9 @@ add_executable(rrs_unit_tests
   unit/test_availability.cpp
   unit/test_booking_validator.cpp
   unit/test_waitlist_plan.cpp
+  unit/test_refund_calculator.cpp
+  unit/test_cancellation_eligibility.cpp
+  unit/test_ticket_status.cpp
 )
 target_link_libraries(rrs_unit_tests PRIVATE rrs_core GTest::gtest_main)
 gtest_discover_tests(rrs_unit_tests PROPERTIES LABELS unit)
@@ -39,6 +42,7 @@ add_executable(rrs_integration_tests
   integration/test_booking_service.cpp
   integration/test_passenger_menu.cpp
   integration/test_seat_release.cpp
+  integration/test_cancellation_service.cpp
   integration/test_schedule_coach_service.cpp
   integration/test_report_service.cpp
 )

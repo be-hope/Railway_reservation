@@ -66,6 +66,8 @@ add_library(rrs_core STATIC
   src/booking/booking_service.cpp
   src/cancel/waitlist_manager.cpp
   src/cancel/seat_release_service.cpp
+  src/cancel/refund_calculator.cpp
+  src/cancel/cancellation_service.cpp
   src/admin/schedule_coach_service.cpp
   src/admin/report_service.cpp
 )

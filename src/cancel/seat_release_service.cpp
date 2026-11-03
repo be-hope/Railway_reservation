@@ -20,6 +20,9 @@ Result<ReleaseResult> SeatReleaseService::releaseInTransaction(const std::string
     if (!found.value()) return R::failure(ErrorCode::PnrNotFound);
     Reservation r = *found.value();
     if (r.status == TicketStatus::Cancelled) return R::failure(ErrorCode::AlreadyCancelled);
+    if (!canTransitionTicketStatus(r.status, TicketStatus::Cancelled)) {
+        return R::failure(ErrorCode::Validation, "Invalid ticket status transition to CANCELLED.");
+    }
 
     ReleaseResult result;
     for (Traveller& t : r.travellers) {

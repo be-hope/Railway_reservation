@@ -57,6 +57,7 @@ PromotionPlan planPromotion(const ClassConfig& config, const std::vector<Reserva
     // Phase 1: confirm from the head of the queue while the party fits.
     for (Reservation* r : queue) {
         const int n = r->travellerCount();
+        if (!canTransitionTicketStatus(r->status, TicketStatus::Confirmed)) break;
         if (n > config.capacity() - confirmedTravellers) break;
         auto seats = SeatAllocator::allocate(config, occupied, n);
         if (!seats.ok()) break;
@@ -75,6 +76,7 @@ PromotionPlan planPromotion(const ClassConfig& config, const std::vector<Reserva
     for (Reservation* r : waitlist) {
         if (r->status != TicketStatus::Waitlisted) continue;   // confirmed in phase 1
         const int n = r->travellerCount();
+        if (!canTransitionTicketStatus(r->status, TicketStatus::Rac)) break;
         if (n > config.racQuota - racTravellers) break;
         r->status = TicketStatus::Rac;
         r->waitlistPosition = 0;
