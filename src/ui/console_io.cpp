@@ -45,8 +45,9 @@ std::optional<int> ConsoleIO::readInt(const std::string& prompt, int min, int ma
         auto text = readLine(prompt);
         if (!text) return std::nullopt;
         bool digits = !text->empty() && text->size() <= 9;
-        for (char c : *text) {
-            if (!std::isdigit(static_cast<unsigned char>(c))) digits = false;
+        for (std::size_t i = 0; i < text->size(); ++i) {
+            if (i == 0 && (*text)[i] == '-' && min < 0 && text->size() > 1) continue;
+            if (!std::isdigit(static_cast<unsigned char>((*text)[i]))) digits = false;
         }
         if (digits) {
             int value = std::stoi(*text);

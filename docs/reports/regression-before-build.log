@@ -1,0 +1,75 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13") found components: Crypto 
+-- Found SQLite3: /usr/include (found version "3.45.1") 
+-- Configuring done (23.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/railway-before-24gaxa2q/build
+[1/58] Building CXX object CMakeFiles/rrs_core.dir/src/common/money.cpp.o
+[2/58] Building CXX object CMakeFiles/rrs_core.dir/src/common/date.cpp.o
+[3/58] Building CXX object CMakeFiles/rrs_core.dir/src/common/clock.cpp.o
+[4/58] Building CXX object CMakeFiles/rrs_core.dir/src/common/domain.cpp.o
+[5/58] Building CXX object CMakeFiles/rrs_core.dir/src/auth/password_hasher.cpp.o
+[6/58] Building CXX object CMakeFiles/rrs_core.dir/src/common/result.cpp.o
+[7/58] Building CXX object CMakeFiles/rrs_core.dir/src/common/session.cpp.o
+[8/58] Building CXX object CMakeFiles/rrs_core.dir/src/auth/auth_service.cpp.o
+[9/58] Building CXX object CMakeFiles/rrs_core.dir/src/security/input_validator.cpp.o
+[10/58] Building CXX object CMakeFiles/rrs_core.dir/src/security/access_control.cpp.o
+[11/58] Building CXX object CMakeFiles/rrs_core.dir/src/booking/fare_policy.cpp.o
+[12/58] Building CXX object CMakeFiles/rrs_core.dir/src/admin/reservation_admin_service.cpp.o
+[13/58] Building CXX object CMakeFiles/rrs_core.dir/src/auth/profile_service.cpp.o
+[14/58] Building CXX object CMakeFiles/rrs_core.dir/src/booking/seat_allocator.cpp.o
+[15/58] Building CXX object CMakeFiles/rrs_core.dir/src/booking/availability.cpp.o
+[16/58] Building CXX object CMakeFiles/rrs_core.dir/src/booking/booking_request_validator.cpp.o
+[17/58] Building CXX object CMakeFiles/rrs_core.dir/src/booking/pnr_generator.cpp.o
+[18/58] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/refund_calculator.cpp.o
+[19/58] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/seat_release_service.cpp.o
+[20/58] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/waitlist_manager.cpp.o
+[21/58] Building CXX object CMakeFiles/rrs_core.dir/src/booking/booking_service.cpp.o
+[22/58] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/cancellation_service.cpp.o
+[23/58] Building CXX object CMakeFiles/rrs_core.dir/src/admin/schedule_coach_service.cpp.o
+[24/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/schema.cpp.o
+[25/58] Building CXX object CMakeFiles/rrs_core.dir/src/admin/train_admin_service.cpp.o
+[26/58] Building CXX object CMakeFiles/rrs_dal.dir/src/common/audit.cpp.o
+[27/58] Building CXX object CMakeFiles/rrs_core.dir/src/admin/report_service.cpp.o
+[28/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/retention.cpp.o
+[29/58] Linking CXX static library librrs_core.a
+[30/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/sqlite_database.cpp.o
+[31/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/sqlite_config_repository.cpp.o
+[32/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/sqlite_user_repository.cpp.o
+[33/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/sqlite_train_repository.cpp.o
+[34/58] Building CXX object CMakeFiles/rrs_dal.dir/src/dal/sqlite_reservation_repository.cpp.o
+[35/58] Building CXX object CMakeFiles/rrs_ui.dir/src/ui/console_io.cpp.o
+[36/58] Linking CXX static library librrs_dal.a
+[37/58] Building CXX object CMakeFiles/rrs_ui.dir/src/ui/report_view.cpp.o
+[38/58] Building CXX object CMakeFiles/rrs_ui.dir/src/ui/ticket_view.cpp.o
+[39/58] Building CXX object CMakeFiles/rrs_tools.dir/tools/demo_adapters.cpp.o
+[40/58] Building CXX object CMakeFiles/rrs_ui.dir/src/ui/passenger_menu.cpp.o
+[41/58] Linking CXX static library librrs_ui.a
+[42/58] Building CXX object CMakeFiles/rrs_tools.dir/tools/seed_data.cpp.o
+[43/58] Building CXX object CMakeFiles/rrs_tools.dir/tools/management_menu.cpp.o
+[44/58] Linking CXX static library librrs_tools.a
+[45/58] Building CXX object tests/CMakeFiles/rrs_test_support.dir/support/test_support.cpp.o
+[46/58] Building CXX object tests/CMakeFiles/rrs_test_support.dir/fakes/in_memory_store.cpp.o
+[47/58] Linking CXX static library tests/librrs_test_support.a
+[48/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_seed_data.cpp.o
+[49/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_sqlite_schema.cpp.o
+[50/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_final_integration.cpp.o
+[51/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_repositories.cpp.o
+[52/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_passenger_menu.cpp.o
+[53/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_booking_service.cpp.o
+[54/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_seat_release.cpp.o
+[55/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_cancellation_service.cpp.o
+[56/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_schedule_coach_service.cpp.o
+[57/58] Building CXX object tests/CMakeFiles/rrs_integration_tests.dir/integration/test_report_service.cpp.o
+[58/58] Linking CXX executable tests/rrs_integration_tests

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="15" failures="0" disabled="0" errors="0" time="32.936" timestamp="2026-11-17T13:41:05.234" name="AllTests">
+  <testsuite name="SecurityTest" tests="11" failures="0" disabled="0" skipped="0" errors="0" time="25.648" timestamp="2026-11-17T13:41:05.237">
+    <testcase name="SEC_T01_SaltedHashesAndNoCredentialDisclosure" file="./tests/integration/test_security.cpp" line="39" status="run" result="completed" time="4.044" timestamp="2026-11-17T13:41:05.237" classname="SecurityTest" />
+    <testcase name="UT_AUTH_02_DuplicatesAndBothLoginAliases" file="./tests/integration/test_security.cpp" line="58" status="run" result="completed" time="4.3" timestamp="2026-11-17T13:41:09.284" classname="SecurityTest" />
+    <testcase name="SEC_T04_ExpiredTamperedAndRevokedSessions" file="./tests/integration/test_security.cpp" line="67" status="run" result="completed" time="1.861" timestamp="2026-11-17T13:41:13.586" classname="SecurityTest" />
+    <testcase name="SEC_T06_FiveFailuresLockForExactlyFiveMinutes" file="./tests/integration/test_security.cpp" line="85" status="run" result="completed" time="5.775" timestamp="2026-11-17T13:41:15.449" classname="SecurityTest" />
+    <testcase name="SuccessfulLoginResetsFailureCountAndLockExpiryRestartsCounter" file="./tests/integration/test_security.cpp" line="95" status="run" result="completed" time="8.064" timestamp="2026-11-17T13:41:21.228" classname="SecurityTest" />
+    <testcase name="IT_AUTH_03_ProfileValidationOwnershipPersistenceAndMasking" file="./tests/integration/test_security.cpp" line="104" status="run" result="completed" time="1.353" timestamp="2026-11-17T13:41:29.297" classname="SecurityTest" />
+    <testcase name="IT_BKG_07_SEC_T08_HistoryIsPrivateOrderedAndIdsMasked" file="./tests/integration/test_security.cpp" line="124" status="run" result="completed" time="0.062" timestamp="2026-11-17T13:41:30.657" classname="SecurityTest" />
+    <testcase name="IT_STF_01_02_StaffBookingsAndCorrectionsPreserveInvariants" file="./tests/integration/test_security.cpp" line="142" status="run" result="completed" time="0.048" timestamp="2026-11-17T13:41:30.724" classname="SecurityTest" />
+    <testcase name="SEC_T02_CompleteRolePermissionMatrix" file="./tests/integration/test_security.cpp" line="162" status="run" result="completed" time="0.029" timestamp="2026-11-17T13:41:30.777" classname="SecurityTest" />
+    <testcase name="SEC_T07_RetentionBoundaryAndIdempotence" file="./tests/integration/test_security.cpp" line="179" status="run" result="completed" time="0.036" timestamp="2026-11-17T13:41:30.808" classname="SecurityTest" />
+    <testcase name="StaffCorrectionRejectsDepartedAndCancelledTickets" file="./tests/integration/test_security.cpp" line="257" status="run" result="completed" time="0.037" timestamp="2026-11-17T13:41:30.847" classname="SecurityTest" />
+  </testsuite>
+  <testsuite name="InputValidatorSecurity" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.011" timestamp="2026-11-17T13:41:30.890">
+    <testcase name="SEC_T03_BoundariesAndHostileInputs" file="./tests/integration/test_security.cpp" line="189" status="run" result="completed" time="0.008" timestamp="2026-11-17T13:41:30.891" classname="InputValidatorSecurity" />
+  </testsuite>
+  <testsuite name="AuditSecurity" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.024" timestamp="2026-11-17T13:41:30.903">
+    <testcase name="SEC_T05_AppendSanitizeAndDetectTampering" file="./tests/integration/test_security.cpp" line="204" status="run" result="completed" time="0.022" timestamp="2026-11-17T13:41:30.904" classname="AuditSecurity" />
+  </testsuite>
+  <testsuite name="PasswordSecurity" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.63" timestamp="2026-11-17T13:41:30.930">
+    <testcase name="PBKDF2MatchesIndependentPythonHashlibVector" file="./tests/integration/test_security.cpp" line="222" status="run" result="completed" time="0.627" timestamp="2026-11-17T13:41:30.931" classname="PasswordSecurity" />
+  </testsuite>
+  <testsuite name="AuthPersistence" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="6.605" timestamp="2026-11-17T13:41:31.563">
+    <testcase name="ProfileAndLockoutSurviveDatabaseReopen" file="./tests/integration/test_security.cpp" line="227" status="run" result="completed" time="6.603" timestamp="2026-11-17T13:41:31.564" classname="AuthPersistence" />
+  </testsuite>
+</testsuites>

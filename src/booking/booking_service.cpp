@@ -3,6 +3,7 @@
 #include "booking/booking_service.h"
 
 #include "booking/availability.h"
+#include "security/input_validator.h"
 #include "booking/seat_allocator.h"
 
 namespace rrs {
@@ -28,6 +29,9 @@ Result<int> BookingService::distanceBetween(const Train& train, const std::strin
 
 Result<Availability> BookingService::checkAvailability(const std::string& trainNumber,
                                                        const Date& journeyDate, ClassCode classCode) {
+    auto activeTrain = data_.trains.findTrain(trainNumber);
+    if (!activeTrain.ok()) return activeTrain.error();
+    if (!activeTrain.value() || !activeTrain.value()->active) return Error{ErrorCode::TrainNotFound, {}};
     auto config = data_.config.findClassConfig(trainNumber, classCode);
     if (!config.ok()) return config.error();
     if (!config.value()) {
@@ -50,6 +54,7 @@ Result<FareQuote> BookingService::quoteFare(const std::string& trainNumber,
                                             const std::string& destinationCode, ClassCode classCode,
                                             int travellers) {
     using R = Result<FareQuote>;
+    if (sourceCode == destinationCode || !InputValidator::station(sourceCode).ok() || !InputValidator::station(destinationCode).ok()) return R::failure(ErrorCode::Validation, "Invalid journey stations.");
     if (travellers < kMinTravellers || travellers > kMaxTravellers) {
         return R::failure(ErrorCode::Validation, "Invalid number of travellers: 1 to 6 per booking.");
     }
@@ -57,6 +62,9 @@ Result<FareQuote> BookingService::quoteFare(const std::string& trainNumber,
     if (!train.ok()) return train.error();
     if (!train.value() || !train.value()->active) return R::failure(ErrorCode::TrainNotFound);
 
+    auto activeTrain = data_.trains.findTrain(trainNumber);
+    if (!activeTrain.ok()) return activeTrain.error();
+    if (!activeTrain.value() || !activeTrain.value()->active) return Error{ErrorCode::TrainNotFound, {}};
     auto config = data_.config.findClassConfig(trainNumber, classCode);
     if (!config.ok()) return config.error();
     if (!config.value()) {

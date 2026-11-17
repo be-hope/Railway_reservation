@@ -1,3 +1,5 @@
+> Historical sprint snapshot. For the integrated release, use README.md, test-cases.md and the four final test reports in this folder. Pending-work statements and counts below describe the earlier branch state.
+
 # Booking module (M3) and data-access layer
 
 Owner: Catherine D. Covers SRS FR-009 to FR-014, NFR-003, NFR-004, NFR-006,

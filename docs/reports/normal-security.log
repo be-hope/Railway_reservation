@@ -1,0 +1,51 @@
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 15 tests from 5 test suites.
+[----------] Global test environment set-up.
+[----------] 11 tests from SecurityTest
+[ RUN      ] SecurityTest.SEC_T01_SaltedHashesAndNoCredentialDisclosure
+[       OK ] SecurityTest.SEC_T01_SaltedHashesAndNoCredentialDisclosure (1693 ms)
+[ RUN      ] SecurityTest.UT_AUTH_02_DuplicatesAndBothLoginAliases
+[       OK ] SecurityTest.UT_AUTH_02_DuplicatesAndBothLoginAliases (1560 ms)
+[ RUN      ] SecurityTest.SEC_T04_ExpiredTamperedAndRevokedSessions
+[       OK ] SecurityTest.SEC_T04_ExpiredTamperedAndRevokedSessions (603 ms)
+[ RUN      ] SecurityTest.SEC_T06_FiveFailuresLockForExactlyFiveMinutes
+[       OK ] SecurityTest.SEC_T06_FiveFailuresLockForExactlyFiveMinutes (1665 ms)
+[ RUN      ] SecurityTest.SuccessfulLoginResetsFailureCountAndLockExpiryRestartsCounter
+[       OK ] SecurityTest.SuccessfulLoginResetsFailureCountAndLockExpiryRestartsCounter (2453 ms)
+[ RUN      ] SecurityTest.IT_AUTH_03_ProfileValidationOwnershipPersistenceAndMasking
+[       OK ] SecurityTest.IT_AUTH_03_ProfileValidationOwnershipPersistenceAndMasking (390 ms)
+[ RUN      ] SecurityTest.IT_BKG_07_SEC_T08_HistoryIsPrivateOrderedAndIdsMasked
+[       OK ] SecurityTest.IT_BKG_07_SEC_T08_HistoryIsPrivateOrderedAndIdsMasked (14 ms)
+[ RUN      ] SecurityTest.IT_STF_01_02_StaffBookingsAndCorrectionsPreserveInvariants
+[       OK ] SecurityTest.IT_STF_01_02_StaffBookingsAndCorrectionsPreserveInvariants (9 ms)
+[ RUN      ] SecurityTest.SEC_T02_CompleteRolePermissionMatrix
+[       OK ] SecurityTest.SEC_T02_CompleteRolePermissionMatrix (8 ms)
+[ RUN      ] SecurityTest.SEC_T07_RetentionBoundaryAndIdempotence
+[       OK ] SecurityTest.SEC_T07_RetentionBoundaryAndIdempotence (11 ms)
+[ RUN      ] SecurityTest.StaffCorrectionRejectsDepartedAndCancelledTickets
+[       OK ] SecurityTest.StaffCorrectionRejectsDepartedAndCancelledTickets (12 ms)
+[----------] 11 tests from SecurityTest (8447 ms total)
+
+[----------] 1 test from InputValidatorSecurity
+[ RUN      ] InputValidatorSecurity.SEC_T03_BoundariesAndHostileInputs
+[       OK ] InputValidatorSecurity.SEC_T03_BoundariesAndHostileInputs (0 ms)
+[----------] 1 test from InputValidatorSecurity (1 ms total)
+
+[----------] 1 test from AuditSecurity
+[ RUN      ] AuditSecurity.SEC_T05_AppendSanitizeAndDetectTampering
+[       OK ] AuditSecurity.SEC_T05_AppendSanitizeAndDetectTampering (2 ms)
+[----------] 1 test from AuditSecurity (3 ms total)
+
+[----------] 1 test from PasswordSecurity
+[ RUN      ] PasswordSecurity.PBKDF2MatchesIndependentPythonHashlibVector
+[       OK ] PasswordSecurity.PBKDF2MatchesIndependentPythonHashlibVector (326 ms)
+[----------] 1 test from PasswordSecurity (327 ms total)
+
+[----------] 1 test from AuthPersistence
+[ RUN      ] AuthPersistence.ProfileAndLockoutSurviveDatabaseReopen
+[       OK ] AuthPersistence.ProfileAndLockoutSurviveDatabaseReopen (2337 ms)
+[----------] 1 test from AuthPersistence (2338 ms total)
+
+[----------] Global test environment tear-down
+[==========] 15 tests from 5 test suites ran. (11127 ms total)
+[  PASSED  ] 15 tests.

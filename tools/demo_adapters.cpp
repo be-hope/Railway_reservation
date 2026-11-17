@@ -3,6 +3,7 @@
 #include "demo_adapters.h"
 
 #include <cstdio>
+#include "security/input_validator.h"
 
 namespace rrs::demo {
 
@@ -39,6 +40,14 @@ TrainSummary summarize(const Train& train, const std::string& source, const std:
 Result<std::vector<TrainSummary>> RepositoryTrainSearch::search(const std::string& source,
                                                                 const std::string& destination,
                                                                 const Date& date) {
+    using R = Result<std::vector<TrainSummary>>;
+    if (source == destination || !InputValidator::station(source).ok() || !InputValidator::station(destination).ok())
+        return R::failure(ErrorCode::Validation, "Invalid source or destination.");
+    if (clock_ && !InputValidator::journeyDate(date, clock_->today()).ok()) return R::failure(ErrorCode::Validation, "Invalid journey date.");
+    auto stations = trains_.listStations(); if (!stations.ok()) return stations.error();
+    bool fromKnown = false, toKnown = false;
+    for (const auto& station : stations.value()) { fromKnown = fromKnown || station.code == source; toKnown = toKnown || station.code == destination; }
+    if (!fromKnown || !toKnown) return R::failure(ErrorCode::Validation, "Unknown station.");
     auto trains = trains_.findTrains(source, destination, date);
     if (!trains.ok()) return trains.error();
     std::vector<TrainSummary> rows;
@@ -87,12 +96,9 @@ Status RepositoryProfile::update(const Session& session, const Account& changes)
     return users_.updateProfile(changes);
 }
 
-Result<Reservation> InterimCancellation::cancel(const Session& session, const std::string& pnr) {
-    auto ticket = booking_.getTicket(session, pnr);   // session, format and ownership checks
-    if (!ticket.ok()) return ticket.error();
-    auto released = release_.cancelAndRelease(pnr, std::nullopt, session.accountId);
-    if (!released.ok()) return released.error();
-    return released.value().cancelled;
+Result<Reservation> CancellationAdapter::cancel(
+    const Session& session, const std::string& pnr) {
+    return service_.cancel(session, pnr);
 }
 
 }  // namespace rrs::demo

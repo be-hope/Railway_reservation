@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="63" failures="0" disabled="0" errors="0" time="0.188" timestamp="2026-11-17T13:36:55.782" name="AllTests">
+  <testsuite name="Money" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.001" timestamp="2026-11-17T13:36:55.785">
+    <testcase name="FormatsRupeesWithGroupingAndTwoDecimals" file="./tests/unit/test_money_date.cpp" line="11" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.785" classname="Money" />
+  </testsuite>
+  <testsuite name="Date" tests="3" failures="0" disabled="0" skipped="0" errors="0" time="0.006" timestamp="2026-11-17T13:36:55.787">
+    <testcase name="ParsesIsoAndDisplayFormats" file="./tests/unit/test_money_date.cpp" line="19" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.788" classname="Date" />
+    <testcase name="RejectsImpossibleOrMalformedDates" file="./tests/unit/test_money_date.cpp" line="26" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.790" classname="Date" />
+    <testcase name="DayArithmeticCrossesMonthAndYearEnds" file="./tests/unit/test_money_date.cpp" line="36" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.793" classname="Date" />
+  </testsuite>
+  <testsuite name="ErrorCatalogue" tests="2" failures="0" disabled="0" skipped="0" errors="0" time="0.003" timestamp="2026-11-17T13:36:55.795">
+    <testcase name="FormatsStandardErrorLine" file="./tests/unit/test_money_date.cpp" line="44" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.796" classname="ErrorCatalogue" />
+    <testcase name="EveryCodeHasANameAndMessage" file="./tests/unit/test_money_date.cpp" line="52" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.798" classname="ErrorCatalogue" />
+  </testsuite>
+  <testsuite name="FarePolicy" tests="5" failures="0" disabled="0" skipped="0" errors="0" time="0.008" timestamp="2026-11-17T13:36:55.801">
+    <testcase name="UT_BKG_01_TotalFareCases" file="./tests/unit/test_fare_policy.cpp" line="15" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.801" classname="FarePolicy" />
+    <testcase name="SeedFaresFromTestPlan" file="./tests/unit/test_fare_policy.cpp" line="22" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.803" classname="FarePolicy" />
+    <testcase name="RoundsHalfUpToThePaisa" file="./tests/unit/test_fare_policy.cpp" line="30" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.805" classname="FarePolicy" />
+    <testcase name="NonPositiveInputsGiveZero" file="./tests/unit/test_fare_policy.cpp" line="37" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.807" classname="FarePolicy" />
+    <testcase name="RateIsConfigurable" file="./tests/unit/test_fare_policy.cpp" line="43" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.808" classname="FarePolicy" />
+  </testsuite>
+  <testsuite name="SeatAllocator" tests="6" failures="0" disabled="0" skipped="0" errors="0" time="0.054" timestamp="2026-11-17T13:36:55.811">
+    <testcase name="UT_BKG_04_AllocatesLowestFreeSeatThenExhausts" file="./tests/unit/test_seat_allocator.cpp" line="25" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.812" classname="SeatAllocator" />
+    <testcase name="FillsGapsLeftByReleasedSeatsFirst" file="./tests/unit/test_seat_allocator.cpp" line="41" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.813" classname="SeatAllocator" />
+    <testcase name="ContinuesIntoTheNextCoach" file="./tests/unit/test_seat_allocator.cpp" line="48" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.815" classname="SeatAllocator" />
+    <testcase name="AllOrNothingWhenTooFewSeatsAreFree" file="./tests/unit/test_seat_allocator.cpp" line="55" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.817" classname="SeatAllocator" />
+    <testcase name="NeverReturnsAnOccupiedOrDuplicateSeat" file="./tests/unit/test_seat_allocator.cpp" line="61" status="run" result="completed" time="0.044" timestamp="2026-11-17T13:36:55.818" classname="SeatAllocator" />
+    <testcase name="RejectsNonPositiveCount" file="./tests/unit/test_seat_allocator.cpp" line="74" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.864" classname="SeatAllocator" />
+  </testsuite>
+  <testsuite name="SeatLabel" tests="2" failures="0" disabled="0" skipped="0" errors="0" time="0.002" timestamp="2026-11-17T13:36:55.866">
+    <testcase name="FormatsAndParsesLabels" file="./tests/unit/test_seat_allocator.cpp" line="78" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.867" classname="SeatLabel" />
+    <testcase name="SeatExistsChecksTheLayout" file="./tests/unit/test_seat_allocator.cpp" line="93" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.868" classname="SeatLabel" />
+  </testsuite>
+  <testsuite name="PnrGenerator" tests="6" failures="0" disabled="0" skipped="0" errors="0" time="0.03" timestamp="2026-11-17T13:36:55.870">
+    <testcase name="UT_BKG_03_TenThousandUniqueValidPnrs" file="./tests/unit/test_pnr_generator.cpp" line="12" status="run" result="completed" time="0.021" timestamp="2026-11-17T13:36:55.870" classname="PnrGenerator" />
+    <testcase name="UT_BKG_03_CollisionDrawsANewValue" file="./tests/unit/test_pnr_generator.cpp" line="25" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.894" classname="PnrGenerator" />
+    <testcase name="GivesUpAfterFiveCollisions" file="./tests/unit/test_pnr_generator.cpp" line="38" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.895" classname="PnrGenerator" />
+    <testcase name="PropagatesStorageErrorsFromTheExistsCheck" file="./tests/unit/test_pnr_generator.cpp" line="49" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.897" classname="PnrGenerator" />
+    <testcase name="RangeCoversFirstAndLastValues" file="./tests/unit/test_pnr_generator.cpp" line="55" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.898" classname="PnrGenerator" />
+    <testcase name="IsValidPnrRejectsMalformedValues" file="./tests/unit/test_pnr_generator.cpp" line="64" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.900" classname="PnrGenerator" />
+  </testsuite>
+  <testsuite name="Availability" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.005" timestamp="2026-11-17T13:36:55.902">
+    <testcase name="UT_BKG_05_OneConfirmedLeavesOneFree" file="./tests/unit/test_availability.cpp" line="28" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.902" classname="Availability" />
+    <testcase name="UT_BKG_05_CancelledSeatsAreReleased" file="./tests/unit/test_availability.cpp" line="42" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.904" classname="Availability" />
+    <testcase name="ReportsRacAndWaitlist" file="./tests/unit/test_availability.cpp" line="49" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.905" classname="Availability" />
+    <testcase name="NeverNegativeAfterACapacityChange" file="./tests/unit/test_availability.cpp" line="60" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.907" classname="Availability" />
+  </testsuite>
+  <testsuite name="StatusDecision" tests="7" failures="0" disabled="0" skipped="0" errors="0" time="0.009" timestamp="2026-11-17T13:36:55.909">
+    <testcase name="ConfirmedWhenSeatsFreeAndNobodyQueued" file="./tests/unit/test_availability.cpp" line="68" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.910" classname="StatusDecision" />
+    <testcase name="UT_CAN_03_SequenceUntilCapacityIsExhausted" file="./tests/unit/test_availability.cpp" line="76" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.911" classname="StatusDecision" />
+    <testcase name="RacBeforeWaitlist" file="./tests/unit/test_availability.cpp" line="95" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.913" classname="StatusDecision" />
+    <testcase name="PartyLargerThanFreeSeatsIsWaitlistedWhole" file="./tests/unit/test_availability.cpp" line="103" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.914" classname="StatusDecision" />
+    <testcase name="NewBookingDoesNotOvertakeTheWaitlist" file="./tests/unit/test_availability.cpp" line="113" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.916" classname="StatusDecision" />
+    <testcase name="NewBookingDoesNotOvertakeRac" file="./tests/unit/test_availability.cpp" line="123" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.917" classname="StatusDecision" />
+    <testcase name="RejectsZeroTravellers" file="./tests/unit/test_availability.cpp" line="132" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.918" classname="StatusDecision" />
+  </testsuite>
+  <testsuite name="BookingValidator" tests="8" failures="0" disabled="0" skipped="0" errors="0" time="0.013" timestamp="2026-11-17T13:36:55.919">
+    <testcase name="UT_BKG_02_TravellerCountBoundaries" file="./tests/unit/test_booking_validator.cpp" line="39" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.920" classname="BookingValidator" />
+    <testcase name="UT_BKG_02_InvalidTravellerFields" file="./tests/unit/test_booking_validator.cpp" line="47" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.921" classname="BookingValidator" />
+    <testcase name="AgeBoundaryValues" file="./tests/unit/test_booking_validator.cpp" line="62" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.922" classname="BookingValidator" />
+    <testcase name="MessageNamesTheTravellerAndField" file="./tests/unit/test_booking_validator.cpp" line="74" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.924" classname="BookingValidator" />
+    <testcase name="JourneyDateWindowIsTodayToTodayPlus120" file="./tests/unit/test_booking_validator.cpp" line="83" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.926" classname="BookingValidator" />
+    <testcase name="RejectsSameSourceAndDestination" file="./tests/unit/test_booking_validator.cpp" line="95" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.928" classname="BookingValidator" />
+    <testcase name="RejectsBadRequestIdTrainAndStation" file="./tests/unit/test_booking_validator.cpp" line="101" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.929" classname="BookingValidator" />
+    <testcase name="HostileInputIsRejectedCleanly" file="./tests/unit/test_booking_validator.cpp" line="118" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.931" classname="BookingValidator" />
+  </testsuite>
+  <testsuite name="WaitlistPlan" tests="7" failures="0" disabled="0" skipped="0" errors="0" time="0.01" timestamp="2026-11-17T13:36:55.934">
+    <testcase name="UT_CAN_04_HeadThatDoesNotFitBlocksTheQueue" file="./tests/unit/test_waitlist_plan.cpp" line="50" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.935" classname="WaitlistPlan" />
+    <testcase name="HeadOfWaitlistGetsTheFreedSeat" file="./tests/unit/test_waitlist_plan.cpp" line="62" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.936" classname="WaitlistPlan" />
+    <testcase name="RacConfirmedThenWaitlistMovesIntoRac" file="./tests/unit/test_waitlist_plan.cpp" line="82" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.938" classname="WaitlistPlan" />
+    <testcase name="SeveralTicketsArePromotedInQueueOrder" file="./tests/unit/test_waitlist_plan.cpp" line="98" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.939" classname="WaitlistPlan" />
+    <testcase name="GapsInWaitlistPositionsAreClosed" file="./tests/unit/test_waitlist_plan.cpp" line="111" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.941" classname="WaitlistPlan" />
+    <testcase name="BlockedRacHeadAlsoBlocksTheWaitlist" file="./tests/unit/test_waitlist_plan.cpp" line="125" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.943" classname="WaitlistPlan" />
+    <testcase name="NothingToDoWhenNobodyWaits" file="./tests/unit/test_waitlist_plan.cpp" line="135" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.944" classname="WaitlistPlan" />
+  </testsuite>
+  <testsuite name="RefundCalculatorTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.005" timestamp="2026-11-17T13:36:55.947">
+    <testcase name="UT_CAN_01_RefundSlabBoundaries" file="./tests/unit/test_refund_calculator.cpp" line="7" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.947" classname="RefundCalculatorTest" />
+    <testcase name="WaitlistedTicketGetsFullRefund" file="./tests/unit/test_refund_calculator.cpp" line="27" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.949" classname="RefundCalculatorTest" />
+    <testcase name="RacTicketUsesNormalRefundSlabs" file="./tests/unit/test_refund_calculator.cpp" line="34" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.950" classname="RefundCalculatorTest" />
+    <testcase name="HandlesPaiseWithoutFloatingPoint" file="./tests/unit/test_refund_calculator.cpp" line="41" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.952" classname="RefundCalculatorTest" />
+  </testsuite>
+  <testsuite name="CancellationEligibilityTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.007" timestamp="2026-11-17T13:36:55.954">
+    <testcase name="UT_CAN_02_FutureActiveTicketsCanBeCancelled" file="./tests/unit/test_cancellation_eligibility.cpp" line="12" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.955" classname="CancellationEligibilityTest" />
+    <testcase name="UT_CAN_02_AlreadyCancelledTicketIsRejected" file="./tests/unit/test_cancellation_eligibility.cpp" line="23" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.957" classname="CancellationEligibilityTest" />
+    <testcase name="UT_CAN_02_DepartedTicketIsRejected" file="./tests/unit/test_cancellation_eligibility.cpp" line="30" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.959" classname="CancellationEligibilityTest" />
+    <testcase name="UT_CAN_02_ExactDepartureTimeIsRejected" file="./tests/unit/test_cancellation_eligibility.cpp" line="37" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.960" classname="CancellationEligibilityTest" />
+  </testsuite>
+  <testsuite name="TicketStatusTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.005" timestamp="2026-11-17T13:36:55.963">
+    <testcase name="ValidForwardTransitionsAreAccepted" file="./tests/unit/test_ticket_status.cpp" line="7" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.964" classname="TicketStatusTest" />
+    <testcase name="InvalidBackwardTransitionsAreRejected" file="./tests/unit/test_ticket_status.cpp" line="24" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.965" classname="TicketStatusTest" />
+    <testcase name="CancelledIsTerminal" file="./tests/unit/test_ticket_status.cpp" line="33" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.967" classname="TicketStatusTest" />
+    <testcase name="RepeatedStatusesAreNotTransitions" file="./tests/unit/test_ticket_status.cpp" line="44" status="run" result="completed" time="0." timestamp="2026-11-17T13:36:55.968" classname="TicketStatusTest" />
+  </testsuite>
+</testsuites>

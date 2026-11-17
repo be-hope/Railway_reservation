@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html class="theme-green">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>GCC Code Coverage Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+:root {
+    font-family: sans-serif;
+    --tab_size: 4;
+}
+
+.theme-green, .theme-blue {
+    --unknown_color: lightgray;
+    --low_color: #FF6666;
+    --medium_color: #F9FD63;
+    --partial_covered_color: var(--medium_color);
+    --uncovered_color: #FF8C8C;
+    --warning_color: orangered;
+    --notTakenBranch_color: red;
+    --uncheckedDecision_color: darkorange;
+    --notTakenDecision_color: red;
+    --notInvokedCall_color: red;
+    --excluded_color: rgb(255, 241, 229);
+}
+
+.theme-green {
+    --high_color: #85E485;
+    --covered_color: #85E485;
+    --takenBranch_color: green;
+    --takenDecision_color: green;
+    --invokedCall_color: green;
+}
+
+.theme-blue {
+    --high_color: #66B4FF;
+    --covered_color: #66B4Ff;
+    --takenBranch_color: blue;
+    --takenDecision_color: blue;
+    --invokedCall_color: blue;
+}
+
+body
+{
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+h1
+{
+    text-align: center;
+    margin: 0;
+    padding-bottom: 10px;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+hr
+{
+    background-color: navy;
+    height: 2px;
+    border: 0;
+}
+
+/* Link formats: use maroon w/underlines */
+a:link
+{
+    color: navy;
+    text-decoration: underline;
+}
+a:visited
+{
+    color: maroon;
+    text-decoration: underline;
+}
+
+/*** Summary formats ***/
+
+.summary
+{
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 100%;
+    justify-content: flex-start;
+}
+
+.summary > table
+{
+    flex: 1 0 7em;
+    border: 0;
+}
+
+.summary > :last-child {
+    margin-left: auto;
+}
+
+table.legend
+{
+    color: black;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+table.legend th[scope=row]
+{
+    font-weight: normal;
+    text-align: right;
+    white-space: nowrap;
+}
+
+table.legend td
+{
+    color: blue;
+    text-align: left;
+    white-space: nowrap;
+    padding-left: 5px;
+}
+
+table.legend td.legend
+{
+    color: black;
+    font-size: 80%;
+}
+
+table.legend td.warning_text
+{
+    color: var(--warning_color);
+}
+
+table.coverage td,
+table.coverage th
+{
+    text-align: right;
+    color: black;
+    font-weight: normal;
+    white-space: nowrap;
+    padding-left: 5px;
+    padding-right: 4px;
+}
+
+table.coverage td
+{
+    background-color: LightSteelBlue;
+}
+
+table.coverage th[scope=row]
+{
+    color: black;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+table.coverage th[scope=col]
+{
+    color: blue;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+table.legend span
+{
+    margin-right: 4px;
+    padding: 2px;
+}
+
+table.legend span.coverage-unknown,
+table.legend span.coverage-none,
+table.legend span.coverage-low,
+table.legend span.coverage-medium,
+table.legend span.coverage-high
+{
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+table.legend span.coverage-unknown,
+table.coverage td.coverage-unknown,
+table.file-list td.coverage-unknow
+{
+    background-color: var(--unknown_color) !important;
+}
+
+table.legend span.coverage-none,
+table.legend span.coverage-low,
+table.coverage td.coverage-none,
+table.coverage td.coverage-low,
+table.file-list td.coverage-none,
+table.file-list td.coverage-low
+{
+    background-color: var(--low_color) !important;
+}
+
+table.legend span.coverage-medium,
+table.coverage td.coverage-medium,
+table.file-list td.coverage-medium
+{
+    background-color: var(--medium_color) !important;
+}
+
+table.legend span.coverage-high,
+table.coverage td.coverage-high,
+table.file-list td.coverage-high
+{
+    background-color: var(--high_color) !important;
+}
+/*** End of Summary formats ***/
+/*** Meter formats ***/
+
+/* Common */
+meter {
+    -moz-appearance: none;
+
+    width: 30vw;
+    min-width: 4em;
+    max-width: 15em;
+    height: 0.75em;
+    padding: 0;
+    vertical-align: baseline;
+    margin-top: 3px;
+    /* Outer background for Mozilla */
+    background: none;
+    background-color: whitesmoke;
+}
+
+/* Webkit */
+
+meter::-webkit-meter-bar {
+    /* Outer background for Webkit */
+    background: none;
+    background-color: whitesmoke;
+    height: 0.75em;
+    border-radius: 0px;
+}
+
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value
+{
+    /* Inner shadow for Webkit */
+    border: solid 1px black;
+}
+
+meter.coverage-none::-webkit-meter-optimum-value,
+meter.coverage-low::-webkit-meter-optimum-value
+{
+    background: var(--low_color);
+}
+
+meter.coverage-medium::-webkit-meter-optimum-value
+{
+    background: var(--medium_color);
+}
+
+meter.coverage-high::-webkit-meter-optimum-value
+{
+    background: var(--high_color);
+}
+
+/* Mozilla */
+
+meter::-moz-meter-bar
+{
+    box-sizing: border-box;
+}
+
+meter:-moz-meter-optimum::-moz-meter-bar,
+meter:-moz-meter-sub-optimum::-moz-meter-bar,
+meter:-moz-meter-sub-sub-optimum::-moz-meter-bar
+{
+    /* Inner shadow for Mozilla */
+    border: solid 1px black;
+}
+
+meter.coverage-none:-moz-meter-optimum::-moz-meter-bar,
+meter.coverage-low:-moz-meter-optimum::-moz-meter-bar
+{
+    background: var(--low_color);
+}
+
+meter.coverage-medium:-moz-meter-optimum::-moz-meter-bar
+{
+    background: var(--medium_color);
+}
+
+meter.coverage-high:-moz-meter-optimum::-moz-meter-bar
+{
+    background: var(--high_color);
+}
+
+/*** End of Meter formats ***/
+.file-list td, .file-list th {
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+.file-list th[scope^=col]
+{
+    text-align: center;
+    color: white;
+    background-color: SteelBlue;
+    font-size: 120%;
+}
+
+.file-list th[scope=row]
+{
+    text-align: left;
+    color: black;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.file-list tr > td,
+.file-list tr > th {
+    background: aliceblue;
+}
+
+.file-list tr:nth-child(even) > td,
+.file-list tr:nth-child(even) > th {
+    background: LightSteelBlue
+}
+
+.file-list tr:hover > td,
+.file-list tr:hover > th[scope=row]
+{
+    background-color: #ddd;
+}
+td.CoverValue
+{
+    text-align: right;
+    white-space: nowrap;
+}
+
+td.coveredLine,
+span.coveredLine
+{
+    background-color: var(--covered_color) !important;
+}
+
+td.partialCoveredLine,
+span.partialCoveredLine
+{
+    background-color: var(--partial_covered_color) !important;
+}
+
+td.uncoveredLine,
+span.uncoveredLine
+{
+    background-color: var(--uncovered_color) !important;
+}
+
+td.excludedLine,
+span.excludedLine
+{
+    background-color: var(--excluded_color) !important;
+}
+
+.linebranch, .linedecision, .linecall, .linecount
+{
+    font-family: monospace;
+    border-right: 1px gray solid;
+    background-color: lightgray;
+    text-align: right;
+}
+
+
+.linebranchDetails, .linedecisionDetails, .linecallDetails
+{
+    position: relative;
+}
+.linebranchSummary, .linedecisionSummary, .linecallSummary
+{
+    cursor: help;
+}
+.linebranchContents, .linedecisionContents, .linecallContents
+{
+    font-family: sans-serif;
+    font-size: small;
+    text-align: left;
+    position: absolute;
+    width: 15em;
+    padding: 1em;
+    background: white;
+    border: solid gray 1px;
+    box-shadow: 5px 5px 10px gray;
+    z-index: 1; /* show in front of the table entries */
+}
+
+.takenBranch
+{
+    color: var(--takenBranch_color) !important;
+}
+
+.notTakenBranch
+{
+    color: var(--notTakenBranch_color) !important;
+}
+
+.takenDecision
+{
+    color: var(--takenDecision_color) !important;
+}
+
+.notTakenDecision
+{
+    color: var(--notTakenDecision_color) !important;
+}
+
+.uncheckedDecision
+{
+    color: var(--uncheckedDecision_color) !important;
+}
+
+.invokedCall
+{
+    color: var(--invokedCall_color) !important;
+}
+
+.notInvokedCall
+{
+    color: var(--notInvokedCall_color) !important;
+}
+
+.src
+{
+    padding-left: 12px;
+    text-align: left;
+
+    font-family: monospace;
+    white-space: pre;
+
+    tab-size: var(--tab_size);
+    -moz-tab-size: var(--tab_size);
+}
+
+span.takenBranch,
+span.notTakenBranch,
+span.takenDecision,
+span.notTakenDecision,
+span.uncheckedDecision
+{
+    font-family: monospace;
+    font-weight: bold;
+}
+
+pre
+{
+    height : 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.listOfFunctions td, .listOfFunctions th {
+    padding: 0 10px;
+}
+.listOfFunctions th
+{
+    text-align: center;
+    color: white;
+    background-color: SteelBlue;
+}
+.listOfFunctions tr > td {
+    background: aliceblue;
+}
+.listOfFunctions tr:nth-child(even) > td {
+    background: LightSteelBlue
+}
+.listOfFunctions tr:hover > td
+{
+    background-color: #ddd;
+}
+.listOfFunctions tr > td > a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.source-line
+{
+    height : 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.lineno
+{
+    background-color: #EFE383;
+    border-right: 1px solid #BBB15F;
+    text-align: right;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+}
+
+.lineno > a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.file-list
+{
+    margin: 1em auto;
+    border: 0;
+    border-spacing: 1px;
+}
+
+.file-source table
+{
+    border-spacing: 0;
+}
+
+.file-source table td,
+.file-source table th
+{
+    padding: 1px 10px;
+}
+
+.file-source table th
+{
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.file-source table td:last-child
+{
+    width: 100%;
+}
+footer
+{
+    text-align: center;
+    padding-top: 3px;
+}
+
+/* pygments syntax highlighting */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.hll { background-color: #ffffcc }
+.c { color: #3D7B7B; font-style: italic } /* Comment */
+.err { border: 1px solid #FF0000 } /* Error */
+.k { color: #008000; font-weight: bold } /* Keyword */
+.o { color: #666666 } /* Operator */
+.ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.cp { color: #9C6500 } /* Comment.Preproc */
+.cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.gd { color: #A00000 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.gr { color: #E40000 } /* Generic.Error */
+.gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.gi { color: #008400 } /* Generic.Inserted */
+.go { color: #717171 } /* Generic.Output */
+.gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.gt { color: #0044DD } /* Generic.Traceback */
+.kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.kp { color: #008000 } /* Keyword.Pseudo */
+.kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.kt { color: #B00040 } /* Keyword.Type */
+.m { color: #666666 } /* Literal.Number */
+.s { color: #BA2121 } /* Literal.String */
+.na { color: #687822 } /* Name.Attribute */
+.nb { color: #008000 } /* Name.Builtin */
+.nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.no { color: #880000 } /* Name.Constant */
+.nd { color: #AA22FF } /* Name.Decorator */
+.ni { color: #717171; font-weight: bold } /* Name.Entity */
+.ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.nf { color: #0000FF } /* Name.Function */
+.nl { color: #767600 } /* Name.Label */
+.nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.nt { color: #008000; font-weight: bold } /* Name.Tag */
+.nv { color: #19177C } /* Name.Variable */
+.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mb { color: #666666 } /* Literal.Number.Bin */
+.mf { color: #666666 } /* Literal.Number.Float */
+.mh { color: #666666 } /* Literal.Number.Hex */
+.mi { color: #666666 } /* Literal.Number.Integer */
+.mo { color: #666666 } /* Literal.Number.Oct */
+.sa { color: #BA2121 } /* Literal.String.Affix */
+.sb { color: #BA2121 } /* Literal.String.Backtick */
+.sc { color: #BA2121 } /* Literal.String.Char */
+.dl { color: #BA2121 } /* Literal.String.Delimiter */
+.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.s2 { color: #BA2121 } /* Literal.String.Double */
+.se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.sh { color: #BA2121 } /* Literal.String.Heredoc */
+.si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.sx { color: #008000 } /* Literal.String.Other */
+.sr { color: #A45A77 } /* Literal.String.Regex */
+.s1 { color: #BA2121 } /* Literal.String.Single */
+.ss { color: #19177C } /* Literal.String.Symbol */
+.bp { color: #008000 } /* Name.Builtin.Pseudo */
+.fm { color: #0000FF } /* Name.Function.Magic */
+.vc { color: #19177C } /* Name.Variable.Class */
+.vg { color: #19177C } /* Name.Variable.Global */
+.vi { color: #19177C } /* Name.Variable.Instance */
+.vm { color: #19177C } /* Name.Variable.Magic */
+.il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>GCC Code Coverage Report</h1>
+
+      <hr/>
+
+      <div class="summary">
+<div>
+  <table class="legend">
+    <tr>
+      <th scope="row">Directory:</th>
+      <td>./</td>
+    </tr>
+    <tr>
+      <th scope="row">Date:</th>
+      <td>2026-11-17 14:12:25</td>
+    </tr>
+    <tr>
+      <th scope="row">Coverage:</th>
+      <td class="legend">
+        <span class="coverage-low">low: &ge; 0%</span>
+        <span class="coverage-medium">medium: &ge; 75.0%</span>
+        <span class="coverage-high">high: &ge; 90.0%</span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <table class="coverage">
+    <tr>
+      <th></th>
+      <th scope="col">Exec</th>
+      <th scope="col">Total</th>
+      <th scope="col">Coverage</th>
+    </tr>
+    <tr>
+      <th scope="row">Lines:</th>
+      <td>2731</td>
+      <td>2858</td>
+      <td class="coverage-high">95.6%</td>
+    </tr>
+    <tr>
+      <th scope="row">Functions:</th>
+      <td>531</td>
+      <td>574</td>
+      <td class="coverage-high">92.5%</td>
+    </tr>
+    <tr>
+      <th scope="row">Branches:</th>
+      <td>3976</td>
+      <td>7737</td>
+      <td class="coverage-low">51.4%</td>
+    </tr>
+  </table>
+</div>
+      </div>
+
+      <hr/>
+    </header>
+
+    <nav>
+<a href="coverage.functions.html">List of functions</a>
+    </nav>
+
+    <main>
+<table class="file-list">
+  <col/>
+  <colgroup span="3"/>
+  <colgroup span="2"/>
+  <colgroup span="2"/>
+
+  <tr>
+    <th scope="col">File</th>
+    <th scope="colgroup" colspan=3>Lines</th>
+    <th scope="colgroup" colspan=2>Functions</th>
+    <th scope="colgroup" colspan=2>Branches</th>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html">src/admin/report_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.9" title="98.9%">98.9</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.9%</td>
+    <td class="CoverValue line-coverage coverage-high">90 / 91</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">7 / 7</td>
+    <td class="CoverValue branch-coverage coverage-low">59.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">79 / 133</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.report_service.h.fddea84ae6b77bd91dcbfbc194084da6.html">src/admin/report_service.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.reservation_admin_service.cpp.c39483d1999c97ee5ca0e1c4734d5dac.html">src/admin/reservation_admin_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">31 / 31</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue branch-coverage coverage-low">54.2%</td>
+    <td class="CoverValue branch-coverage coverage-low">65 / 120</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.reservation_admin_service.h.dbf360d06839149c63488eda3e3e1310.html">src/admin/reservation_admin_service.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html">src/admin/schedule_coach_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="99.3" title="99.3%">99.3</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">99.3%</td>
+    <td class="CoverValue line-coverage coverage-high">134 / 135</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">11 / 11</td>
+    <td class="CoverValue branch-coverage coverage-low">54.5%</td>
+    <td class="CoverValue branch-coverage coverage-low">231 / 424</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html">src/admin/train_admin_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.7" title="98.7%">98.7</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.7%</td>
+    <td class="CoverValue line-coverage coverage-high">76 / 77</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">11 / 11</td>
+    <td class="CoverValue branch-coverage coverage-low">50.3%</td>
+    <td class="CoverValue branch-coverage coverage-low">149 / 296</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.train_admin_service.h.0d8ac124e99122d4efca9adff41b63ab.html">src/admin/train_admin_service.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-low">62.5%</td>
+    <td class="CoverValue branch-coverage coverage-low">5 / 8</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.auth_service.cpp.a56611a11e25534d1215ce78ed169934.html">src/auth/auth_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">61 / 61</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">3 / 3</td>
+    <td class="CoverValue branch-coverage coverage-low">45.7%</td>
+    <td class="CoverValue branch-coverage coverage-low">105 / 230</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.auth_service.h.2675d58e4c65f64e614d62d2350ee22f.html">src/auth/auth_service.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html">src/auth/password_hasher.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="97.6" title="97.6%">97.6</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">97.6%</td>
+    <td class="CoverValue line-coverage coverage-high">41 / 42</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue branch-coverage coverage-low">52.3%</td>
+    <td class="CoverValue branch-coverage coverage-low">45 / 86</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.profile_service.cpp.1e1badd4d6efe761d9d6e11d0e5843b4.html">src/auth/profile_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">40 / 40</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-low">54.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">49 / 90</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.profile_service.h.4f82c3a01734565ba311ab87596e37ca.html">src/auth/profile_service.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.availability.cpp.a0d5e1d2bc152d6db73b8c86e0c62961.html">src/booking/availability.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="95.8" title="95.8%">95.8</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">95.8%</td>
+    <td class="CoverValue line-coverage coverage-high">23 / 24</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue branch-coverage coverage-medium">83.3%</td>
+    <td class="CoverValue branch-coverage coverage-medium">20 / 24</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.booking_request_validator.cpp.6cd9111d7db2b9d78b57a09581eff0b3.html">src/booking/booking_request_validator.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">39 / 39</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-low">62.5%</td>
+    <td class="CoverValue branch-coverage coverage-low">75 / 120</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html">src/booking/booking_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.2" title="98.2%">98.2</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.2%</td>
+    <td class="CoverValue line-coverage coverage-high">165 / 168</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue branch-coverage coverage-low">53.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">233 / 436</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.booking_service.h.e1c1216a08e4ae34fdf5d3ad32264c57.html">src/booking/booking_service.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.fare_policy.cpp.ee498e334c82233cc397a5cead5fb5f1.html">src/booking/fare_policy.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">7 / 7</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue branch-coverage coverage-medium">80.0%</td>
+    <td class="CoverValue branch-coverage coverage-medium">8 / 10</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.pnr_generator.cpp.818be002bc11914a6bcaef07ee680552.html">src/booking/pnr_generator.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">20 / 20</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-medium">75.0%</td>
+    <td class="CoverValue branch-coverage coverage-medium">27 / 36</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.pnr_generator.h.347dc82fc5b1701257a65c92aa18a50f.html">src/booking/pnr_generator.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html">src/booking/seat_allocator.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">46 / 46</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue branch-coverage coverage-low">74.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">67 / 90</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.cancellation_service.cpp.3591e87e1858173a3701cc390cbaa2b6.html">src/cancel/cancellation_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="90.4" title="90.4%">90.4</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">90.4%</td>
+    <td class="CoverValue line-coverage coverage-high">47 / 52</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-low">47.2%</td>
+    <td class="CoverValue branch-coverage coverage-low">34 / 72</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.refund_calculator.cpp.98282980ddc2f2db8c80e55bb0d8f8cb.html">src/cancel/refund_calculator.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">13 / 13</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-high">100.0%</td>
+    <td class="CoverValue branch-coverage coverage-high">6 / 6</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.seat_release_service.cpp.2cd980a54d5422edfa9237060ff5c692.html">src/cancel/seat_release_service.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="97.5" title="97.5%">97.5</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">97.5%</td>
+    <td class="CoverValue line-coverage coverage-high">39 / 40</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">3 / 3</td>
+    <td class="CoverValue branch-coverage coverage-low">54.7%</td>
+    <td class="CoverValue branch-coverage coverage-low">47 / 86</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.waitlist_manager.cpp.fdd762e0b2cf44a147a5d085e83ddff8.html">src/cancel/waitlist_manager.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.7" title="98.7%">98.7</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.7%</td>
+    <td class="CoverValue line-coverage coverage-high">74 / 75</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-low">66.7%</td>
+    <td class="CoverValue branch-coverage coverage-low">80 / 120</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.waitlist_manager.h.d7105d7bb904830901a06c9fdfc93253.html">src/cancel/waitlist_manager.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.audit.cpp.83e7a180f718f74146949efd7100f42a.html">src/common/audit.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="94.1" title="94.1%">94.1</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">94.1%</td>
+    <td class="CoverValue line-coverage coverage-high">48 / 51</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-low">47.1%</td>
+    <td class="CoverValue branch-coverage coverage-low">80 / 170</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.audit.h.a0a6e276cb3c187af51eb196af25313a.html">src/common/audit.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">3 / 3</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.clock.cpp.7b4047398857f662f86435ca3da32dd3.html">src/common/clock.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-low" min="0" max="100" value="58.3" title="58.3%">58.3</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-low">58.3%</td>
+    <td class="CoverValue line-coverage coverage-low">7 / 12</td>
+    <td class="CoverValue function-coverage coverage-low">66.7%</td>
+    <td class="CoverValue function-coverage coverage-low">2 / 3</td>
+    <td class="CoverValue branch-coverage coverage-low">37.5%</td>
+    <td class="CoverValue branch-coverage coverage-low">3 / 8</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html">src/common/clock.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue branch-coverage coverage-low">50.0%</td>
+    <td class="CoverValue branch-coverage coverage-low">1 / 2</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html">src/common/date.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.1" title="98.1%">98.1</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.1%</td>
+    <td class="CoverValue line-coverage coverage-high">51 / 52</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">10 / 10</td>
+    <td class="CoverValue branch-coverage coverage-low">72.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">55 / 76</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html">src/common/date.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">11 / 11</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">11 / 11</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html">src/common/domain.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="90.9" title="90.9%">90.9</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">90.9%</td>
+    <td class="CoverValue line-coverage coverage-high">50 / 55</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">11 / 11</td>
+    <td class="CoverValue branch-coverage coverage-low">72.6%</td>
+    <td class="CoverValue branch-coverage coverage-low">69 / 95</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.domain.h.58884c18e2dcdfd1fcc7392edd7b07c8.html">src/common/domain.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.money.cpp.db8e00c8bb9f574fc84e425b333fb664.html">src/common/money.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">15 / 15</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-low">66.7%</td>
+    <td class="CoverValue branch-coverage coverage-low">16 / 24</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html">src/common/money.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.result.cpp.4a80f1565f1889e228d4e18761535ad2.html">src/common/result.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="96.0" title="96.0%">96.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">96.0%</td>
+    <td class="CoverValue line-coverage coverage-high">48 / 50</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-low">63.8%</td>
+    <td class="CoverValue branch-coverage coverage-low">88 / 138</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html">src/common/result.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">19 / 19</td>
+    <td class="CoverValue function-coverage coverage-medium">81.9%</td>
+    <td class="CoverValue function-coverage coverage-medium">186 / 227</td>
+    <td class="CoverValue branch-coverage coverage-medium">75.0%</td>
+    <td class="CoverValue branch-coverage coverage-medium">3 / 4</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.session.cpp.b12d53e43effe86f53fe264fc596cca5.html">src/common/session.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">19 / 19</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">3 / 3</td>
+    <td class="CoverValue branch-coverage coverage-low">65.2%</td>
+    <td class="CoverValue branch-coverage coverage-low">30 / 46</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html">src/dal/repositories.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="93.8" title="93.8%">93.8</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">93.8%</td>
+    <td class="CoverValue line-coverage coverage-high">15 / 16</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue branch-coverage coverage-low">58.3%</td>
+    <td class="CoverValue branch-coverage coverage-low">7 / 12</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.retention.cpp.2c911d62127dc10483d00b0a027c09a9.html">src/dal/retention.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">10 / 10</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-low">39.3%</td>
+    <td class="CoverValue branch-coverage coverage-low">11 / 28</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_config_repository.cpp.1fe547c5cfb59bb9ebffeab7a287872e.html">src/dal/sqlite_config_repository.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="97.6" title="97.6%">97.6</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">97.6%</td>
+    <td class="CoverValue line-coverage coverage-high">41 / 42</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-low">47.8%</td>
+    <td class="CoverValue branch-coverage coverage-low">43 / 90</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html">src/dal/sqlite_database.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="91.5" title="91.5%">91.5</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">91.5%</td>
+    <td class="CoverValue line-coverage coverage-high">107 / 117</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">22 / 22</td>
+    <td class="CoverValue branch-coverage coverage-low">40.6%</td>
+    <td class="CoverValue branch-coverage coverage-low">82 / 202</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_database.h.705510b01a20a0a95978848dd2f2c147.html">src/dal/sqlite_database.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html">src/dal/sqlite_repositories.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html">src/dal/sqlite_reservation_repository.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="99.4" title="99.4%">99.4</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">99.4%</td>
+    <td class="CoverValue line-coverage coverage-high">173 / 174</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">15 / 15</td>
+    <td class="CoverValue branch-coverage coverage-low">51.5%</td>
+    <td class="CoverValue branch-coverage coverage-low">235 / 456</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html">src/dal/sqlite_train_repository.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">121 / 121</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">13 / 13</td>
+    <td class="CoverValue branch-coverage coverage-low">47.9%</td>
+    <td class="CoverValue branch-coverage coverage-low">138 / 288</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html">src/dal/sqlite_user_repository.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.8" title="98.8%">98.8</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.8%</td>
+    <td class="CoverValue line-coverage coverage-high">81 / 82</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue branch-coverage coverage-low">47.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">93 / 196</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.access_control.cpp.f548a7494d6057f3992e0cc9d29ad84a.html">src/security/access_control.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="94.4" title="94.4%">94.4</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">94.4%</td>
+    <td class="CoverValue line-coverage coverage-high">17 / 18</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-medium">75.7%</td>
+    <td class="CoverValue branch-coverage coverage-medium">28 / 37</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.access_control.h.6face6d3241b201a54094f3cb7944bf7.html">src/security/access_control.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">1 / 1</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html">src/security/input_validator.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.0" title="98.0%">98.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.0%</td>
+    <td class="CoverValue line-coverage coverage-high">48 / 49</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">17 / 17</td>
+    <td class="CoverValue branch-coverage coverage-low">68.9%</td>
+    <td class="CoverValue branch-coverage coverage-low">153 / 222</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html">src/ui/console_io.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="93.0" title="93.0%">93.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">93.0%</td>
+    <td class="CoverValue line-coverage coverage-high">40 / 43</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">9 / 9</td>
+    <td class="CoverValue branch-coverage coverage-low">57.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">70 / 122</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.console_io.h.53718f72b47d83c84539ea4f173cb915.html">src/ui/console_io.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">2 / 2</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html">src/ui/passenger_menu.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="97.6" title="97.6%">97.6</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">97.6%</td>
+    <td class="CoverValue line-coverage coverage-high">287 / 294</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">20 / 20</td>
+    <td class="CoverValue branch-coverage coverage-low">51.5%</td>
+    <td class="CoverValue branch-coverage coverage-low">511 / 993</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.passenger_menu.h.c98ecc07b8fdb864a2cd2ef0512bf5e0.html">src/ui/passenger_menu.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.report_view.cpp.a16126a5ddaf291ea5bbcf2930905366.html">src/ui/report_view.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">44 / 44</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-low">50.0%</td>
+    <td class="CoverValue branch-coverage coverage-low">111 / 222</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.ticket_view.cpp.0740969d99a9c0d682f652c2fd328d00.html">src/ui/ticket_view.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="95.8" title="95.8%">95.8</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">95.8%</td>
+    <td class="CoverValue line-coverage coverage-high">46 / 48</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-low">51.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">132 / 257</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html">tools/demo_adapters.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="92.8" title="92.8%">92.8</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">92.8%</td>
+    <td class="CoverValue line-coverage coverage-high">64 / 69</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">8 / 8</td>
+    <td class="CoverValue branch-coverage coverage-low">52.3%</td>
+    <td class="CoverValue branch-coverage coverage-low">92 / 176</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.demo_adapters.h.5fbf2e0d9b03d7a7f01c9c0a1606c0ee.html">tools/demo_adapters.h</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="100.0" title="100.0%">100.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">100.0%</td>
+    <td class="CoverValue line-coverage coverage-high">6 / 6</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">4 / 4</td>
+    <td class="CoverValue branch-coverage coverage-unknown">-%</td>
+    <td class="CoverValue branch-coverage coverage-unknown">0 / 0</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.main.cpp.36a227146cac398defd63282f9e54084.html">tools/main.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="98.2" title="98.2%">98.2</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">98.2%</td>
+    <td class="CoverValue line-coverage coverage-high">107 / 109</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">3 / 3</td>
+    <td class="CoverValue branch-coverage coverage-low">47.0%</td>
+    <td class="CoverValue branch-coverage coverage-low">206 / 438</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.management_menu.cpp.5ec0088ed3cefc6204a1ed69d26ad9e2.html">tools/management_menu.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-medium" min="0" max="100" value="76.2" title="76.2%">76.2</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-medium">76.2%</td>
+    <td class="CoverValue line-coverage coverage-medium">61 / 80</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">5 / 5</td>
+    <td class="CoverValue branch-coverage coverage-low">36.4%</td>
+    <td class="CoverValue branch-coverage coverage-low">147 / 404</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html">tools/seed_data.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-high" min="0" max="100" value="92.3" title="92.3%">92.3</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-high">92.3%</td>
+    <td class="CoverValue line-coverage coverage-high">191 / 207</td>
+    <td class="CoverValue function-coverage coverage-high">100.0%</td>
+    <td class="CoverValue function-coverage coverage-high">12 / 12</td>
+    <td class="CoverValue branch-coverage coverage-low">44.9%</td>
+    <td class="CoverValue branch-coverage coverage-low">247 / 550</td>
+  </tr>
+
+
+  <tr>
+    <th scope="row">
+      <a href="coverage.seed_database.cpp.ddba545844eddefc9f6b49dddcdbfc90.html">tools/seed_database.cpp</a>
+    </th>
+    <td>
+      <meter class="coverage-none" min="0" max="100" value="0.0" title="0.0%">0.0</meter>
+    </td>
+    <td class="CoverValue line-coverage coverage-none">0.0%</td>
+    <td class="CoverValue line-coverage coverage-none">0 / 26</td>
+    <td class="CoverValue function-coverage coverage-none">0.0%</td>
+    <td class="CoverValue function-coverage coverage-none">0 / 1</td>
+    <td class="CoverValue branch-coverage coverage-none">0.0%</td>
+    <td class="CoverValue branch-coverage coverage-none">0 / 94</td>
+  </tr>
+
+</table>
+      <hr/>
+    </main>
+
+    <footer>
+      Generated by: <a href="http://gcovr.com/en/7.0">GCOVR (Version 7.0)</a>
+    </footer>
+  </body>
+</html>

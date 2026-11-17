@@ -1,0 +1,63 @@
+Running main() from ./googletest/src/gtest_main.cc
+Note: Google Test filter = *FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare*:*FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied*
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from Backends/FinalIntegration
+[ RUN      ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0
+/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:62: Failure
+Expected equality of these values:
+  booking->checkAvailability("20001", clock.today().plusDays(3), ClassCode::SL).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::TrainNotFound
+    Which is: 4-byte object <D1-07 00-00>
+
+/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:63: Failure
+Expected equality of these values:
+  booking->quoteFare("20003", "SBC", "SBC", ClassCode::SL, 1).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::Validation
+    Which is: 4-byte object <E9-03 00-00>
+
+[  FAILED  ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0, where GetParam() = "memory" (14 ms)
+[ RUN      ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1
+/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:62: Failure
+Expected equality of these values:
+  booking->checkAvailability("20001", clock.today().plusDays(3), ClassCode::SL).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::TrainNotFound
+    Which is: 4-byte object <D1-07 00-00>
+
+/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:63: Failure
+Expected equality of these values:
+  booking->quoteFare("20003", "SBC", "SBC", ClassCode::SL, 1).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::Validation
+    Which is: 4-byte object <E9-03 00-00>
+
+[  FAILED  ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1, where GetParam() = "sqlite" (20 ms)
+[ RUN      ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0
+/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:78: Failure
+Value of: cancelled.ok()
+  Actual: false
+Expected: true
+
+[  FAILED  ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0, where GetParam() = "memory" (0 ms)
+[ RUN      ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1
+/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:78: Failure
+Value of: cancelled.ok()
+  Actual: false
+Expected: true
+
+[  FAILED  ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1, where GetParam() = "sqlite" (8 ms)
+[----------] 4 tests from Backends/FinalIntegration (44 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (44 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 4 tests, listed below:
+[  FAILED  ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0, where GetParam() = "memory"
+[  FAILED  ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1, where GetParam() = "sqlite"
+[  FAILED  ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0, where GetParam() = "memory"
+[  FAILED  ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1, where GetParam() = "sqlite"
+
+ 4 FAILED TESTS

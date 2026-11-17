@@ -1,0 +1,48 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13") found components: Crypto 
+-- Found SQLite3: /usr/include (found version "3.45.1") 
+-- Configuring done (12.3s)
+-- Generating done (0.8s)
+-- Build files have been written to: ./build-final
+[1/79] Building CXX object CMakeFiles/rrs_core.dir/src/common/money.cpp.o
+[2/79] Building CXX object CMakeFiles/rrs_core.dir/src/common/date.cpp.o
+[3/79] Building CXX object CMakeFiles/rrs_core.dir/src/common/clock.cpp.o
+[4/79] Building CXX object CMakeFiles/rrs_core.dir/src/common/domain.cpp.o
+[5/79] Building CXX object CMakeFiles/rrs_core.dir/src/common/result.cpp.o
+[6/79] Building CXX object CMakeFiles/rrs_core.dir/src/auth/password_hasher.cpp.o
+[7/79] Building CXX object CMakeFiles/rrs_core.dir/src/common/session.cpp.o
+[8/79] Building CXX object CMakeFiles/rrs_core.dir/src/auth/auth_service.cpp.o
+[9/79] Building CXX object CMakeFiles/rrs_core.dir/src/security/input_validator.cpp.o
+[10/79] Building CXX object CMakeFiles/rrs_core.dir/src/security/access_control.cpp.o
+[11/79] Building CXX object CMakeFiles/rrs_core.dir/src/auth/profile_service.cpp.o
+[12/79] Building CXX object CMakeFiles/rrs_core.dir/src/booking/fare_policy.cpp.o
+[13/79] Building CXX object CMakeFiles/rrs_core.dir/src/admin/reservation_admin_service.cpp.o
+[14/79] Building CXX object CMakeFiles/rrs_core.dir/src/booking/availability.cpp.o
+[15/79] Building CXX object CMakeFiles/rrs_core.dir/src/booking/seat_allocator.cpp.o
+[16/79] Building CXX object CMakeFiles/rrs_core.dir/src/booking/booking_request_validator.cpp.o
+[17/79] Building CXX object CMakeFiles/rrs_core.dir/src/booking/pnr_generator.cpp.o
+[18/79] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/refund_calculator.cpp.o
+[19/79] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/seat_release_service.cpp.o
+[20/79] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/waitlist_manager.cpp.o
+[21/79] Building CXX object CMakeFiles/rrs_core.dir/src/admin/train_admin_service.cpp.o
+FAILED: CMakeFiles/rrs_core.dir/src/admin/train_admin_service.cpp.o 
+/usr/bin/c++  -I"./src" -g -std=c++17 -Wall -Wextra -Wpedantic -fstack-protector-strong -Werror -MD -MT CMakeFiles/rrs_core.dir/src/admin/train_admin_service.cpp.o -MF CMakeFiles/rrs_core.dir/src/admin/train_admin_service.cpp.o.d -o CMakeFiles/rrs_core.dir/src/admin/train_admin_service.cpp.o -c './src/admin/train_admin_service.cpp'
+./src/admin/train_admin_service.cpp:24:10: fatal error: admin/train_admin_service.h: No such file or directory
+   24 | #include "admin/train_admin_service.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+[22/79] Building CXX object CMakeFiles/rrs_core.dir/src/booking/booking_service.cpp.o
+[23/79] Building CXX object CMakeFiles/rrs_core.dir/src/cancel/cancellation_service.cpp.o
+[24/79] Building CXX object CMakeFiles/rrs_core.dir/src/admin/schedule_coach_service.cpp.o
+ninja: build stopped: subcommand failed.

@@ -20,9 +20,12 @@ add_executable(rrs_unit_tests
   unit/test_availability.cpp
   unit/test_booking_validator.cpp
   unit/test_waitlist_plan.cpp
+  unit/test_refund_calculator.cpp
+  unit/test_cancellation_eligibility.cpp
+  unit/test_ticket_status.cpp
 )
 target_link_libraries(rrs_unit_tests PRIVATE rrs_core GTest::gtest_main)
-gtest_discover_tests(rrs_unit_tests PROPERTIES LABELS unit)
+gtest_discover_tests(rrs_unit_tests DISCOVERY_TIMEOUT 60 PROPERTIES LABELS unit)
 
 # Shared helpers: in-memory fakes, storage backends, fault injection.
 add_library(rrs_test_support STATIC
@@ -34,16 +37,19 @@ target_link_libraries(rrs_test_support PUBLIC rrs_dal rrs_tools GTest::gtest)
 
 # Integration tests: services against both the fakes and real SQLite.
 add_executable(rrs_integration_tests
+  integration/test_seed_data.cpp
+  integration/test_final_integration.cpp
   integration/test_sqlite_schema.cpp
   integration/test_repositories.cpp
   integration/test_booking_service.cpp
   integration/test_passenger_menu.cpp
   integration/test_seat_release.cpp
+  integration/test_cancellation_service.cpp
   integration/test_schedule_coach_service.cpp
   integration/test_report_service.cpp
 )
 target_link_libraries(rrs_integration_tests PRIVATE rrs_test_support GTest::gtest_main)
-gtest_discover_tests(rrs_integration_tests PROPERTIES LABELS integration)
+gtest_discover_tests(rrs_integration_tests DISCOVERY_TIMEOUT 60 PROPERTIES LABELS integration)
 
 # Performance, soak and retry tests (PERF-01/02, REL-01/02) on a generated
 # large database: 200 trains, 40 stations, 20,000 reservations.
@@ -54,3 +60,7 @@ add_executable(rrs_perf_tests
 )
 target_link_libraries(rrs_perf_tests PRIVATE rrs_test_support GTest::gtest_main)
 gtest_discover_tests(rrs_perf_tests PROPERTIES LABELS perf DISCOVERY_TIMEOUT 60)
+
+add_executable(rrs_security_tests integration/test_security.cpp)
+target_link_libraries(rrs_security_tests PRIVATE rrs_test_support GTest::gtest_main)
+gtest_discover_tests(rrs_security_tests DISCOVERY_TIMEOUT 60 PROPERTIES LABELS security)

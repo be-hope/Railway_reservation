@@ -1,0 +1,6 @@
+Testing source revision 55bfc5f
+55bfc5f7fb2c22c6812fea3be2b0b72ffb18c642
+2026-11-17T13:36:16Z
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+cmake version 3.28.3
+gcovr 7.0

@@ -1,0 +1,66 @@
+{
+  "executed_at": "2026-11-17T13:37:43.234384+00:00",
+  "executable": "rrs_app",
+  "tests": [
+    {
+      "case": "__main__.SystemValidation.test_ADMIN_cancellation_is_authorized",
+      "status": "PASS",
+      "seconds": 2.204
+    },
+    {
+      "case": "__main__.SystemValidation.test_AUTH_invalid_login_and_secret_free_audit",
+      "status": "PASS",
+      "seconds": 1.818
+    },
+    {
+      "case": "__main__.SystemValidation.test_AUTH_registration_login_and_restart",
+      "status": "PASS",
+      "seconds": 2.591
+    },
+    {
+      "case": "__main__.SystemValidation.test_FR025_ops_reports_match_stored_booking",
+      "status": "PASS",
+      "seconds": 2.553
+    },
+    {
+      "case": "__main__.SystemValidation.test_IT_CAN_03_waitlist_promotes_after_cancellation",
+      "status": "PASS",
+      "seconds": 3.267
+    },
+    {
+      "case": "__main__.SystemValidation.test_IT_STF_01_02_staff_book_correct_and_cancel",
+      "status": "PASS",
+      "seconds": 2.041
+    },
+    {
+      "case": "__main__.SystemValidation.test_MNT_restart_retains_ticket",
+      "status": "PASS",
+      "seconds": 2.262
+    },
+    {
+      "case": "__main__.SystemValidation.test_OPS_cannot_modify_trains",
+      "status": "PASS",
+      "seconds": 1.521
+    },
+    {
+      "case": "__main__.SystemValidation.test_SEC_T08_foreign_history_and_pnr_are_denied",
+      "status": "PASS",
+      "seconds": 1.881
+    },
+    {
+      "case": "__main__.SystemValidation.test_ST_ADM_01_admin_creates_bookable_train",
+      "status": "PASS",
+      "seconds": 2.033
+    },
+    {
+      "case": "__main__.SystemValidation.test_ST_BKG_01_02_quote_booking_and_history",
+      "status": "PASS",
+      "seconds": 1.559
+    },
+    {
+      "case": "__main__.SystemValidation.test_ST_CAN_01_cancel_refund_and_repeat_rejection",
+      "status": "PASS",
+      "seconds": 2.098
+    }
+  ]
+}

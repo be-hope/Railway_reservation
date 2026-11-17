@@ -77,12 +77,7 @@ Status FaultInjectingReservationRepository::update(const Reservation& r) {
 }
 
 Session sessionFor(const std::string& accountId, Role role, const IClock& clock) {
-    Session s;
-    s.sessionId = "test-" + accountId;
-    s.accountId = accountId;
-    s.role = role;
-    s.expiresAt = clock.now() + 15 * 60;
-    return s;
+    return Session::issue(accountId, role, clock).value();
 }
 
 Traveller traveller(const std::string& name, int age, char gender, const std::string& idProof) {

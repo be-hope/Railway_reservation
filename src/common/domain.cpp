@@ -42,6 +42,27 @@ std::optional<TicketStatus> parseTicketStatus(const std::string& s) {
 
 bool isActive(TicketStatus s) { return s != TicketStatus::Cancelled; }
 
+bool canTransitionTicketStatus(TicketStatus from, TicketStatus to) {
+    // A transition must change state. CANCELLED is terminal.
+    switch (from) {
+        case TicketStatus::Confirmed:
+            return to == TicketStatus::Cancelled;
+
+        case TicketStatus::Rac:
+            return to == TicketStatus::Confirmed ||
+                   to == TicketStatus::Cancelled;
+
+        case TicketStatus::Waitlisted:
+            return to == TicketStatus::Rac ||
+                   to == TicketStatus::Confirmed ||
+                   to == TicketStatus::Cancelled;
+
+        case TicketStatus::Cancelled:
+            return false;
+    }
+    return false;
+}
+
 std::string roleString(Role r) {
     switch (r) {
         case Role::Passenger: return "PASSENGER";
