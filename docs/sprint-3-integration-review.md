@@ -1,7 +1,9 @@
+> Historical sprint snapshot. For the integrated release, use README.md, test-cases.md and the four final test reports in this folder. Pending-work statements and counts below describe the earlier branch state.
+
 # Sprint 3 Integration Review — Issue #44
 
-**Issue:** #44 — Run integration tests and fix defects  
-**Date:** 2026-11-02  
+**Issue:** #44 — Run integration tests and fix defects
+**Date:** 2026-11-02
 **Branch:** `sprint-3`
 
 ## 1. Objective

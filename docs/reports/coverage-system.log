@@ -1,0 +1,17 @@
+test_ADMIN_cancellation_is_authorized (__main__.SystemValidation.test_ADMIN_cancellation_is_authorized) ... ok
+test_AUTH_invalid_login_and_secret_free_audit (__main__.SystemValidation.test_AUTH_invalid_login_and_secret_free_audit) ... ok
+test_AUTH_registration_login_and_restart (__main__.SystemValidation.test_AUTH_registration_login_and_restart) ... ok
+test_FR025_ops_reports_match_stored_booking (__main__.SystemValidation.test_FR025_ops_reports_match_stored_booking) ... ok
+test_IT_CAN_03_waitlist_promotes_after_cancellation (__main__.SystemValidation.test_IT_CAN_03_waitlist_promotes_after_cancellation) ... ok
+test_IT_STF_01_02_staff_book_correct_and_cancel (__main__.SystemValidation.test_IT_STF_01_02_staff_book_correct_and_cancel) ... ok
+test_MNT_restart_retains_ticket (__main__.SystemValidation.test_MNT_restart_retains_ticket) ... ok
+test_OPS_cannot_modify_trains (__main__.SystemValidation.test_OPS_cannot_modify_trains) ... ok
+test_SEC_T08_foreign_history_and_pnr_are_denied (__main__.SystemValidation.test_SEC_T08_foreign_history_and_pnr_are_denied) ... ok
+test_ST_ADM_01_admin_creates_bookable_train (__main__.SystemValidation.test_ST_ADM_01_admin_creates_bookable_train) ... ok
+test_ST_BKG_01_02_quote_booking_and_history (__main__.SystemValidation.test_ST_BKG_01_02_quote_booking_and_history) ... ok
+test_ST_CAN_01_cancel_refund_and_repeat_rejection (__main__.SystemValidation.test_ST_CAN_01_cancel_refund_and_repeat_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 68.586s
+
+OK

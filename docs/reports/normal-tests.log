@@ -1,0 +1,670 @@
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 63 tests from 14 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from Money
+[ RUN      ] Money.FormatsRupeesWithGroupingAndTwoDecimals
+[       OK ] Money.FormatsRupeesWithGroupingAndTwoDecimals (0 ms)
+[----------] 1 test from Money (1 ms total)
+
+[----------] 3 tests from Date
+[ RUN      ] Date.ParsesIsoAndDisplayFormats
+[       OK ] Date.ParsesIsoAndDisplayFormats (0 ms)
+[ RUN      ] Date.RejectsImpossibleOrMalformedDates
+[       OK ] Date.RejectsImpossibleOrMalformedDates (0 ms)
+[ RUN      ] Date.DayArithmeticCrossesMonthAndYearEnds
+[       OK ] Date.DayArithmeticCrossesMonthAndYearEnds (0 ms)
+[----------] 3 tests from Date (6 ms total)
+
+[----------] 2 tests from ErrorCatalogue
+[ RUN      ] ErrorCatalogue.FormatsStandardErrorLine
+[       OK ] ErrorCatalogue.FormatsStandardErrorLine (0 ms)
+[ RUN      ] ErrorCatalogue.EveryCodeHasANameAndMessage
+[       OK ] ErrorCatalogue.EveryCodeHasANameAndMessage (0 ms)
+[----------] 2 tests from ErrorCatalogue (3 ms total)
+
+[----------] 5 tests from FarePolicy
+[ RUN      ] FarePolicy.UT_BKG_01_TotalFareCases
+[       OK ] FarePolicy.UT_BKG_01_TotalFareCases (0 ms)
+[ RUN      ] FarePolicy.SeedFaresFromTestPlan
+[       OK ] FarePolicy.SeedFaresFromTestPlan (0 ms)
+[ RUN      ] FarePolicy.RoundsHalfUpToThePaisa
+[       OK ] FarePolicy.RoundsHalfUpToThePaisa (0 ms)
+[ RUN      ] FarePolicy.NonPositiveInputsGiveZero
+[       OK ] FarePolicy.NonPositiveInputsGiveZero (0 ms)
+[ RUN      ] FarePolicy.RateIsConfigurable
+[       OK ] FarePolicy.RateIsConfigurable (0 ms)
+[----------] 5 tests from FarePolicy (8 ms total)
+
+[----------] 6 tests from SeatAllocator
+[ RUN      ] SeatAllocator.UT_BKG_04_AllocatesLowestFreeSeatThenExhausts
+[       OK ] SeatAllocator.UT_BKG_04_AllocatesLowestFreeSeatThenExhausts (0 ms)
+[ RUN      ] SeatAllocator.FillsGapsLeftByReleasedSeatsFirst
+[       OK ] SeatAllocator.FillsGapsLeftByReleasedSeatsFirst (0 ms)
+[ RUN      ] SeatAllocator.ContinuesIntoTheNextCoach
+[       OK ] SeatAllocator.ContinuesIntoTheNextCoach (0 ms)
+[ RUN      ] SeatAllocator.AllOrNothingWhenTooFewSeatsAreFree
+[       OK ] SeatAllocator.AllOrNothingWhenTooFewSeatsAreFree (0 ms)
+[ RUN      ] SeatAllocator.NeverReturnsAnOccupiedOrDuplicateSeat
+[       OK ] SeatAllocator.NeverReturnsAnOccupiedOrDuplicateSeat (44 ms)
+[ RUN      ] SeatAllocator.RejectsNonPositiveCount
+[       OK ] SeatAllocator.RejectsNonPositiveCount (0 ms)
+[----------] 6 tests from SeatAllocator (54 ms total)
+
+[----------] 2 tests from SeatLabel
+[ RUN      ] SeatLabel.FormatsAndParsesLabels
+[       OK ] SeatLabel.FormatsAndParsesLabels (0 ms)
+[ RUN      ] SeatLabel.SeatExistsChecksTheLayout
+[       OK ] SeatLabel.SeatExistsChecksTheLayout (0 ms)
+[----------] 2 tests from SeatLabel (2 ms total)
+
+[----------] 6 tests from PnrGenerator
+[ RUN      ] PnrGenerator.UT_BKG_03_TenThousandUniqueValidPnrs
+[       OK ] PnrGenerator.UT_BKG_03_TenThousandUniqueValidPnrs (21 ms)
+[ RUN      ] PnrGenerator.UT_BKG_03_CollisionDrawsANewValue
+[       OK ] PnrGenerator.UT_BKG_03_CollisionDrawsANewValue (0 ms)
+[ RUN      ] PnrGenerator.GivesUpAfterFiveCollisions
+[       OK ] PnrGenerator.GivesUpAfterFiveCollisions (0 ms)
+[ RUN      ] PnrGenerator.PropagatesStorageErrorsFromTheExistsCheck
+[       OK ] PnrGenerator.PropagatesStorageErrorsFromTheExistsCheck (0 ms)
+[ RUN      ] PnrGenerator.RangeCoversFirstAndLastValues
+[       OK ] PnrGenerator.RangeCoversFirstAndLastValues (0 ms)
+[ RUN      ] PnrGenerator.IsValidPnrRejectsMalformedValues
+[       OK ] PnrGenerator.IsValidPnrRejectsMalformedValues (0 ms)
+[----------] 6 tests from PnrGenerator (30 ms total)
+
+[----------] 4 tests from Availability
+[ RUN      ] Availability.UT_BKG_05_OneConfirmedLeavesOneFree
+[       OK ] Availability.UT_BKG_05_OneConfirmedLeavesOneFree (0 ms)
+[ RUN      ] Availability.UT_BKG_05_CancelledSeatsAreReleased
+[       OK ] Availability.UT_BKG_05_CancelledSeatsAreReleased (0 ms)
+[ RUN      ] Availability.ReportsRacAndWaitlist
+[       OK ] Availability.ReportsRacAndWaitlist (0 ms)
+[ RUN      ] Availability.NeverNegativeAfterACapacityChange
+[       OK ] Availability.NeverNegativeAfterACapacityChange (0 ms)
+[----------] 4 tests from Availability (5 ms total)
+
+[----------] 7 tests from StatusDecision
+[ RUN      ] StatusDecision.ConfirmedWhenSeatsFreeAndNobodyQueued
+[       OK ] StatusDecision.ConfirmedWhenSeatsFreeAndNobodyQueued (0 ms)
+[ RUN      ] StatusDecision.UT_CAN_03_SequenceUntilCapacityIsExhausted
+[       OK ] StatusDecision.UT_CAN_03_SequenceUntilCapacityIsExhausted (0 ms)
+[ RUN      ] StatusDecision.RacBeforeWaitlist
+[       OK ] StatusDecision.RacBeforeWaitlist (0 ms)
+[ RUN      ] StatusDecision.PartyLargerThanFreeSeatsIsWaitlistedWhole
+[       OK ] StatusDecision.PartyLargerThanFreeSeatsIsWaitlistedWhole (0 ms)
+[ RUN      ] StatusDecision.NewBookingDoesNotOvertakeTheWaitlist
+[       OK ] StatusDecision.NewBookingDoesNotOvertakeTheWaitlist (0 ms)
+[ RUN      ] StatusDecision.NewBookingDoesNotOvertakeRac
+[       OK ] StatusDecision.NewBookingDoesNotOvertakeRac (0 ms)
+[ RUN      ] StatusDecision.RejectsZeroTravellers
+[       OK ] StatusDecision.RejectsZeroTravellers (0 ms)
+[----------] 7 tests from StatusDecision (9 ms total)
+
+[----------] 8 tests from BookingValidator
+[ RUN      ] BookingValidator.UT_BKG_02_TravellerCountBoundaries
+[       OK ] BookingValidator.UT_BKG_02_TravellerCountBoundaries (0 ms)
+[ RUN      ] BookingValidator.UT_BKG_02_InvalidTravellerFields
+[       OK ] BookingValidator.UT_BKG_02_InvalidTravellerFields (0 ms)
+[ RUN      ] BookingValidator.AgeBoundaryValues
+[       OK ] BookingValidator.AgeBoundaryValues (0 ms)
+[ RUN      ] BookingValidator.MessageNamesTheTravellerAndField
+[       OK ] BookingValidator.MessageNamesTheTravellerAndField (0 ms)
+[ RUN      ] BookingValidator.JourneyDateWindowIsTodayToTodayPlus120
+[       OK ] BookingValidator.JourneyDateWindowIsTodayToTodayPlus120 (0 ms)
+[ RUN      ] BookingValidator.RejectsSameSourceAndDestination
+[       OK ] BookingValidator.RejectsSameSourceAndDestination (0 ms)
+[ RUN      ] BookingValidator.RejectsBadRequestIdTrainAndStation
+[       OK ] BookingValidator.RejectsBadRequestIdTrainAndStation (0 ms)
+[ RUN      ] BookingValidator.HostileInputIsRejectedCleanly
+[       OK ] BookingValidator.HostileInputIsRejectedCleanly (0 ms)
+[----------] 8 tests from BookingValidator (13 ms total)
+
+[----------] 7 tests from WaitlistPlan
+[ RUN      ] WaitlistPlan.UT_CAN_04_HeadThatDoesNotFitBlocksTheQueue
+[       OK ] WaitlistPlan.UT_CAN_04_HeadThatDoesNotFitBlocksTheQueue (0 ms)
+[ RUN      ] WaitlistPlan.HeadOfWaitlistGetsTheFreedSeat
+[       OK ] WaitlistPlan.HeadOfWaitlistGetsTheFreedSeat (0 ms)
+[ RUN      ] WaitlistPlan.RacConfirmedThenWaitlistMovesIntoRac
+[       OK ] WaitlistPlan.RacConfirmedThenWaitlistMovesIntoRac (0 ms)
+[ RUN      ] WaitlistPlan.SeveralTicketsArePromotedInQueueOrder
+[       OK ] WaitlistPlan.SeveralTicketsArePromotedInQueueOrder (0 ms)
+[ RUN      ] WaitlistPlan.GapsInWaitlistPositionsAreClosed
+[       OK ] WaitlistPlan.GapsInWaitlistPositionsAreClosed (0 ms)
+[ RUN      ] WaitlistPlan.BlockedRacHeadAlsoBlocksTheWaitlist
+[       OK ] WaitlistPlan.BlockedRacHeadAlsoBlocksTheWaitlist (0 ms)
+[ RUN      ] WaitlistPlan.NothingToDoWhenNobodyWaits
+[       OK ] WaitlistPlan.NothingToDoWhenNobodyWaits (0 ms)
+[----------] 7 tests from WaitlistPlan (10 ms total)
+
+[----------] 4 tests from RefundCalculatorTest
+[ RUN      ] RefundCalculatorTest.UT_CAN_01_RefundSlabBoundaries
+[       OK ] RefundCalculatorTest.UT_CAN_01_RefundSlabBoundaries (0 ms)
+[ RUN      ] RefundCalculatorTest.WaitlistedTicketGetsFullRefund
+[       OK ] RefundCalculatorTest.WaitlistedTicketGetsFullRefund (0 ms)
+[ RUN      ] RefundCalculatorTest.RacTicketUsesNormalRefundSlabs
+[       OK ] RefundCalculatorTest.RacTicketUsesNormalRefundSlabs (0 ms)
+[ RUN      ] RefundCalculatorTest.HandlesPaiseWithoutFloatingPoint
+[       OK ] RefundCalculatorTest.HandlesPaiseWithoutFloatingPoint (0 ms)
+[----------] 4 tests from RefundCalculatorTest (5 ms total)
+
+[----------] 4 tests from CancellationEligibilityTest
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_FutureActiveTicketsCanBeCancelled
+[       OK ] CancellationEligibilityTest.UT_CAN_02_FutureActiveTicketsCanBeCancelled (0 ms)
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_AlreadyCancelledTicketIsRejected
+[       OK ] CancellationEligibilityTest.UT_CAN_02_AlreadyCancelledTicketIsRejected (0 ms)
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_DepartedTicketIsRejected
+[       OK ] CancellationEligibilityTest.UT_CAN_02_DepartedTicketIsRejected (0 ms)
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_ExactDepartureTimeIsRejected
+[       OK ] CancellationEligibilityTest.UT_CAN_02_ExactDepartureTimeIsRejected (0 ms)
+[----------] 4 tests from CancellationEligibilityTest (7 ms total)
+
+[----------] 4 tests from TicketStatusTest
+[ RUN      ] TicketStatusTest.ValidForwardTransitionsAreAccepted
+[       OK ] TicketStatusTest.ValidForwardTransitionsAreAccepted (0 ms)
+[ RUN      ] TicketStatusTest.InvalidBackwardTransitionsAreRejected
+[       OK ] TicketStatusTest.InvalidBackwardTransitionsAreRejected (0 ms)
+[ RUN      ] TicketStatusTest.CancelledIsTerminal
+[       OK ] TicketStatusTest.CancelledIsTerminal (0 ms)
+[ RUN      ] TicketStatusTest.RepeatedStatusesAreNotTransitions
+[       OK ] TicketStatusTest.RepeatedStatusesAreNotTransitions (0 ms)
+[----------] 4 tests from TicketStatusTest (5 ms total)
+
+[----------] Global test environment tear-down
+[==========] 63 tests from 14 test suites ran. (188 ms total)
+[  PASSED  ] 63 tests.
+
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 181 tests from 13 test suites.
+[----------] Global test environment set-up.
+[----------] 8 tests from SqliteSchemaTest
+[ RUN      ] SqliteSchemaTest.MigrateIsIdempotentAndRecordsVersion
+[       OK ] SqliteSchemaTest.MigrateIsIdempotentAndRecordsVersion (50 ms)
+[ RUN      ] SqliteSchemaTest.IndexesForSearchAndSeatsExist
+[       OK ] SqliteSchemaTest.IndexesForSearchAndSeatsExist (7 ms)
+[ RUN      ] SqliteSchemaTest.DuplicatePnrIsRejected
+[       OK ] SqliteSchemaTest.DuplicatePnrIsRejected (4 ms)
+[ RUN      ] SqliteSchemaTest.DuplicateRequestIdIsRejected
+[       OK ] SqliteSchemaTest.DuplicateRequestIdIsRejected (4 ms)
+[ RUN      ] SqliteSchemaTest.SeatCannotBeAssignedTwiceButIsReusableAfterRelease
+[       OK ] SqliteSchemaTest.SeatCannotBeAssignedTwiceButIsReusableAfterRelease (3 ms)
+[ RUN      ] SqliteSchemaTest.MalformedPnrAndInconsistentWaitlistRowsAreRejected
+[       OK ] SqliteSchemaTest.MalformedPnrAndInconsistentWaitlistRowsAreRejected (5 ms)
+[ RUN      ] SqliteSchemaTest.ReservationNeedsAScheduledTrainAndKnownAccount
+[       OK ] SqliteSchemaTest.ReservationNeedsAScheduledTrainAndKnownAccount (4 ms)
+[ RUN      ] SqliteSchemaTest.HostileTextIsStoredLiterallyNotExecuted
+[       OK ] SqliteSchemaTest.HostileTextIsStoredLiterallyNotExecuted (3 ms)
+[----------] 8 tests from SqliteSchemaTest (95 ms total)
+
+[----------] 1 test from SqliteFile
+[ RUN      ] SqliteFile.DataSurvivesReopeningTheFile
+[       OK ] SqliteFile.DataSurvivesReopeningTheFile (196 ms)
+[----------] 1 test from SqliteFile (197 ms total)
+
+[----------] 12 tests from PassengerMenuTest
+[ RUN      ] PassengerMenuTest.ST_BKG_01_BookingTakesSixPrimarySteps
+[       OK ] PassengerMenuTest.ST_BKG_01_BookingTakesSixPrimarySteps (14 ms)
+[ RUN      ] PassengerMenuTest.RejectingTheFareCreatesNoBooking
+[       OK ] PassengerMenuTest.RejectingTheFareCreatesNoBooking (9 ms)
+[ RUN      ] PassengerMenuTest.InvalidFieldsAreReportedAndAskedAgain
+[       OK ] PassengerMenuTest.InvalidFieldsAreReportedAndAskedAgain (10 ms)
+[ RUN      ] PassengerMenuTest.InvalidMenuChoiceRedisplaysMenu
+[       OK ] PassengerMenuTest.InvalidMenuChoiceRedisplaysMenu (7 ms)
+[ RUN      ] PassengerMenuTest.EndOfInputLogsOutCleanly
+[       OK ] PassengerMenuTest.EndOfInputLogsOutCleanly (7 ms)
+[ RUN      ] PassengerMenuTest.SearchWithNoResultsSaysSo
+[       OK ] PassengerMenuTest.SearchWithNoResultsSaysSo (9 ms)
+[ RUN      ] PassengerMenuTest.AvailabilityRouteHistoryAndPnrScreens
+[       OK ] PassengerMenuTest.AvailabilityRouteHistoryAndPnrScreens (10 ms)
+[ RUN      ] PassengerMenuTest.CancelShowsNotAvailableWithoutACancellationPort
+[       OK ] PassengerMenuTest.CancelShowsNotAvailableWithoutACancellationPort (6 ms)
+[ RUN      ] PassengerMenuTest.CancelReleasesTheSeatThroughTheMenu
+[       OK ] PassengerMenuTest.CancelReleasesTheSeatThroughTheMenu (7 ms)
+[ RUN      ] PassengerMenuTest.CannotCancelAnotherPassengersTicket
+[       OK ] PassengerMenuTest.CannotCancelAnotherPassengersTicket (7 ms)
+[ RUN      ] PassengerMenuTest.ProfileIsShownMaskedAndCanBeEdited
+[       OK ] PassengerMenuTest.ProfileIsShownMaskedAndCanBeEdited (5 ms)
+[ RUN      ] PassengerMenuTest.FR_015_IT_BKG_07_ShowsOnlyOwnPastAndUpcomingBookings
+[       OK ] PassengerMenuTest.FR_015_IT_BKG_07_ShowsOnlyOwnPastAndUpcomingBookings (8 ms)
+[----------] 12 tests from PassengerMenuTest (125 ms total)
+
+[----------] 1 test from TicketStatusView
+[ RUN      ] TicketStatusView.FR_020_IT_CAN_06_FormatsAllReservationStatuses
+[       OK ] TicketStatusView.FR_020_IT_CAN_06_FormatsAllReservationStatuses (0 ms)
+[----------] 1 test from TicketStatusView (1 ms total)
+
+[----------] 1 test from ReportServiceSql
+[ RUN      ] ReportServiceSql.ReportsEqualDirectDatabaseQueries
+[       OK ] ReportServiceSql.ReportsEqualDirectDatabaseQueries (4 ms)
+[----------] 1 test from ReportServiceSql (6 ms total)
+
+[----------] 10 tests from AllBackends/DemoSeedDataTest
+[ RUN      ] AllBackends/DemoSeedDataTest.CreatesExpectedStationsTrainsAndAccounts/0
+[       OK ] AllBackends/DemoSeedDataTest.CreatesExpectedStationsTrainsAndAccounts/0 (0 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.CreatesExpectedStationsTrainsAndAccounts/1
+[       OK ] AllBackends/DemoSeedDataTest.CreatesExpectedStationsTrainsAndAccounts/1 (4 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.CreatesFourSampleReservations/0
+[       OK ] AllBackends/DemoSeedDataTest.CreatesFourSampleReservations/0 (0 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.CreatesFourSampleReservations/1
+[       OK ] AllBackends/DemoSeedDataTest.CreatesFourSampleReservations/1 (3 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.RunningCompleteSeedTwiceDoesNotDuplicateData/0
+[       OK ] AllBackends/DemoSeedDataTest.RunningCompleteSeedTwiceDoesNotDuplicateData/0 (0 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.RunningCompleteSeedTwiceDoesNotDuplicateData/1
+[       OK ] AllBackends/DemoSeedDataTest.RunningCompleteSeedTwiceDoesNotDuplicateData/1 (8 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.BaseSeedDoesNotCreateSampleReservations/0
+[       OK ] AllBackends/DemoSeedDataTest.BaseSeedDoesNotCreateSampleReservations/0 (0 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.BaseSeedDoesNotCreateSampleReservations/1
+[       OK ] AllBackends/DemoSeedDataTest.BaseSeedDoesNotCreateSampleReservations/1 (5 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.CompleteSeedRejectsTooFewScheduleDays/0
+[       OK ] AllBackends/DemoSeedDataTest.CompleteSeedRejectsTooFewScheduleDays/0 (0 ms)
+[ RUN      ] AllBackends/DemoSeedDataTest.CompleteSeedRejectsTooFewScheduleDays/1
+[       OK ] AllBackends/DemoSeedDataTest.CompleteSeedRejectsTooFewScheduleDays/1 (1 ms)
+[----------] 10 tests from AllBackends/DemoSeedDataTest (40 ms total)
+
+[----------] 12 tests from Backends/FinalIntegration
+[ RUN      ] Backends/FinalIntegration.AdminAddsRenamesAndTogglesTrain/0
+[       OK ] Backends/FinalIntegration.AdminAddsRenamesAndTogglesTrain/0 (1 ms)
+[ RUN      ] Backends/FinalIntegration.AdminAddsRenamesAndTogglesTrain/1
+[       OK ] Backends/FinalIntegration.AdminAddsRenamesAndTogglesTrain/1 (14 ms)
+[ RUN      ] Backends/FinalIntegration.RouteAndScheduleValidation/0
+[       OK ] Backends/FinalIntegration.RouteAndScheduleValidation/0 (1 ms)
+[ RUN      ] Backends/FinalIntegration.RouteAndScheduleValidation/1
+[       OK ] Backends/FinalIntegration.RouteAndScheduleValidation/1 (10 ms)
+[ RUN      ] Backends/FinalIntegration.ExistingBookingsProtectTrainRouteAndSchedule/0
+[       OK ] Backends/FinalIntegration.ExistingBookingsProtectTrainRouteAndSchedule/0 (2 ms)
+[ RUN      ] Backends/FinalIntegration.ExistingBookingsProtectTrainRouteAndSchedule/1
+[       OK ] Backends/FinalIntegration.ExistingBookingsProtectTrainRouteAndSchedule/1 (15 ms)
+[ RUN      ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0
+[       OK ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0 (1 ms)
+[ RUN      ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1
+[       OK ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1 (9 ms)
+[ RUN      ] Backends/FinalIntegration.SearchRejectsUnknownSameAndOutOfWindowInputs/0
+[       OK ] Backends/FinalIntegration.SearchRejectsUnknownSameAndOutOfWindowInputs/0 (0 ms)
+[ RUN      ] Backends/FinalIntegration.SearchRejectsUnknownSameAndOutOfWindowInputs/1
+[       OK ] Backends/FinalIntegration.SearchRejectsUnknownSameAndOutOfWindowInputs/1 (13 ms)
+[ RUN      ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0
+[       OK ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0 (2 ms)
+[ RUN      ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1
+[       OK ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1 (11 ms)
+[----------] 12 tests from Backends/FinalIntegration (102 ms total)
+
+[----------] 20 tests from Backends/RepositoryContract
+[ RUN      ] Backends/RepositoryContract.FindTrainsHonoursDirectionScheduleAndActiveFlag/memory
+[       OK ] Backends/RepositoryContract.FindTrainsHonoursDirectionScheduleAndActiveFlag/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.FindTrainsHonoursDirectionScheduleAndActiveFlag/sqlite
+[       OK ] Backends/RepositoryContract.FindTrainsHonoursDirectionScheduleAndActiveFlag/sqlite (3 ms)
+[ RUN      ] Backends/RepositoryContract.TrainRoundTripKeepsOrderedStops/memory
+[       OK ] Backends/RepositoryContract.TrainRoundTripKeepsOrderedStops/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.TrainRoundTripKeepsOrderedStops/sqlite
+[       OK ] Backends/RepositoryContract.TrainRoundTripKeepsOrderedStops/sqlite (4 ms)
+[ RUN      ] Backends/RepositoryContract.SchedulesCanBeAddedAndRemoved/memory
+[       OK ] Backends/RepositoryContract.SchedulesCanBeAddedAndRemoved/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.SchedulesCanBeAddedAndRemoved/sqlite
+[       OK ] Backends/RepositoryContract.SchedulesCanBeAddedAndRemoved/sqlite (3 ms)
+[ RUN      ] Backends/RepositoryContract.ClassConfigRoundTrip/memory
+[       OK ] Backends/RepositoryContract.ClassConfigRoundTrip/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.ClassConfigRoundTrip/sqlite
+[       OK ] Backends/RepositoryContract.ClassConfigRoundTrip/sqlite (3 ms)
+[ RUN      ] Backends/RepositoryContract.ReservationRoundTripAndOccupancy/memory
+[       OK ] Backends/RepositoryContract.ReservationRoundTripAndOccupancy/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.ReservationRoundTripAndOccupancy/sqlite
+[       OK ] Backends/RepositoryContract.ReservationRoundTripAndOccupancy/sqlite (4 ms)
+[ RUN      ] Backends/RepositoryContract.UpdateReleasesSeatAndCancelledTicketsDropOutOfOccupancy/memory
+[       OK ] Backends/RepositoryContract.UpdateReleasesSeatAndCancelledTicketsDropOutOfOccupancy/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.UpdateReleasesSeatAndCancelledTicketsDropOutOfOccupancy/sqlite
+[       OK ] Backends/RepositoryContract.UpdateReleasesSeatAndCancelledTicketsDropOutOfOccupancy/sqlite (5 ms)
+[ RUN      ] Backends/RepositoryContract.ListForAccountIsOrderedAndScoped/memory
+[       OK ] Backends/RepositoryContract.ListForAccountIsOrderedAndScoped/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.ListForAccountIsOrderedAndScoped/sqlite
+[       OK ] Backends/RepositoryContract.ListForAccountIsOrderedAndScoped/sqlite (5 ms)
+[ RUN      ] Backends/RepositoryContract.RollbackDiscardsEverythingSinceBegin/memory
+[       OK ] Backends/RepositoryContract.RollbackDiscardsEverythingSinceBegin/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.RollbackDiscardsEverythingSinceBegin/sqlite
+[       OK ] Backends/RepositoryContract.RollbackDiscardsEverythingSinceBegin/sqlite (4 ms)
+[ RUN      ] Backends/RepositoryContract.DuplicateAccountsAreRejectedWithE1002/memory
+[       OK ] Backends/RepositoryContract.DuplicateAccountsAreRejectedWithE1002/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.DuplicateAccountsAreRejectedWithE1002/sqlite
+[       OK ] Backends/RepositoryContract.DuplicateAccountsAreRejectedWithE1002/sqlite (6 ms)
+[ RUN      ] Backends/RepositoryContract.ProfileAndAttemptsUpdate/memory
+[       OK ] Backends/RepositoryContract.ProfileAndAttemptsUpdate/memory (0 ms)
+[ RUN      ] Backends/RepositoryContract.ProfileAndAttemptsUpdate/sqlite
+[       OK ] Backends/RepositoryContract.ProfileAndAttemptsUpdate/sqlite (5 ms)
+[----------] 20 tests from Backends/RepositoryContract (74 ms total)
+
+[----------] 46 tests from Backends/BookingServiceTest
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_01_AvailabilityReflectsReservations/memory
+[       OK ] Backends/BookingServiceTest.IT_BKG_01_AvailabilityReflectsReservations/memory (2 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_01_AvailabilityReflectsReservations/sqlite
+[       OK ] Backends/BookingServiceTest.IT_BKG_01_AvailabilityReflectsReservations/sqlite (14 ms)
+[ RUN      ] Backends/BookingServiceTest.AvailabilityForUnknownTrainDateOrClassIsE2001/memory
+[       OK ] Backends/BookingServiceTest.AvailabilityForUnknownTrainDateOrClassIsE2001/memory (2 ms)
+[ RUN      ] Backends/BookingServiceTest.AvailabilityForUnknownTrainDateOrClassIsE2001/sqlite
+[       OK ] Backends/BookingServiceTest.AvailabilityForUnknownTrainDateOrClassIsE2001/sqlite (12 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_02_SuccessfulSingleBooking/memory
+[       OK ] Backends/BookingServiceTest.IT_BKG_02_SuccessfulSingleBooking/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_02_SuccessfulSingleBooking/sqlite
+[       OK ] Backends/BookingServiceTest.IT_BKG_02_SuccessfulSingleBooking/sqlite (12 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_03_InvalidTravellerBlocksBooking/memory
+[       OK ] Backends/BookingServiceTest.IT_BKG_03_InvalidTravellerBlocksBooking/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_03_InvalidTravellerBlocksBooking/sqlite
+[       OK ] Backends/BookingServiceTest.IT_BKG_03_InvalidTravellerBlocksBooking/sqlite (12 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_04_RejectedFareCreatesNothing/memory
+[       OK ] Backends/BookingServiceTest.IT_BKG_04_RejectedFareCreatesNothing/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_04_RejectedFareCreatesNothing/sqlite
+[       OK ] Backends/BookingServiceTest.IT_BKG_04_RejectedFareCreatesNothing/sqlite (16 ms)
+[ RUN      ] Backends/BookingServiceTest.FareDifferentFromQuoteMustBeAcceptedAgain/memory
+[       OK ] Backends/BookingServiceTest.FareDifferentFromQuoteMustBeAcceptedAgain/memory (0 ms)
+[ RUN      ] Backends/BookingServiceTest.FareDifferentFromQuoteMustBeAcceptedAgain/sqlite
+[       OK ] Backends/BookingServiceTest.FareDifferentFromQuoteMustBeAcceptedAgain/sqlite (11 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_05_NoSeatIsAllocatedTwice/memory
+[       OK ] Backends/BookingServiceTest.IT_BKG_05_NoSeatIsAllocatedTwice/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_05_NoSeatIsAllocatedTwice/sqlite
+[       OK ] Backends/BookingServiceTest.IT_BKG_05_NoSeatIsAllocatedTwice/sqlite (14 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_06_DuplicateSubmissionIsIdempotent/memory
+[       OK ] Backends/BookingServiceTest.IT_BKG_06_DuplicateSubmissionIsIdempotent/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_BKG_06_DuplicateSubmissionIsIdempotent/sqlite
+[       OK ] Backends/BookingServiceTest.IT_BKG_06_DuplicateSubmissionIsIdempotent/sqlite (11 ms)
+[ RUN      ] Backends/BookingServiceTest.RequestTokenOfAnotherPassengerIsRejected/memory
+[       OK ] Backends/BookingServiceTest.RequestTokenOfAnotherPassengerIsRejected/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.RequestTokenOfAnotherPassengerIsRejected/sqlite
+[       OK ] Backends/BookingServiceTest.RequestTokenOfAnotherPassengerIsRejected/sqlite (9 ms)
+[ RUN      ] Backends/BookingServiceTest.ST_BKG_02_MultiTravellerBooking/memory
+[       OK ] Backends/BookingServiceTest.ST_BKG_02_MultiTravellerBooking/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.ST_BKG_02_MultiTravellerBooking/sqlite
+[       OK ] Backends/BookingServiceTest.ST_BKG_02_MultiTravellerBooking/sqlite (10 ms)
+[ RUN      ] Backends/BookingServiceTest.ConfirmedThenRacThenWaitlistThenNoCapacity/memory
+[       OK ] Backends/BookingServiceTest.ConfirmedThenRacThenWaitlistThenNoCapacity/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.ConfirmedThenRacThenWaitlistThenNoCapacity/sqlite
+[       OK ] Backends/BookingServiceTest.ConfirmedThenRacThenWaitlistThenNoCapacity/sqlite (14 ms)
+[ RUN      ] Backends/BookingServiceTest.StorageFailureRollsBackAndRetryWithSameTokenSucceedsOnce/memory
+[       OK ] Backends/BookingServiceTest.StorageFailureRollsBackAndRetryWithSameTokenSucceedsOnce/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.StorageFailureRollsBackAndRetryWithSameTokenSucceedsOnce/sqlite
+[       OK ] Backends/BookingServiceTest.StorageFailureRollsBackAndRetryWithSameTokenSucceedsOnce/sqlite (23 ms)
+[ RUN      ] Backends/BookingServiceTest.ExpiredOrEmptySessionIsE1005/memory
+[       OK ] Backends/BookingServiceTest.ExpiredOrEmptySessionIsE1005/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.ExpiredOrEmptySessionIsE1005/sqlite
+[       OK ] Backends/BookingServiceTest.ExpiredOrEmptySessionIsE1005/sqlite (10 ms)
+[ RUN      ] Backends/BookingServiceTest.AdminAndOpsCannotBookE1006/memory
+[       OK ] Backends/BookingServiceTest.AdminAndOpsCannotBookE1006/memory (0 ms)
+[ RUN      ] Backends/BookingServiceTest.AdminAndOpsCannotBookE1006/sqlite
+[       OK ] Backends/BookingServiceTest.AdminAndOpsCannotBookE1006/sqlite (16 ms)
+[ RUN      ] Backends/BookingServiceTest.PassengerCannotBookForSomeoneElse/memory
+[       OK ] Backends/BookingServiceTest.PassengerCannotBookForSomeoneElse/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.PassengerCannotBookForSomeoneElse/sqlite
+[       OK ] Backends/BookingServiceTest.PassengerCannotBookForSomeoneElse/sqlite (8 ms)
+[ RUN      ] Backends/BookingServiceTest.StaffBooksOnBehalfAndIsRecordedAsBookedBy/memory
+[       OK ] Backends/BookingServiceTest.StaffBooksOnBehalfAndIsRecordedAsBookedBy/memory (0 ms)
+[ RUN      ] Backends/BookingServiceTest.StaffBooksOnBehalfAndIsRecordedAsBookedBy/sqlite
+[       OK ] Backends/BookingServiceTest.StaffBooksOnBehalfAndIsRecordedAsBookedBy/sqlite (9 ms)
+[ RUN      ] Backends/BookingServiceTest.WrongDirectionOrUnknownTrainIsE2001/memory
+[       OK ] Backends/BookingServiceTest.WrongDirectionOrUnknownTrainIsE2001/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.WrongDirectionOrUnknownTrainIsE2001/sqlite
+[       OK ] Backends/BookingServiceTest.WrongDirectionOrUnknownTrainIsE2001/sqlite (12 ms)
+[ RUN      ] Backends/BookingServiceTest.TrainNotRunningOnTheDateIsE2001/memory
+[       OK ] Backends/BookingServiceTest.TrainNotRunningOnTheDateIsE2001/memory (0 ms)
+[ RUN      ] Backends/BookingServiceTest.TrainNotRunningOnTheDateIsE2001/sqlite
+[       OK ] Backends/BookingServiceTest.TrainNotRunningOnTheDateIsE2001/sqlite (11 ms)
+[ RUN      ] Backends/BookingServiceTest.IntermediateStopFareUsesSegmentDistance/memory
+[       OK ] Backends/BookingServiceTest.IntermediateStopFareUsesSegmentDistance/memory (0 ms)
+[ RUN      ] Backends/BookingServiceTest.IntermediateStopFareUsesSegmentDistance/sqlite
+[       OK ] Backends/BookingServiceTest.IntermediateStopFareUsesSegmentDistance/sqlite (10 ms)
+[ RUN      ] Backends/BookingServiceTest.DateOutsideBookingWindowIsRejected/memory
+[       OK ] Backends/BookingServiceTest.DateOutsideBookingWindowIsRejected/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.DateOutsideBookingWindowIsRejected/sqlite
+[       OK ] Backends/BookingServiceTest.DateOutsideBookingWindowIsRejected/sqlite (10 ms)
+[ RUN      ] Backends/BookingServiceTest.OwnerAndStaffCanViewTicketOthersCannot/memory
+[       OK ] Backends/BookingServiceTest.OwnerAndStaffCanViewTicketOthersCannot/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.OwnerAndStaffCanViewTicketOthersCannot/sqlite
+[       OK ] Backends/BookingServiceTest.OwnerAndStaffCanViewTicketOthersCannot/sqlite (8 ms)
+[ RUN      ] Backends/BookingServiceTest.UT_CAN_05_InvalidPnrRejectedBeforeDatabaseLookup/memory
+[       OK ] Backends/BookingServiceTest.UT_CAN_05_InvalidPnrRejectedBeforeDatabaseLookup/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.UT_CAN_05_InvalidPnrRejectedBeforeDatabaseLookup/sqlite
+[       OK ] Backends/BookingServiceTest.UT_CAN_05_InvalidPnrRejectedBeforeDatabaseLookup/sqlite (8 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_CAN_06_PnrLookupDisplaysStoredReservationStatus/memory
+[       OK ] Backends/BookingServiceTest.IT_CAN_06_PnrLookupDisplaysStoredReservationStatus/memory (1 ms)
+[ RUN      ] Backends/BookingServiceTest.IT_CAN_06_PnrLookupDisplaysStoredReservationStatus/sqlite
+[       OK ] Backends/BookingServiceTest.IT_CAN_06_PnrLookupDisplaysStoredReservationStatus/sqlite (16 ms)
+[----------] 46 tests from Backends/BookingServiceTest (372 ms total)
+
+[----------] 22 tests from Backends/SeatReleaseTest
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_01_CancelledSeatBecomesAvailableAgain/memory
+[       OK ] Backends/SeatReleaseTest.IT_CAN_01_CancelledSeatBecomesAvailableAgain/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_01_CancelledSeatBecomesAvailableAgain/sqlite
+[       OK ] Backends/SeatReleaseTest.IT_CAN_01_CancelledSeatBecomesAvailableAgain/sqlite (9 ms)
+[ RUN      ] Backends/SeatReleaseTest.ReleasedSeatIsAllocatedToTheNextBooking/memory
+[       OK ] Backends/SeatReleaseTest.ReleasedSeatIsAllocatedToTheNextBooking/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.ReleasedSeatIsAllocatedToTheNextBooking/sqlite
+[       OK ] Backends/SeatReleaseTest.ReleasedSeatIsAllocatedToTheNextBooking/sqlite (11 ms)
+[ RUN      ] Backends/SeatReleaseTest.AllSeatsOfAMultiTravellerTicketAreReleased/memory
+[       OK ] Backends/SeatReleaseTest.AllSeatsOfAMultiTravellerTicketAreReleased/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.AllSeatsOfAMultiTravellerTicketAreReleased/sqlite
+[       OK ] Backends/SeatReleaseTest.AllSeatsOfAMultiTravellerTicketAreReleased/sqlite (14 ms)
+[ RUN      ] Backends/SeatReleaseTest.UnknownAlreadyCancelledAndMalformedPnr/memory
+[       OK ] Backends/SeatReleaseTest.UnknownAlreadyCancelledAndMalformedPnr/memory (2 ms)
+[ RUN      ] Backends/SeatReleaseTest.UnknownAlreadyCancelledAndMalformedPnr/sqlite
+[       OK ] Backends/SeatReleaseTest.UnknownAlreadyCancelledAndMalformedPnr/sqlite (12 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_03_WaitlistPromotedOnCancellation/memory
+[       OK ] Backends/SeatReleaseTest.IT_CAN_03_WaitlistPromotedOnCancellation/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_03_WaitlistPromotedOnCancellation/sqlite
+[       OK ] Backends/SeatReleaseTest.IT_CAN_03_WaitlistPromotedOnCancellation/sqlite (11 ms)
+[ RUN      ] Backends/SeatReleaseTest.UT_CAN_04_LargeHeadIsNotSkipped/memory
+[       OK ] Backends/SeatReleaseTest.UT_CAN_04_LargeHeadIsNotSkipped/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.UT_CAN_04_LargeHeadIsNotSkipped/sqlite
+[       OK ] Backends/SeatReleaseTest.UT_CAN_04_LargeHeadIsNotSkipped/sqlite (11 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_04_CancelWaitlistedTicketRenumbersQueue/memory
+[       OK ] Backends/SeatReleaseTest.IT_CAN_04_CancelWaitlistedTicketRenumbersQueue/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_04_CancelWaitlistedTicketRenumbersQueue/sqlite
+[       OK ] Backends/SeatReleaseTest.IT_CAN_04_CancelWaitlistedTicketRenumbersQueue/sqlite (15 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_05_RacPath/memory
+[       OK ] Backends/SeatReleaseTest.IT_CAN_05_RacPath/memory (1 ms)
+[ RUN      ] Backends/SeatReleaseTest.IT_CAN_05_RacPath/sqlite
+[       OK ] Backends/SeatReleaseTest.IT_CAN_05_RacPath/sqlite (18 ms)
+[ RUN      ] Backends/SeatReleaseTest.CancellingAnRacTicketPromotesTheWaitlistIntoRac/memory
+[       OK ] Backends/SeatReleaseTest.CancellingAnRacTicketPromotesTheWaitlistIntoRac/memory (2 ms)
+[ RUN      ] Backends/SeatReleaseTest.CancellingAnRacTicketPromotesTheWaitlistIntoRac/sqlite
+[       OK ] Backends/SeatReleaseTest.CancellingAnRacTicketPromotesTheWaitlistIntoRac/sqlite (14 ms)
+[ RUN      ] Backends/SeatReleaseTest.FailureDuringPromotionRollsBackTheWholeCancellation/memory
+[       OK ] Backends/SeatReleaseTest.FailureDuringPromotionRollsBackTheWholeCancellation/memory (3 ms)
+[ RUN      ] Backends/SeatReleaseTest.FailureDuringPromotionRollsBackTheWholeCancellation/sqlite
+[       OK ] Backends/SeatReleaseTest.FailureDuringPromotionRollsBackTheWholeCancellation/sqlite (9 ms)
+[ RUN      ] Backends/SeatReleaseTest.RandomisedBookAndCancelNeverBreaksQueueOrder/memory
+[       OK ] Backends/SeatReleaseTest.RandomisedBookAndCancelNeverBreaksQueueOrder/memory (53 ms)
+[ RUN      ] Backends/SeatReleaseTest.RandomisedBookAndCancelNeverBreaksQueueOrder/sqlite
+[       OK ] Backends/SeatReleaseTest.RandomisedBookAndCancelNeverBreaksQueueOrder/sqlite (109 ms)
+[----------] 22 tests from Backends/SeatReleaseTest (340 ms total)
+
+[----------] 10 tests from Backends/CancellationServiceTest
+[ RUN      ] Backends/CancellationServiceTest.CancelsOwnedConfirmedTicketAndStoresRefund/memory
+[       OK ] Backends/CancellationServiceTest.CancelsOwnedConfirmedTicketAndStoresRefund/memory (1 ms)
+[ RUN      ] Backends/CancellationServiceTest.CancelsOwnedConfirmedTicketAndStoresRefund/sqlite
+[       OK ] Backends/CancellationServiceTest.CancelsOwnedConfirmedTicketAndStoresRefund/sqlite (10 ms)
+[ RUN      ] Backends/CancellationServiceTest.RejectsForeignAndUnknownPnrWithoutChangingTicket/memory
+[       OK ] Backends/CancellationServiceTest.RejectsForeignAndUnknownPnrWithoutChangingTicket/memory (1 ms)
+[ RUN      ] Backends/CancellationServiceTest.RejectsForeignAndUnknownPnrWithoutChangingTicket/sqlite
+[       OK ] Backends/CancellationServiceTest.RejectsForeignAndUnknownPnrWithoutChangingTicket/sqlite (9 ms)
+[ RUN      ] Backends/CancellationServiceTest.RejectsAlreadyCancelledTicket/memory
+[       OK ] Backends/CancellationServiceTest.RejectsAlreadyCancelledTicket/memory (1 ms)
+[ RUN      ] Backends/CancellationServiceTest.RejectsAlreadyCancelledTicket/sqlite
+[       OK ] Backends/CancellationServiceTest.RejectsAlreadyCancelledTicket/sqlite (16 ms)
+[ RUN      ] Backends/CancellationServiceTest.RejectsCancellationAfterDepartureWithoutChangingTicket/memory
+[       OK ] Backends/CancellationServiceTest.RejectsCancellationAfterDepartureWithoutChangingTicket/memory (1 ms)
+[ RUN      ] Backends/CancellationServiceTest.RejectsCancellationAfterDepartureWithoutChangingTicket/sqlite
+[       OK ] Backends/CancellationServiceTest.RejectsCancellationAfterDepartureWithoutChangingTicket/sqlite (11 ms)
+[ RUN      ] Backends/CancellationServiceTest.WaitlistedTicketReceivesFullRefund/memory
+[       OK ] Backends/CancellationServiceTest.WaitlistedTicketReceivesFullRefund/memory (1 ms)
+[ RUN      ] Backends/CancellationServiceTest.WaitlistedTicketReceivesFullRefund/sqlite
+[       OK ] Backends/CancellationServiceTest.WaitlistedTicketReceivesFullRefund/sqlite (10 ms)
+[----------] 10 tests from Backends/CancellationServiceTest (89 ms total)
+
+[----------] 26 tests from Backends/ScheduleCoachTest
+[ RUN      ] Backends/ScheduleCoachTest.IT_ADM_04_IncreasingCapacityIsVisibleInAvailability/memory
+[       OK ] Backends/ScheduleCoachTest.IT_ADM_04_IncreasingCapacityIsVisibleInAvailability/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.IT_ADM_04_IncreasingCapacityIsVisibleInAvailability/sqlite
+[       OK ] Backends/ScheduleCoachTest.IT_ADM_04_IncreasingCapacityIsVisibleInAvailability/sqlite (7 ms)
+[ RUN      ] Backends/ScheduleCoachTest.IT_ADM_04_ReducingBelowBookedSeatsIsRejected/memory
+[       OK ] Backends/ScheduleCoachTest.IT_ADM_04_ReducingBelowBookedSeatsIsRejected/memory (1 ms)
+[ RUN      ] Backends/ScheduleCoachTest.IT_ADM_04_ReducingBelowBookedSeatsIsRejected/sqlite
+[       OK ] Backends/ScheduleCoachTest.IT_ADM_04_ReducingBelowBookedSeatsIsRejected/sqlite (10 ms)
+[ RUN      ] Backends/ScheduleCoachTest.RemovingACoachWithAnOccupiedSeatIsRejected/memory
+[       OK ] Backends/ScheduleCoachTest.RemovingACoachWithAnOccupiedSeatIsRejected/memory (1 ms)
+[ RUN      ] Backends/ScheduleCoachTest.RemovingACoachWithAnOccupiedSeatIsRejected/sqlite
+[       OK ] Backends/ScheduleCoachTest.RemovingACoachWithAnOccupiedSeatIsRejected/sqlite (8 ms)
+[ RUN      ] Backends/ScheduleCoachTest.ReducingUnusedCapacityIsAllowed/memory
+[       OK ] Backends/ScheduleCoachTest.ReducingUnusedCapacityIsAllowed/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.ReducingUnusedCapacityIsAllowed/sqlite
+[       OK ] Backends/ScheduleCoachTest.ReducingUnusedCapacityIsAllowed/sqlite (3 ms)
+[ RUN      ] Backends/ScheduleCoachTest.AddedSeatsPromoteTheWaitlistInOrder/memory
+[       OK ] Backends/ScheduleCoachTest.AddedSeatsPromoteTheWaitlistInOrder/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.AddedSeatsPromoteTheWaitlistInOrder/sqlite
+[       OK ] Backends/ScheduleCoachTest.AddedSeatsPromoteTheWaitlistInOrder/sqlite (6 ms)
+[ RUN      ] Backends/ScheduleCoachTest.AddedRacSlotsMoveTheWaitlistIntoRac/memory
+[       OK ] Backends/ScheduleCoachTest.AddedRacSlotsMoveTheWaitlistIntoRac/memory (1 ms)
+[ RUN      ] Backends/ScheduleCoachTest.AddedRacSlotsMoveTheWaitlistIntoRac/sqlite
+[       OK ] Backends/ScheduleCoachTest.AddedRacSlotsMoveTheWaitlistIntoRac/sqlite (8 ms)
+[ RUN      ] Backends/ScheduleCoachTest.QuotasCannotDropBelowWhatIsHeld/memory
+[       OK ] Backends/ScheduleCoachTest.QuotasCannotDropBelowWhatIsHeld/memory (1 ms)
+[ RUN      ] Backends/ScheduleCoachTest.QuotasCannotDropBelowWhatIsHeld/sqlite
+[       OK ] Backends/ScheduleCoachTest.QuotasCannotDropBelowWhatIsHeld/sqlite (5 ms)
+[ RUN      ] Backends/ScheduleCoachTest.FareMultiplierChangeAffectsQuotes/memory
+[       OK ] Backends/ScheduleCoachTest.FareMultiplierChangeAffectsQuotes/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.FareMultiplierChangeAffectsQuotes/sqlite
+[       OK ] Backends/ScheduleCoachTest.FareMultiplierChangeAffectsQuotes/sqlite (5 ms)
+[ RUN      ] Backends/ScheduleCoachTest.NewClassCanBeAdded/memory
+[       OK ] Backends/ScheduleCoachTest.NewClassCanBeAdded/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.NewClassCanBeAdded/sqlite
+[       OK ] Backends/ScheduleCoachTest.NewClassCanBeAdded/sqlite (5 ms)
+[ RUN      ] Backends/ScheduleCoachTest.InvalidConfigurationsAreRejected/memory
+[       OK ] Backends/ScheduleCoachTest.InvalidConfigurationsAreRejected/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.InvalidConfigurationsAreRejected/sqlite
+[       OK ] Backends/ScheduleCoachTest.InvalidConfigurationsAreRejected/sqlite (5 ms)
+[ RUN      ] Backends/ScheduleCoachTest.OnlyAdministratorsMayChangeConfiguration/memory
+[       OK ] Backends/ScheduleCoachTest.OnlyAdministratorsMayChangeConfiguration/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.OnlyAdministratorsMayChangeConfiguration/sqlite
+[       OK ] Backends/ScheduleCoachTest.OnlyAdministratorsMayChangeConfiguration/sqlite (5 ms)
+[ RUN      ] Backends/ScheduleCoachTest.SchedulesCanBeAddedForADateRange/memory
+[       OK ] Backends/ScheduleCoachTest.SchedulesCanBeAddedForADateRange/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.SchedulesCanBeAddedForADateRange/sqlite
+[       OK ] Backends/ScheduleCoachTest.SchedulesCanBeAddedForADateRange/sqlite (3 ms)
+[ RUN      ] Backends/ScheduleCoachTest.ScheduleWithActiveReservationsCannotBeRemoved/memory
+[       OK ] Backends/ScheduleCoachTest.ScheduleWithActiveReservationsCannotBeRemoved/memory (0 ms)
+[ RUN      ] Backends/ScheduleCoachTest.ScheduleWithActiveReservationsCannotBeRemoved/sqlite
+[       OK ] Backends/ScheduleCoachTest.ScheduleWithActiveReservationsCannotBeRemoved/sqlite (2 ms)
+[----------] 26 tests from Backends/ScheduleCoachTest (120 ms total)
+
+[----------] 12 tests from Backends/ReportServiceTest
+[ RUN      ] Backends/ReportServiceTest.IT_RPT_01_BookingStatisticsByStatus/memory
+[       OK ] Backends/ReportServiceTest.IT_RPT_01_BookingStatisticsByStatus/memory (0 ms)
+[ RUN      ] Backends/ReportServiceTest.IT_RPT_01_BookingStatisticsByStatus/sqlite
+[       OK ] Backends/ReportServiceTest.IT_RPT_01_BookingStatisticsByStatus/sqlite (4 ms)
+[ RUN      ] Backends/ReportServiceTest.StatisticsRespectTheDateRange/memory
+[       OK ] Backends/ReportServiceTest.StatisticsRespectTheDateRange/memory (0 ms)
+[ RUN      ] Backends/ReportServiceTest.StatisticsRespectTheDateRange/sqlite
+[       OK ] Backends/ReportServiceTest.StatisticsRespectTheDateRange/sqlite (8 ms)
+[ RUN      ] Backends/ReportServiceTest.IT_RPT_02_SeatOccupancy/memory
+[       OK ] Backends/ReportServiceTest.IT_RPT_02_SeatOccupancy/memory (0 ms)
+[ RUN      ] Backends/ReportServiceTest.IT_RPT_02_SeatOccupancy/sqlite
+[       OK ] Backends/ReportServiceTest.IT_RPT_02_SeatOccupancy/sqlite (10 ms)
+[ RUN      ] Backends/ReportServiceTest.IT_RPT_02_TrainWiseCounts/memory
+[       OK ] Backends/ReportServiceTest.IT_RPT_02_TrainWiseCounts/memory (0 ms)
+[ RUN      ] Backends/ReportServiceTest.IT_RPT_02_TrainWiseCounts/sqlite
+[       OK ] Backends/ReportServiceTest.IT_RPT_02_TrainWiseCounts/sqlite (10 ms)
+[ RUN      ] Backends/ReportServiceTest.OnlyAdminAndOpsSeeReports/memory
+[       OK ] Backends/ReportServiceTest.OnlyAdminAndOpsSeeReports/memory (0 ms)
+[ RUN      ] Backends/ReportServiceTest.OnlyAdminAndOpsSeeReports/sqlite
+[       OK ] Backends/ReportServiceTest.OnlyAdminAndOpsSeeReports/sqlite (4 ms)
+[ RUN      ] Backends/ReportServiceTest.InvalidRangesAreRejected/memory
+[       OK ] Backends/ReportServiceTest.InvalidRangesAreRejected/memory (0 ms)
+[ RUN      ] Backends/ReportServiceTest.InvalidRangesAreRejected/sqlite
+[       OK ] Backends/ReportServiceTest.InvalidRangesAreRejected/sqlite (4 ms)
+[----------] 12 tests from Backends/ReportServiceTest (64 ms total)
+
+[----------] Global test environment tear-down
+[==========] 181 tests from 13 test suites ran. (1650 ms total)
+[  PASSED  ] 181 tests.
+
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 8 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 4 tests from PerformanceTest
+[setup] generated 200 trains, 40 stations, 20000 reservations in 2320 ms
+[ RUN      ] PerformanceTest.LargeDatasetHasTheTestPlanSize
+[       OK ] PerformanceTest.LargeDatasetHasTheTestPlanSize (0 ms)
+[ RUN      ] PerformanceTest.PERF_01_SearchResponseTime
+[PERF-01 search] n=100  P50=0.54 ms  P95=1.01 ms  max=1.26 ms
+[       OK ] PerformanceTest.PERF_01_SearchResponseTime (56 ms)
+[ RUN      ] PerformanceTest.PERF_02_AvailabilityAndBookingLatency
+[PERF-02 availability] n=50  P50=0.17 ms  P95=0.48 ms  max=1.09 ms
+[PERF-02 booking] n=50  P50=11.17 ms  P95=14.55 ms  max=15.09 ms
+[       OK ] PerformanceTest.PERF_02_AvailabilityAndBookingLatency (586 ms)
+[ RUN      ] PerformanceTest.RepeatedSearchesDoNotDegrade
+[repeated search (first 50)] n=50  P50=0.36 ms  P95=0.86 ms  max=0.97 ms
+[repeated search (last 450)] n=450  P50=0.47 ms  P95=1.12 ms  max=2.54 ms
+[       OK ] PerformanceTest.RepeatedSearchesDoNotDegrade (259 ms)
+[----------] 4 tests from PerformanceTest (910 ms total)
+
+[----------] 4 tests from Reliability
+[ RUN      ] Reliability.REL_01_SoakOfThousandMixedOperations
+[REL-01] operations=1000 normal=1000 abnormal=0 (search 287, availability 151, booking 364, ticket 92, cancel 106)
+[       OK ] Reliability.REL_01_SoakOfThousandMixedOperations (2977 ms)
+[ RUN      ] Reliability.REL_02_RetryAfterRestartReturnsTheOriginalPnr
+[       OK ] Reliability.REL_02_RetryAfterRestartReturnsTheOriginalPnr (228 ms)
+[ RUN      ] Reliability.RetriesAfterStorageFaultsCreateExactlyOneReservation
+[       OK ] Reliability.RetriesAfterStorageFaultsCreateExactlyOneReservation (202 ms)
+[ RUN      ] Reliability.FillingATrainLeavesNoDuplicatesAndAContiguousWaitlist
+[       OK ] Reliability.FillingATrainLeavesNoDuplicatesAndAContiguousWaitlist (305 ms)
+[----------] 4 tests from Reliability (3719 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 2 test suites ran. (7220 ms total)
+[  PASSED  ] 8 tests.
+
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 15 tests from 5 test suites.
+[----------] Global test environment set-up.
+[----------] 11 tests from SecurityTest
+[ RUN      ] SecurityTest.SEC_T01_SaltedHashesAndNoCredentialDisclosure
+[       OK ] SecurityTest.SEC_T01_SaltedHashesAndNoCredentialDisclosure (1693 ms)
+[ RUN      ] SecurityTest.UT_AUTH_02_DuplicatesAndBothLoginAliases
+[       OK ] SecurityTest.UT_AUTH_02_DuplicatesAndBothLoginAliases (1560 ms)
+[ RUN      ] SecurityTest.SEC_T04_ExpiredTamperedAndRevokedSessions
+[       OK ] SecurityTest.SEC_T04_ExpiredTamperedAndRevokedSessions (603 ms)
+[ RUN      ] SecurityTest.SEC_T06_FiveFailuresLockForExactlyFiveMinutes
+[       OK ] SecurityTest.SEC_T06_FiveFailuresLockForExactlyFiveMinutes (1665 ms)
+[ RUN      ] SecurityTest.SuccessfulLoginResetsFailureCountAndLockExpiryRestartsCounter
+[       OK ] SecurityTest.SuccessfulLoginResetsFailureCountAndLockExpiryRestartsCounter (2453 ms)
+[ RUN      ] SecurityTest.IT_AUTH_03_ProfileValidationOwnershipPersistenceAndMasking
+[       OK ] SecurityTest.IT_AUTH_03_ProfileValidationOwnershipPersistenceAndMasking (390 ms)
+[ RUN      ] SecurityTest.IT_BKG_07_SEC_T08_HistoryIsPrivateOrderedAndIdsMasked
+[       OK ] SecurityTest.IT_BKG_07_SEC_T08_HistoryIsPrivateOrderedAndIdsMasked (14 ms)
+[ RUN      ] SecurityTest.IT_STF_01_02_StaffBookingsAndCorrectionsPreserveInvariants
+[       OK ] SecurityTest.IT_STF_01_02_StaffBookingsAndCorrectionsPreserveInvariants (9 ms)
+[ RUN      ] SecurityTest.SEC_T02_CompleteRolePermissionMatrix
+[       OK ] SecurityTest.SEC_T02_CompleteRolePermissionMatrix (8 ms)
+[ RUN      ] SecurityTest.SEC_T07_RetentionBoundaryAndIdempotence
+[       OK ] SecurityTest.SEC_T07_RetentionBoundaryAndIdempotence (11 ms)
+[ RUN      ] SecurityTest.StaffCorrectionRejectsDepartedAndCancelledTickets
+[       OK ] SecurityTest.StaffCorrectionRejectsDepartedAndCancelledTickets (12 ms)
+[----------] 11 tests from SecurityTest (8447 ms total)
+
+[----------] 1 test from InputValidatorSecurity
+[ RUN      ] InputValidatorSecurity.SEC_T03_BoundariesAndHostileInputs
+[       OK ] InputValidatorSecurity.SEC_T03_BoundariesAndHostileInputs (0 ms)
+[----------] 1 test from InputValidatorSecurity (1 ms total)
+
+[----------] 1 test from AuditSecurity
+[ RUN      ] AuditSecurity.SEC_T05_AppendSanitizeAndDetectTampering
+[       OK ] AuditSecurity.SEC_T05_AppendSanitizeAndDetectTampering (2 ms)
+[----------] 1 test from AuditSecurity (3 ms total)
+
+[----------] 1 test from PasswordSecurity
+[ RUN      ] PasswordSecurity.PBKDF2MatchesIndependentPythonHashlibVector
+[       OK ] PasswordSecurity.PBKDF2MatchesIndependentPythonHashlibVector (326 ms)
+[----------] 1 test from PasswordSecurity (327 ms total)
+
+[----------] 1 test from AuthPersistence
+[ RUN      ] AuthPersistence.ProfileAndLockoutSurviveDatabaseReopen
+[       OK ] AuthPersistence.ProfileAndLockoutSurviveDatabaseReopen (2337 ms)
+[----------] 1 test from AuthPersistence (2338 ms total)
+
+[----------] Global test environment tear-down
+[==========] 15 tests from 5 test suites ran. (11127 ms total)
+[  PASSED  ] 15 tests.

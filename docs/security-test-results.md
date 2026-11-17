@@ -1,3 +1,5 @@
+> Historical sprint snapshot. For the integrated release, use README.md, test-cases.md and the four final test reports in this folder. Pending-work statements and counts below describe the earlier branch state.
+
 # Security and integration verification
 
 Verified on 30 October 2026 using Ubuntu 24.04 under WSL, GCC 13.3, CMake 3.28, SQLite 3.45, OpenSSL 3.0, GoogleTest 1.14 and cppcheck 2.13.

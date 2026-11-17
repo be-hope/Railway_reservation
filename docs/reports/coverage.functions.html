@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html class="theme-green">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>GCC Code Coverage Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+:root {
+    font-family: sans-serif;
+    --tab_size: 4;
+}
+
+.theme-green, .theme-blue {
+    --unknown_color: lightgray;
+    --low_color: #FF6666;
+    --medium_color: #F9FD63;
+    --partial_covered_color: var(--medium_color);
+    --uncovered_color: #FF8C8C;
+    --warning_color: orangered;
+    --notTakenBranch_color: red;
+    --uncheckedDecision_color: darkorange;
+    --notTakenDecision_color: red;
+    --notInvokedCall_color: red;
+    --excluded_color: rgb(255, 241, 229);
+}
+
+.theme-green {
+    --high_color: #85E485;
+    --covered_color: #85E485;
+    --takenBranch_color: green;
+    --takenDecision_color: green;
+    --invokedCall_color: green;
+}
+
+.theme-blue {
+    --high_color: #66B4FF;
+    --covered_color: #66B4Ff;
+    --takenBranch_color: blue;
+    --takenDecision_color: blue;
+    --invokedCall_color: blue;
+}
+
+body
+{
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+h1
+{
+    text-align: center;
+    margin: 0;
+    padding-bottom: 10px;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+hr
+{
+    background-color: navy;
+    height: 2px;
+    border: 0;
+}
+
+/* Link formats: use maroon w/underlines */
+a:link
+{
+    color: navy;
+    text-decoration: underline;
+}
+a:visited
+{
+    color: maroon;
+    text-decoration: underline;
+}
+
+/*** Summary formats ***/
+
+.summary
+{
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 100%;
+    justify-content: flex-start;
+}
+
+.summary > table
+{
+    flex: 1 0 7em;
+    border: 0;
+}
+
+.summary > :last-child {
+    margin-left: auto;
+}
+
+table.legend
+{
+    color: black;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+table.legend th[scope=row]
+{
+    font-weight: normal;
+    text-align: right;
+    white-space: nowrap;
+}
+
+table.legend td
+{
+    color: blue;
+    text-align: left;
+    white-space: nowrap;
+    padding-left: 5px;
+}
+
+table.legend td.legend
+{
+    color: black;
+    font-size: 80%;
+}
+
+table.legend td.warning_text
+{
+    color: var(--warning_color);
+}
+
+table.coverage td,
+table.coverage th
+{
+    text-align: right;
+    color: black;
+    font-weight: normal;
+    white-space: nowrap;
+    padding-left: 5px;
+    padding-right: 4px;
+}
+
+table.coverage td
+{
+    background-color: LightSteelBlue;
+}
+
+table.coverage th[scope=row]
+{
+    color: black;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+table.coverage th[scope=col]
+{
+    color: blue;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+table.legend span
+{
+    margin-right: 4px;
+    padding: 2px;
+}
+
+table.legend span.coverage-unknown,
+table.legend span.coverage-none,
+table.legend span.coverage-low,
+table.legend span.coverage-medium,
+table.legend span.coverage-high
+{
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+table.legend span.coverage-unknown,
+table.coverage td.coverage-unknown,
+table.file-list td.coverage-unknow
+{
+    background-color: var(--unknown_color) !important;
+}
+
+table.legend span.coverage-none,
+table.legend span.coverage-low,
+table.coverage td.coverage-none,
+table.coverage td.coverage-low,
+table.file-list td.coverage-none,
+table.file-list td.coverage-low
+{
+    background-color: var(--low_color) !important;
+}
+
+table.legend span.coverage-medium,
+table.coverage td.coverage-medium,
+table.file-list td.coverage-medium
+{
+    background-color: var(--medium_color) !important;
+}
+
+table.legend span.coverage-high,
+table.coverage td.coverage-high,
+table.file-list td.coverage-high
+{
+    background-color: var(--high_color) !important;
+}
+/*** End of Summary formats ***/
+/*** Meter formats ***/
+
+/* Common */
+meter {
+    -moz-appearance: none;
+
+    width: 30vw;
+    min-width: 4em;
+    max-width: 15em;
+    height: 0.75em;
+    padding: 0;
+    vertical-align: baseline;
+    margin-top: 3px;
+    /* Outer background for Mozilla */
+    background: none;
+    background-color: whitesmoke;
+}
+
+/* Webkit */
+
+meter::-webkit-meter-bar {
+    /* Outer background for Webkit */
+    background: none;
+    background-color: whitesmoke;
+    height: 0.75em;
+    border-radius: 0px;
+}
+
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value
+{
+    /* Inner shadow for Webkit */
+    border: solid 1px black;
+}
+
+meter.coverage-none::-webkit-meter-optimum-value,
+meter.coverage-low::-webkit-meter-optimum-value
+{
+    background: var(--low_color);
+}
+
+meter.coverage-medium::-webkit-meter-optimum-value
+{
+    background: var(--medium_color);
+}
+
+meter.coverage-high::-webkit-meter-optimum-value
+{
+    background: var(--high_color);
+}
+
+/* Mozilla */
+
+meter::-moz-meter-bar
+{
+    box-sizing: border-box;
+}
+
+meter:-moz-meter-optimum::-moz-meter-bar,
+meter:-moz-meter-sub-optimum::-moz-meter-bar,
+meter:-moz-meter-sub-sub-optimum::-moz-meter-bar
+{
+    /* Inner shadow for Mozilla */
+    border: solid 1px black;
+}
+
+meter.coverage-none:-moz-meter-optimum::-moz-meter-bar,
+meter.coverage-low:-moz-meter-optimum::-moz-meter-bar
+{
+    background: var(--low_color);
+}
+
+meter.coverage-medium:-moz-meter-optimum::-moz-meter-bar
+{
+    background: var(--medium_color);
+}
+
+meter.coverage-high:-moz-meter-optimum::-moz-meter-bar
+{
+    background: var(--high_color);
+}
+
+/*** End of Meter formats ***/
+.file-list td, .file-list th {
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+.file-list th[scope^=col]
+{
+    text-align: center;
+    color: white;
+    background-color: SteelBlue;
+    font-size: 120%;
+}
+
+.file-list th[scope=row]
+{
+    text-align: left;
+    color: black;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.file-list tr > td,
+.file-list tr > th {
+    background: aliceblue;
+}
+
+.file-list tr:nth-child(even) > td,
+.file-list tr:nth-child(even) > th {
+    background: LightSteelBlue
+}
+
+.file-list tr:hover > td,
+.file-list tr:hover > th[scope=row]
+{
+    background-color: #ddd;
+}
+td.CoverValue
+{
+    text-align: right;
+    white-space: nowrap;
+}
+
+td.coveredLine,
+span.coveredLine
+{
+    background-color: var(--covered_color) !important;
+}
+
+td.partialCoveredLine,
+span.partialCoveredLine
+{
+    background-color: var(--partial_covered_color) !important;
+}
+
+td.uncoveredLine,
+span.uncoveredLine
+{
+    background-color: var(--uncovered_color) !important;
+}
+
+td.excludedLine,
+span.excludedLine
+{
+    background-color: var(--excluded_color) !important;
+}
+
+.linebranch, .linedecision, .linecall, .linecount
+{
+    font-family: monospace;
+    border-right: 1px gray solid;
+    background-color: lightgray;
+    text-align: right;
+}
+
+
+.linebranchDetails, .linedecisionDetails, .linecallDetails
+{
+    position: relative;
+}
+.linebranchSummary, .linedecisionSummary, .linecallSummary
+{
+    cursor: help;
+}
+.linebranchContents, .linedecisionContents, .linecallContents
+{
+    font-family: sans-serif;
+    font-size: small;
+    text-align: left;
+    position: absolute;
+    width: 15em;
+    padding: 1em;
+    background: white;
+    border: solid gray 1px;
+    box-shadow: 5px 5px 10px gray;
+    z-index: 1; /* show in front of the table entries */
+}
+
+.takenBranch
+{
+    color: var(--takenBranch_color) !important;
+}
+
+.notTakenBranch
+{
+    color: var(--notTakenBranch_color) !important;
+}
+
+.takenDecision
+{
+    color: var(--takenDecision_color) !important;
+}
+
+.notTakenDecision
+{
+    color: var(--notTakenDecision_color) !important;
+}
+
+.uncheckedDecision
+{
+    color: var(--uncheckedDecision_color) !important;
+}
+
+.invokedCall
+{
+    color: var(--invokedCall_color) !important;
+}
+
+.notInvokedCall
+{
+    color: var(--notInvokedCall_color) !important;
+}
+
+.src
+{
+    padding-left: 12px;
+    text-align: left;
+
+    font-family: monospace;
+    white-space: pre;
+
+    tab-size: var(--tab_size);
+    -moz-tab-size: var(--tab_size);
+}
+
+span.takenBranch,
+span.notTakenBranch,
+span.takenDecision,
+span.notTakenDecision,
+span.uncheckedDecision
+{
+    font-family: monospace;
+    font-weight: bold;
+}
+
+pre
+{
+    height : 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.listOfFunctions td, .listOfFunctions th {
+    padding: 0 10px;
+}
+.listOfFunctions th
+{
+    text-align: center;
+    color: white;
+    background-color: SteelBlue;
+}
+.listOfFunctions tr > td {
+    background: aliceblue;
+}
+.listOfFunctions tr:nth-child(even) > td {
+    background: LightSteelBlue
+}
+.listOfFunctions tr:hover > td
+{
+    background-color: #ddd;
+}
+.listOfFunctions tr > td > a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.source-line
+{
+    height : 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.lineno
+{
+    background-color: #EFE383;
+    border-right: 1px solid #BBB15F;
+    text-align: right;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+}
+
+.lineno > a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.file-list
+{
+    margin: 1em auto;
+    border: 0;
+    border-spacing: 1px;
+}
+
+.file-source table
+{
+    border-spacing: 0;
+}
+
+.file-source table td,
+.file-source table th
+{
+    padding: 1px 10px;
+}
+
+.file-source table th
+{
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.file-source table td:last-child
+{
+    width: 100%;
+}
+footer
+{
+    text-align: center;
+    padding-top: 3px;
+}
+
+/* pygments syntax highlighting */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.hll { background-color: #ffffcc }
+.c { color: #3D7B7B; font-style: italic } /* Comment */
+.err { border: 1px solid #FF0000 } /* Error */
+.k { color: #008000; font-weight: bold } /* Keyword */
+.o { color: #666666 } /* Operator */
+.ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.cp { color: #9C6500 } /* Comment.Preproc */
+.cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.gd { color: #A00000 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.gr { color: #E40000 } /* Generic.Error */
+.gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.gi { color: #008400 } /* Generic.Inserted */
+.go { color: #717171 } /* Generic.Output */
+.gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.gt { color: #0044DD } /* Generic.Traceback */
+.kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.kp { color: #008000 } /* Keyword.Pseudo */
+.kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.kt { color: #B00040 } /* Keyword.Type */
+.m { color: #666666 } /* Literal.Number */
+.s { color: #BA2121 } /* Literal.String */
+.na { color: #687822 } /* Name.Attribute */
+.nb { color: #008000 } /* Name.Builtin */
+.nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.no { color: #880000 } /* Name.Constant */
+.nd { color: #AA22FF } /* Name.Decorator */
+.ni { color: #717171; font-weight: bold } /* Name.Entity */
+.ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.nf { color: #0000FF } /* Name.Function */
+.nl { color: #767600 } /* Name.Label */
+.nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.nt { color: #008000; font-weight: bold } /* Name.Tag */
+.nv { color: #19177C } /* Name.Variable */
+.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mb { color: #666666 } /* Literal.Number.Bin */
+.mf { color: #666666 } /* Literal.Number.Float */
+.mh { color: #666666 } /* Literal.Number.Hex */
+.mi { color: #666666 } /* Literal.Number.Integer */
+.mo { color: #666666 } /* Literal.Number.Oct */
+.sa { color: #BA2121 } /* Literal.String.Affix */
+.sb { color: #BA2121 } /* Literal.String.Backtick */
+.sc { color: #BA2121 } /* Literal.String.Char */
+.dl { color: #BA2121 } /* Literal.String.Delimiter */
+.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.s2 { color: #BA2121 } /* Literal.String.Double */
+.se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.sh { color: #BA2121 } /* Literal.String.Heredoc */
+.si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.sx { color: #008000 } /* Literal.String.Other */
+.sr { color: #A45A77 } /* Literal.String.Regex */
+.s1 { color: #BA2121 } /* Literal.String.Single */
+.ss { color: #19177C } /* Literal.String.Symbol */
+.bp { color: #008000 } /* Name.Builtin.Pseudo */
+.fm { color: #0000FF } /* Name.Function.Magic */
+.vc { color: #19177C } /* Name.Variable.Class */
+.vg { color: #19177C } /* Name.Variable.Global */
+.vi { color: #19177C } /* Name.Variable.Instance */
+.vm { color: #19177C } /* Name.Variable.Magic */
+.il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>GCC Code Coverage Report</h1>
+
+      <hr/>
+
+      <div class="summary">
+<div>
+  <table class="legend">
+    <tr>
+      <th scope="row">Directory:</th>
+      <td>./</td>
+    </tr>
+    <tr>
+      <th scope="row">Date:</th>
+      <td>2026-11-17 14:12:25</td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <table class="coverage">
+    <tr>
+      <th></th>
+      <th scope="col">Exec</th>
+      <th scope="col">Total</th>
+      <th scope="col">Coverage</th>
+    </tr>
+    <tr>
+      <th scope="row">Lines:</th>
+      <td>2731</td>
+      <td>2858</td>
+      <td class="coverage-high">95.6%</td>
+    </tr>
+    <tr>
+      <th scope="row">Functions:</th>
+      <td>531</td>
+      <td>574</td>
+      <td class="coverage-high">92.5%</td>
+    </tr>
+    <tr>
+      <th scope="row">Branches:</th>
+      <td>3976</td>
+      <td>7737</td>
+      <td class="coverage-low">51.4%</td>
+    </tr>
+  </table>
+</div>
+      </div>
+
+      <hr/>
+    </header>
+
+    <nav>
+    </nav>
+
+    <main>
+<table class="listOfFunctions">
+  <tr>
+    <th>Function (File:Line)</th>
+    <th>Call count</th>
+    <th>Block coverage</th>
+  </tr>
+  <tr><td><a href="coverage.main.cpp.36a227146cac398defd63282f9e54084.html#l23">(anonymous namespace)::read(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, bool) (tools/main.cpp:23)</a></td><td>called 127 times, returned 127 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.main.cpp.36a227146cac398defd63282f9e54084.html#l148">main (tools/main.cpp:148)</a></td><td>called 35 times, returned 35 times</td><td>29.0%</td></tr>
+  <tr><td><a href="coverage.seed_database.cpp.ddba545844eddefc9f6b49dddcdbfc90.html#l10">main (tools/seed_database.cpp:10)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l9">rrs::(anonymous namespace)::bindMinutes(rrs::Statement&amp;, int, int) (src/dal/sqlite_train_repository.cpp:9)</a></td><td>called 5854 times, returned 5854 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l13">rrs::(anonymous namespace)::capacityError(rrs::Date const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/schedule_coach_service.cpp:13)</a></td><td>called 8 times, returned 8 times</td><td>62.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l7">rrs::(anonymous namespace)::checked(bool, char const*) (src/security/input_validator.cpp:7)</a></td><td>called 15911 times, returned 15911 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.management_menu.cpp.5ec0088ed3cefc6204a1ed69d26ad9e2.html#l7">rrs::(anonymous namespace)::date(rrs::ConsoleIO&amp;) (tools/management_menu.cpp:7)</a></td><td>called 1 time, returned 1 time</td><td>39.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l15">rrs::(anonymous namespace)::daysInMonth(int, int) (src/common/date.cpp:15)</a></td><td>called 6330 times, returned 6330 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html#l15">rrs::(anonymous namespace)::decodeSalt(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::array&lt;unsigned char, 16ul&gt;&amp;) (src/auth/password_hasher.cpp:15)</a></td><td>called 132 times, returned 132 times</td><td>96.0%</td></tr>
+  <tr><td><a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html#l28">rrs::(anonymous namespace)::derive(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, unsigned char const*) (src/auth/password_hasher.cpp:28)</a></td><td>called 132 times, returned 132 times</td><td>95.0%</td></tr>
+  <tr><td><a href="coverage.audit.cpp.83e7a180f718f74146949efd7100f42a.html#l25">rrs::(anonymous namespace)::digest(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/audit.cpp:25)</a></td><td>called 278 times, returned 278 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l10">rrs::(anonymous namespace)::digits(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:10)</a></td><td>called 23 times, returned 23 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l11">rrs::(anonymous namespace)::digits(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;)::{lambda(char)#1}::operator()(char) const (src/security/input_validator.cpp:11)</a></td><td>called 230 times, returned 230 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html#l13">rrs::(anonymous namespace)::digitsFor(int) (src/booking/seat_allocator.cpp:13)</a></td><td>called 50806 times, returned 50806 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html#l9">rrs::(anonymous namespace)::hex(unsigned char const*, unsigned long) (src/auth/password_hasher.cpp:9)</a></td><td>called 1293 times, returned 1293 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l16">rrs::(anonymous namespace)::hhmm(int) (src/ui/passenger_menu.cpp:16)</a></td><td>called 6 times, returned 6 times</td><td>70.0%</td></tr>
+  <tr><td><a href="coverage.booking_request_validator.cpp.6cd9111d7db2b9d78b57a09581eff0b3.html#l12">rrs::(anonymous namespace)::invalid(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/booking_request_validator.cpp:12)</a></td><td>called 28 times, returned 28 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l13">rrs::(anonymous namespace)::isLeap(int) (src/common/date.cpp:13)</a></td><td>called 3 times, returned 3 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.booking_request_validator.cpp.6cd9111d7db2b9d78b57a09581eff0b3.html#l17">rrs::(anonymous namespace)::isToken(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, bool) (src/booking/booking_request_validator.cpp:17)</a></td><td>called 1233 times, returned 1233 times</td><td>71.0%</td></tr>
+  <tr><td><a href="coverage.booking_request_validator.cpp.6cd9111d7db2b9d78b57a09581eff0b3.html#l25">rrs::(anonymous namespace)::isTrainNumber(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/booking_request_validator.cpp:25)</a></td><td>called 1233 times, returned 1233 times</td><td>89.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l23">rrs::(anonymous namespace)::pad(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, unsigned long) (src/ui/passenger_menu.cpp:23)</a></td><td>called 125 times, returned 125 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.report_view.cpp.a16126a5ddaf291ea5bbcf2930905366.html#l11">rrs::(anonymous namespace)::pad(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, unsigned long) (src/ui/report_view.cpp:11)</a></td><td>called 28 times, returned 28 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.report_view.cpp.a16126a5ddaf291ea5bbcf2930905366.html#l17">rrs::(anonymous namespace)::padLeft(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, unsigned long) (src/ui/report_view.cpp:17)</a></td><td>called 92 times, returned 92 times</td><td>64.0%</td></tr>
+  <tr><td><a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html#l19">rrs::(anonymous namespace)::parsePositive(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, int&amp;) (src/booking/seat_allocator.cpp:19)</a></td><td>called 265396 times, returned 265396 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l14">rrs::(anonymous namespace)::readAccount(rrs::Statement const&amp;) (src/dal/sqlite_user_repository.cpp:14)</a></td><td>called 96 times, returned 96 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_config_repository.cpp.1fe547c5cfb59bb9ebffeab7a287872e.html#l12">rrs::(anonymous namespace)::readConfig(rrs::Statement const&amp;) (src/dal/sqlite_config_repository.cpp:12)</a></td><td>called 4134 times, returned 4134 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l21">rrs::(anonymous namespace)::readNumber(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, unsigned long, unsigned long, int&amp;) (src/common/date.cpp:21)</a></td><td>called 11059 times, returned 11059 times</td><td>92.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l18">rrs::(anonymous namespace)::readReservation(rrs::Statement const&amp;) (src/dal/sqlite_reservation_repository.cpp:18)</a></td><td>called 3594 times, returned 3594 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.management_menu.cpp.5ec0088ed3cefc6204a1ed69d26ad9e2.html#l9">rrs::(anonymous namespace)::report(rrs::ConsoleIO&amp;, rrs::ReportService&amp;, rrs::Session const&amp;, rrs::IClock const&amp;) (tools/management_menu.cpp:9)</a></td><td>called 1 time, returned 1 time</td><td>48.0%</td></tr>
+  <tr><td><a href="coverage.waitlist_manager.cpp.fdd762e0b2cf44a147a5d085e83ddff8.html#l14">rrs::(anonymous namespace)::sameState(rrs::Reservation const&amp;, rrs::Reservation const&amp;) (src/cancel/waitlist_manager.cpp:14)</a></td><td>called 1510 times, returned 1510 times</td><td>93.0%</td></tr>
+  <tr><td><a href="coverage.audit.cpp.83e7a180f718f74146949efd7100f42a.html#l17">rrs::(anonymous namespace)::sanitize(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/audit.cpp:17)</a></td><td>called 207 times, returned 207 times</td><td>90.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l14">rrs::(anonymous namespace)::select(char const*) (src/dal/sqlite_reservation_repository.cpp:14)</a></td><td>called 2822 times, returned 2822 times</td><td>56.0%</td></tr>
+  <tr><td><a href="coverage.management_menu.cpp.5ec0088ed3cefc6204a1ed69d26ad9e2.html#l8">rrs::(anonymous namespace)::show(rrs::ConsoleIO&amp;, rrs::Result&lt;void&gt; const&amp;) (tools/management_menu.cpp:8)</a></td><td>called 3 times, returned 3 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.management_menu.cpp.5ec0088ed3cefc6204a1ed69d26ad9e2.html#l6">rrs::(anonymous namespace)::text(rrs::ConsoleIO&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (tools/management_menu.cpp:6)</a></td><td>called 10 times, returned 10 times</td><td>78.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l13">rrs::(anonymous namespace)::trim(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/console_io.cpp:13)</a></td><td>called 322 times, returned 322 times</td><td>79.0%</td></tr>
+  <tr><td><a href="coverage.audit.cpp.83e7a180f718f74146949efd7100f42a.html#l35">rrs::(anonymous namespace)::verifyChain(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/audit.cpp:35)</a></td><td>called 73 times, returned 70 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.access_control.h.6face6d3241b201a54094f3cb7944bf7.html#l8">rrs::AccessControl::AccessControl(rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/security/access_control.h:8)</a></td><td>called 133 times, returned 133 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.access_control.cpp.f548a7494d6057f3992e0cc9d29ad84a.html#l3">rrs::AccessControl::require(rrs::Session const&amp;, rrs::Permission, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/access_control.cpp:3)</a></td><td>called 122 times, returned 122 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.audit.h.a0a6e276cb3c187af51eb196af25313a.html#l32">rrs::AppendOnlyFileAuditLogger::AppendOnlyFileAuditLogger(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, rrs::IClock const&amp;) (src/common/audit.h:32)</a></td><td>called 36 times, returned 36 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.audit.cpp.83e7a180f718f74146949efd7100f42a.html#l53">rrs::AppendOnlyFileAuditLogger::log(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/audit.cpp:53)</a></td><td>called 70 times, returned 69 times</td><td>48.0%</td></tr>
+  <tr><td><a href="coverage.audit.cpp.83e7a180f718f74146949efd7100f42a.html#l49">rrs::AppendOnlyFileAuditLogger::verify() const (src/common/audit.cpp:49)</a></td><td>called 3 times, returned 3 times</td><td>81.0%</td></tr>
+  <tr><td><a href="coverage.auth_service.h.2675d58e4c65f64e614d62d2350ee22f.html#l10">rrs::AuthService::AuthService(rrs::DataAccess, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/auth/auth_service.h:10)</a></td><td>called 48 times, returned 48 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.auth_service.cpp.a56611a11e25534d1215ce78ed169934.html#l29">rrs::AuthService::login(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/auth/auth_service.cpp:29)</a></td><td>called 57 times, returned 57 times</td><td>49.0%</td></tr>
+  <tr><td><a href="coverage.auth_service.cpp.a56611a11e25534d1215ce78ed169934.html#l65">rrs::AuthService::logout(rrs::Session const&amp;) (src/auth/auth_service.cpp:65)</a></td><td>called 23 times, returned 23 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.auth_service.cpp.a56611a11e25534d1215ce78ed169934.html#l4">rrs::AuthService::registerPassenger[abi:cxx11](rrs::Registration const&amp;) (src/auth/auth_service.cpp:4)</a></td><td>called 11 times, returned 11 times</td><td>48.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.h.4f82c3a01734565ba311ab87596e37ca.html#l18">rrs::BookingHistoryService::BookingHistoryService(rrs::IReservationRepository&amp;, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/auth/profile_service.h:18)</a></td><td>called 36 times, returned 36 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.cpp.1e1badd4d6efe761d9d6e11d0e5843b4.html#l32">rrs::BookingHistoryService::history(rrs::Session const&amp;) (src/auth/profile_service.cpp:32)</a></td><td>called 16 times, returned 16 times</td><td>68.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.cpp.1e1badd4d6efe761d9d6e11d0e5843b4.html#l39">rrs::BookingHistoryService::history(rrs::Session const&amp;)::{lambda(rrs::Reservation const&amp;)#1}::operator()(rrs::Reservation const&amp;) const (src/auth/profile_service.cpp:39)</a></td><td>called 16 times, returned 16 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.cpp.1e1badd4d6efe761d9d6e11d0e5843b4.html#l40">rrs::BookingHistoryService::history(rrs::Session const&amp;)::{lambda(rrs::Reservation const&amp;, rrs::Reservation const&amp;)#1}::operator()(rrs::Reservation const&amp;, rrs::Reservation const&amp;) const (src/auth/profile_service.cpp:40)</a></td><td>called 8 times, returned 8 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l11">rrs::BookingService::BookingService(rrs::DataAccess, rrs::IClock const&amp;, rrs::IAuditLogger&amp;, rrs::PnrGenerator&amp;, rrs::FareRules) (src/booking/booking_service.cpp:11)</a></td><td>called 173 times, returned 173 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l30">rrs::BookingService::checkAvailability(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, rrs::ClassCode) (src/booking/booking_service.cpp:30)</a></td><td>called 275 times, returned 275 times</td><td>49.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l99">rrs::BookingService::createBooking(rrs::Session const&amp;, rrs::BookingRequest const&amp;) (src/booking/booking_service.cpp:99)</a></td><td>called 1264 times, returned 1264 times</td><td>61.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l171">rrs::BookingService::createInTransaction(rrs::Session const&amp;, rrs::BookingRequest const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::ClassConfig const&amp;) (src/booking/booking_service.cpp:171)</a></td><td>called 1209 times, returned 1209 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l220">rrs::BookingService::createInTransaction(rrs::Session const&amp;, rrs::BookingRequest const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::ClassConfig const&amp;)::{lambda(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;)#1}::operator()(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) const (src/booking/booking_service.cpp:220)</a></td><td>called 805 times, returned 805 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l15">rrs::BookingService::distanceBetween(rrs::Train const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/booking_service.cpp:15)</a></td><td>called 2466 times, returned 2466 times</td><td>69.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l88">rrs::BookingService::existingForRequest(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/booking_service.cpp:88)</a></td><td>called 2459 times, returned 2459 times</td><td>69.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l231">rrs::BookingService::getTicket(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/booking_service.cpp:231)</a></td><td>called 157 times, returned 157 times</td><td>69.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.cpp.1b000c604906bdf499712fb842a247fe.html#l52">rrs::BookingService::quoteFare(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::ClassCode, int) (src/booking/booking_service.cpp:52)</a></td><td>called 2470 times, returned 2470 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.cancellation_service.cpp.3591e87e1858173a3701cc390cbaa2b6.html#l10">rrs::CancellationService::CancellationService(rrs::IBookingService&amp;, rrs::ITrainRepository&amp;, rrs::SeatReleaseService&amp;, rrs::IClock const&amp;) (src/cancel/cancellation_service.cpp:10)</a></td><td>called 59 times, returned 59 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.cancellation_service.cpp.3591e87e1858173a3701cc390cbaa2b6.html#l69">rrs::CancellationService::cancel(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/cancel/cancellation_service.cpp:69)</a></td><td>called 25 times, returned 25 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.cancellation_service.cpp.3591e87e1858173a3701cc390cbaa2b6.html#l27">rrs::CancellationService::departureTime(rrs::Reservation const&amp;) const (src/cancel/cancellation_service.cpp:27)</a></td><td>called 18 times, returned 18 times</td><td>37.0%</td></tr>
+  <tr><td><a href="coverage.cancellation_service.cpp.3591e87e1858173a3701cc390cbaa2b6.html#l16">rrs::CancellationService::validateEligibility(rrs::TicketStatus, long, long) (src/cancel/cancellation_service.cpp:16)</a></td><td>called 24 times, returned 24 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.domain.h.58884c18e2dcdfd1fcc7392edd7b07c8.html#l79">rrs::ClassConfig::capacity() const (src/common/domain.h:79)</a></td><td>called 4188 times, returned 4188 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.console_io.h.53718f72b47d83c84539ea4f173cb915.html#l19">rrs::ConsoleIO::ConsoleIO(std::istream&amp;, std::ostream&amp;) (src/ui/console_io.h:19)</a></td><td>called 49 times, returned 49 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l73">rrs::ConsoleIO::error(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/console_io.cpp:73)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l75">rrs::ConsoleIO::line(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/console_io.cpp:75)</a></td><td>called 886 times, returned 886 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l71">rrs::ConsoleIO::ok(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/console_io.cpp:71)</a></td><td>called 49 times, returned 49 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.console_io.h.53718f72b47d83c84539ea4f173cb915.html#l21">rrs::ConsoleIO::out() (src/ui/console_io.h:21)</a></td><td>called 51 times, returned 51 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l43">rrs::ConsoleIO::readInt(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, int, int) (src/ui/console_io.cpp:43)</a></td><td>called 138 times, returned 138 times</td><td>89.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l27">rrs::ConsoleIO::readLine(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/console_io.cpp:27)</a></td><td>called 323 times, returned 323 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l60">rrs::ConsoleIO::readYesNo(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/console_io.cpp:60)</a></td><td>called 22 times, returned 22 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l77">rrs::ConsoleIO::rule() (src/ui/console_io.cpp:77)</a></td><td>called 258 times, returned 258 times</td><td>64.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l14">rrs::Date::Date() (src/common/date.h:14)</a></td><td>called 37878 times, returned 37878 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l39">rrs::Date::Date(int, int, int) (src/common/date.h:39)</a></td><td>called 106969 times, returned 106969 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l23">rrs::Date::day() const (src/common/date.h:23)</a></td><td>called 18 times, returned 18 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l58">rrs::Date::dayNumber() const (src/common/date.cpp:58)</a></td><td>called 141959 times, returned 141959 times</td><td>88.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l87">rrs::Date::display[abi:cxx11]() const (src/common/date.cpp:87)</a></td><td>called 122 times, returned 122 times</td><td>70.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l68">rrs::Date::fromDayNumber(long) (src/common/date.cpp:68)</a></td><td>called 100641 times, returned 100641 times</td><td>92.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l34">rrs::Date::fromYmd(int, int, int) (src/common/date.cpp:34)</a></td><td>called 6330 times, returned 6330 times</td><td>86.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l81">rrs::Date::iso[abi:cxx11]() const (src/common/date.cpp:81)</a></td><td>called 180465 times, returned 180465 times</td><td>70.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l22">rrs::Date::month() const (src/common/date.h:22)</a></td><td>called 18 times, returned 18 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l32">rrs::Date::operator!=(rrs::Date const&amp;) const (src/common/date.h:32)</a></td><td>called 84 times, returned 84 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l33">rrs::Date::operator&lt;(rrs::Date const&amp;) const (src/common/date.h:33)</a></td><td>called 161 times, returned 161 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l34">rrs::Date::operator&lt;=(rrs::Date const&amp;) const (src/common/date.h:34)</a></td><td>called 2656 times, returned 2656 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l31">rrs::Date::operator==(rrs::Date const&amp;) const (src/common/date.h:31)</a></td><td>called 17728 times, returned 17728 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l36">rrs::Date::operator&gt;=(rrs::Date const&amp;) const (src/common/date.h:36)</a></td><td>called 1336 times, returned 1336 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l49">rrs::Date::parseDisplay(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/date.cpp:49)</a></td><td>called 27 times, returned 27 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.cpp.8947ce9748fee21ed3d912149439f783.html#l40">rrs::Date::parseIso(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/date.cpp:40)</a></td><td>called 3663 times, returned 3663 times</td><td>85.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l26">rrs::Date::plusDays(long) const (src/common/date.h:26)</a></td><td>called 100640 times, returned 100640 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.date.h.bc6af46d248a73dab2a738378bfc7e91.html#l21">rrs::Date::year() const (src/common/date.h:21)</a></td><td>called 18 times, returned 18 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html#l33">rrs::FixedClock::FixedClock(rrs::Date) (src/common/clock.h:33)</a></td><td>called 159 times, returned 159 times</td><td>80.0%</td></tr>
+  <tr><td><a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html#l38">rrs::FixedClock::advanceSeconds(long) (src/common/clock.h:38)</a></td><td>called 15 times, returned 15 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html#l35">rrs::FixedClock::now() const (src/common/clock.h:35)</a></td><td>called 5426 times, returned 5426 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html#l36">rrs::FixedClock::today() const (src/common/clock.h:36)</a></td><td>called 1344 times, returned 1344 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.audit.h.a0a6e276cb3c187af51eb196af25313a.html#l19">rrs::IAuditLogger::~IAuditLogger() (src/common/audit.h:19)</a></td><td>called 181 times, returned 181 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.h.c98ecc07b8fdb864a2cd2ef0512bf5e0.html#l49">rrs::IBookingHistoryPort::~IBookingHistoryPort() (src/ui/passenger_menu.h:49)</a></td><td>called 48 times, returned 48 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.booking_service.h.e1c1216a08e4ae34fdf5d3ad32264c57.html#l44">rrs::IBookingService::~IBookingService() (src/booking/booking_service.h:44)</a></td><td>called 173 times, returned 173 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.h.c98ecc07b8fdb864a2cd2ef0512bf5e0.html#l56">rrs::ICancellationPort::~ICancellationPort() (src/ui/passenger_menu.h:56)</a></td><td>called 47 times, returned 47 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html#l18">rrs::IClock::localSecondsSinceMidnight() const (src/common/clock.h:18)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.clock.h.b6c9d081024efb47dedb756730735843.html#l16">rrs::IClock::~IClock() (src/common/clock.h:16)</a></td><td>called 194 times, returned 194 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l55">rrs::IConfigRepository::~IConfigRepository() (src/dal/repositories.h:55)</a></td><td>called 235 times, returned 235 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.h.c98ecc07b8fdb864a2cd2ef0512bf5e0.html#l63">rrs::IProfilePort::~IProfilePort() (src/ui/passenger_menu.h:63)</a></td><td>called 51 times, returned 51 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l75">rrs::IReservationRepository::~IReservationRepository() (src/dal/repositories.h:75)</a></td><td>called 304 times, returned 304 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l27">rrs::ITrainRepository::~ITrainRepository() (src/dal/repositories.h:27)</a></td><td>called 235 times, returned 235 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.h.c98ecc07b8fdb864a2cd2ef0512bf5e0.html#l40">rrs::ITrainSearchPort::~ITrainSearchPort() (src/ui/passenger_menu.h:40)</a></td><td>called 49 times, returned 49 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l125">rrs::IUnitOfWork::~IUnitOfWork() (src/dal/repositories.h:125)</a></td><td>called 273 times, returned 273 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l109">rrs::IUserRepository::~IUserRepository() (src/dal/repositories.h:109)</a></td><td>called 235 times, returned 235 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l43">rrs::InputValidator::age(int) (src/security/input_validator.cpp:43)</a></td><td>called 1782 times, returned 1782 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l15">rrs::InputValidator::email(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:15)</a></td><td>called 21 times, returned 21 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l44">rrs::InputValidator::gender(char) (src/security/input_validator.cpp:44)</a></td><td>called 1780 times, returned 1780 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l45">rrs::InputValidator::idProof(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:45)</a></td><td>called 1783 times, returned 1783 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l54">rrs::InputValidator::journeyDate(rrs::Date const&amp;, rrs::Date const&amp;) (src/security/input_validator.cpp:54)</a></td><td>called 1238 times, returned 1238 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l14">rrs::InputValidator::mobile(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:14)</a></td><td>called 22 times, returned 22 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l35">rrs::InputValidator::name(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:35)</a></td><td>called 1804 times, returned 1804 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l65">rrs::InputValidator::normalizeEmail(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/security/input_validator.cpp:65)</a></td><td>called 73 times, returned 73 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l66">rrs::InputValidator::normalizeEmail(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;)::{lambda(unsigned char)#1}::operator()(unsigned char) const (src/security/input_validator.cpp:66)</a></td><td>called 831 times, returned 831 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l26">rrs::InputValidator::password(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:26)</a></td><td>called 14 times, returned 14 times</td><td>97.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l53">rrs::InputValidator::pnr(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:53)</a></td><td>called 12 times, returned 12 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l55">rrs::InputValidator::profile(rrs::Account const&amp;) (src/security/input_validator.cpp:55)</a></td><td>called 5 times, returned 5 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l50">rrs::InputValidator::station(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/security/input_validator.cpp:50)</a></td><td>called 7455 times, returned 7455 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.input_validator.cpp.4ae27c1213416f4da8d09a88764d34b5.html#l51">rrs::InputValidator::station(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;)::{lambda(char)#1}::operator()(char) const (src/security/input_validator.cpp:51)</a></td><td>called 19876 times, returned 19876 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l14">rrs::Money::Money() (src/common/money.h:14)</a></td><td>called 37710 times, returned 37710 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l32">rrs::Money::Money(long) (src/common/money.h:32)</a></td><td>called 33801 times, returned 33801 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l15">rrs::Money::fromPaise(long) (src/common/money.h:15)</a></td><td>called 31235 times, returned 31235 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l16">rrs::Money::fromRupees(long) (src/common/money.h:16)</a></td><td>called 78 times, returned 78 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l28">rrs::Money::operator!=(rrs::Money) const (src/common/money.h:28)</a></td><td>called 1221 times, returned 1221 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l25">rrs::Money::operator*(long) const (src/common/money.h:25)</a></td><td>called 2488 times, returned 2488 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l26">rrs::Money::operator+=(rrs::Money) (src/common/money.h:26)</a></td><td>called 74 times, returned 74 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l27">rrs::Money::operator==(rrs::Money) const (src/common/money.h:27)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.h.457e2a3ad3da3835487ff5ee2efeac8c.html#l18">rrs::Money::paise() const (src/common/money.h:18)</a></td><td>called 25806 times, returned 25806 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.money.cpp.db8e00c8bb9f574fc84e425b333fb664.html#l7">rrs::Money::toString[abi:cxx11]() const (src/common/money.cpp:7)</a></td><td>called 137 times, returned 137 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.audit.h.a0a6e276cb3c187af51eb196af25313a.html#l26">rrs::NullAuditLogger::log(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/audit.h:26)</a></td><td>called 360 times, returned 360 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l38">rrs::PassengerMenu::PassengerMenu(rrs::ConsoleIO&amp;, rrs::PassengerPorts, rrs::Session, rrs::IClock const&amp;, std::function&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; ()&gt;) (src/ui/passenger_menu.cpp:38)</a></td><td>called 30 times, returned 30 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l190">rrs::PassengerMenu::bookFlow(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/passenger_menu.cpp:190)</a></td><td>called 15 times, returned 15 times</td><td>47.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l177">rrs::PassengerMenu::bookTicket() (src/ui/passenger_menu.cpp:177)</a></td><td>called 11 times, returned 11 times</td><td>56.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l316">rrs::PassengerMenu::cancelTicket() (src/ui/passenger_menu.cpp:316)</a></td><td>called 6 times, returned 6 times</td><td>59.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l280">rrs::PassengerMenu::checkAvailability() (src/ui/passenger_menu.cpp:280)</a></td><td>called 2 times, returned 2 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l46">rrs::PassengerMenu::enter(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/passenger_menu.cpp:46)</a></td><td>called 106 times, returned 106 times</td><td>62.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l293">rrs::PassengerMenu::myBookings() (src/ui/passenger_menu.cpp:293)</a></td><td>called 16 times, returned 16 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l333">rrs::PassengerMenu::myProfile() (src/ui/passenger_menu.cpp:333)</a></td><td>called 2 times, returned 2 times</td><td>56.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l307">rrs::PassengerMenu::pnrStatus() (src/ui/passenger_menu.cpp:307)</a></td><td>called 3 times, returned 3 times</td><td>62.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l108">rrs::PassengerMenu::readClass() (src/ui/passenger_menu.cpp:108)</a></td><td>called 17 times, returned 17 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l97">rrs::PassengerMenu::readDate(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/passenger_menu.cpp:97)</a></td><td>called 18 times, returned 18 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l85">rrs::PassengerMenu::readStation(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/passenger_menu.cpp:85)</a></td><td>called 34 times, returned 34 times</td><td>77.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l117">rrs::PassengerMenu::readTraveller(int) (src/ui/passenger_menu.cpp:117)</a></td><td>called 16 times, returned 16 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l53">rrs::PassengerMenu::run() (src/ui/passenger_menu.cpp:53)</a></td><td>called 30 times, returned 30 times</td><td>59.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.h.c98ecc07b8fdb864a2cd2ef0512bf5e0.html#l88">rrs::PassengerMenu::screens[abi:cxx11]() const (src/ui/passenger_menu.h:88)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l148">rrs::PassengerMenu::searchTrains() (src/ui/passenger_menu.cpp:148)</a></td><td>called 6 times, returned 6 times</td><td>54.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l254">rrs::PassengerMenu::showRoute() (src/ui/passenger_menu.cpp:254)</a></td><td>called 1 time, returned 1 time</td><td>48.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l141">rrs::PassengerMenu::trainName(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/passenger_menu.cpp:141)</a></td><td>called 16 times, returned 16 times</td><td>77.0%</td></tr>
+  <tr><td><a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html#l40">rrs::PasswordHasher::hash(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/auth/password_hasher.cpp:40)</a></td><td>called 71 times, returned 71 times</td><td>44.0%</td></tr>
+  <tr><td><a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html#l35">rrs::PasswordHasher::randomToken[abi:cxx11]() (src/auth/password_hasher.cpp:35)</a></td><td>called 1161 times, returned 1161 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.password_hasher.cpp.62ab0cf9107b33d3a3bc808bde751ff7.html#l50">rrs::PasswordHasher::verify(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/auth/password_hasher.cpp:50)</a></td><td>called 61 times, returned 61 times</td><td>89.0%</td></tr>
+  <tr><td><a href="coverage.pnr_generator.cpp.818be002bc11914a6bcaef07ee680552.html#l9">rrs::PnrGenerator::PnrGenerator() (src/booking/pnr_generator.cpp:9)</a></td><td>called 175 times, returned 175 times</td><td>80.0%</td></tr>
+  <tr><td><a href="coverage.pnr_generator.cpp.818be002bc11914a6bcaef07ee680552.html#l10">rrs::PnrGenerator::PnrGenerator()::{lambda()#1}::operator()() const (src/booking/pnr_generator.cpp:10)</a></td><td>called 10806 times, returned 10806 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.pnr_generator.h.347dc82fc5b1701257a65c92aa18a50f.html#l25">rrs::PnrGenerator::PnrGenerator(std::function&lt;unsigned long ()&gt;) (src/booking/pnr_generator.h:25)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.pnr_generator.cpp.818be002bc11914a6bcaef07ee680552.html#l13">rrs::PnrGenerator::draw[abi:cxx11]() (src/booking/pnr_generator.cpp:13)</a></td><td>called 10815 times, returned 10815 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.pnr_generator.cpp.818be002bc11914a6bcaef07ee680552.html#l20">rrs::PnrGenerator::generate(std::function&lt;rrs::Result&lt;bool&gt; (std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;)&gt; const&amp;) (src/booking/pnr_generator.cpp:20)</a></td><td>called 10810 times, returned 10810 times</td><td>80.0%</td></tr>
+  <tr><td><a href="coverage.pnr_generator.cpp.818be002bc11914a6bcaef07ee680552.html#l30">rrs::PnrGenerator::isValidPnr(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/pnr_generator.cpp:30)</a></td><td>called 10463 times, returned 10463 times</td><td>90.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.h.4f82c3a01734565ba311ab87596e37ca.html#l8">rrs::ProfileService::ProfileService(rrs::IUserRepository&amp;, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/auth/profile_service.h:8)</a></td><td>called 39 times, returned 39 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.cpp.1e1badd4d6efe761d9d6e11d0e5843b4.html#l15">rrs::ProfileService::update(rrs::Session const&amp;, rrs::Account const&amp;) (src/auth/profile_service.cpp:15)</a></td><td>called 6 times, returned 6 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.profile_service.cpp.1e1badd4d6efe761d9d6e11d0e5843b4.html#l4">rrs::ProfileService::view(rrs::Session const&amp;) (src/auth/profile_service.cpp:4)</a></td><td>called 5 times, returned 5 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.refund_calculator.cpp.98282980ddc2f2db8c80e55bb0d8f8cb.html#l5">rrs::RefundCalculator::calculate(rrs::Money, rrs::TicketStatus, long) (src/cancel/refund_calculator.cpp:5)</a></td><td>called 21 times, returned 21 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.report_service.h.fddea84ae6b77bd91dcbfbc194084da6.html#l67">rrs::ReportService::ReportService(rrs::DataAccess, rrs::IClock const&amp;) (src/admin/report_service.h:67)</a></td><td>called 17 times, returned 17 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l34">rrs::ReportService::bookingStatistics(rrs::Session const&amp;, rrs::DateRange const&amp;) (src/admin/report_service.cpp:34)</a></td><td>called 20 times, returned 20 times</td><td>74.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l20">rrs::ReportService::checkAccess(rrs::Session const&amp;) (src/admin/report_service.cpp:20)</a></td><td>called 40 times, returned 40 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l24">rrs::ReportService::checkRange(rrs::DateRange const&amp;) (src/admin/report_service.cpp:24)</a></td><td>called 19 times, returned 19 times</td><td>76.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l62">rrs::ReportService::seatOccupancy(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/admin/report_service.cpp:62)</a></td><td>called 11 times, returned 11 times</td><td>63.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l94">rrs::ReportService::trainWiseCounts(rrs::Session const&amp;, rrs::DateRange const&amp;) (src/admin/report_service.cpp:94)</a></td><td>called 9 times, returned 9 times</td><td>71.0%</td></tr>
+  <tr><td><a href="coverage.domain.h.58884c18e2dcdfd1fcc7392edd7b07c8.html#l143">rrs::Reservation::travellerCount() const (src/common/domain.h:143)</a></td><td>called 4515 times, returned 4515 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.reservation_admin_service.h.dbf360d06839149c63488eda3e3e1310.html#l9">rrs::ReservationAdminService::ReservationAdminService(rrs::DataAccess, rrs::IBookingService&amp;, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/admin/reservation_admin_service.h:9)</a></td><td>called 41 times, returned 41 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.reservation_admin_service.cpp.c39483d1999c97ee5ca0e1c4734d5dac.html#l4">rrs::ReservationAdminService::bookOnBehalf(rrs::Session const&amp;, rrs::BookingRequest const&amp;) (src/admin/reservation_admin_service.cpp:4)</a></td><td>called 3 times, returned 3 times</td><td>61.0%</td></tr>
+  <tr><td><a href="coverage.reservation_admin_service.cpp.c39483d1999c97ee5ca0e1c4734d5dac.html#l9">rrs::ReservationAdminService::correctReservation(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::vector&lt;rrs::Traveller, std::allocator&lt;rrs::Traveller&gt; &gt; const&amp;) (src/admin/reservation_admin_service.cpp:9)</a></td><td>called 7 times, returned 7 times</td><td>59.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;bool&gt;::Result(bool) (src/common/result.h:54)</a></td><td>called 12321 times, returned 12321 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;bool&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;bool&gt;::error() const (src/common/result.h:70)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;bool&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;bool&gt;::ok() const (src/common/result.h:61)</a></td><td>called 12307 times, returned 12307 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;bool&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 12306 times, returned 12306 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;bool&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 15 times, returned 15 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;int&gt;::Result(int) (src/common/result.h:54)</a></td><td>called 2513 times, returned 2513 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;int&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;int&gt;::error() const (src/common/result.h:70)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;int&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;int&gt;::ok() const (src/common/result.h:61)</a></td><td>called 2514 times, returned 2514 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;int&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 4937 times, returned 4937 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;int&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 3 times, returned 3 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;long&gt;::Result(long) (src/common/result.h:54)</a></td><td>called 849 times, returned 849 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;long&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;long&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;long&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;long&gt;::ok() const (src/common/result.h:61)</a></td><td>called 847 times, returned 847 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;long&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 860 times, returned 860 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;long&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::Account&gt;::Result(rrs::Account) (src/common/result.h:54)</a></td><td>called 7 times, returned 7 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::Account&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::Account&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::Account&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::Account&gt;::ok() const (src/common/result.h:61)</a></td><td>called 7 times, returned 7 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;rrs::Account&gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 9 times, returned 9 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::Account&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 7 times, returned 7 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::Availability&gt;::Result(rrs::Availability) (src/common/result.h:54)</a></td><td>called 267 times, returned 267 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::Availability&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 8 times, returned 8 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::Availability&gt;::code() const (src/common/result.h:71)</a></td><td>called 8 times, returned 8 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::Availability&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::Availability&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::Availability&gt;::ok() const (src/common/result.h:61)</a></td><td>called 242 times, returned 242 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::Availability&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 33 times, returned 33 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;rrs::Availability&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 33 times, returned 33 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::BookingStatistics&gt;::Result(rrs::BookingStatistics) (src/common/result.h:54)</a></td><td>called 12 times, returned 12 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::BookingStatistics&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 8 times, returned 8 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::BookingStatistics&gt;::code() const (src/common/result.h:71)</a></td><td>called 8 times, returned 8 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::BookingStatistics&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::BookingStatistics&gt;::ok() const (src/common/result.h:61)</a></td><td>called 15 times, returned 15 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::BookingStatistics&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 21 times, returned 21 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;rrs::BookingStatistics&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 5 times, returned 5 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::FareQuote&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 8 times, returned 8 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::FareQuote&gt;::Result(rrs::FareQuote) (src/common/result.h:54)</a></td><td>called 2462 times, returned 2462 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::FareQuote&gt;::code() const (src/common/result.h:71)</a></td><td>called 6 times, returned 6 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::FareQuote&gt;::error() const (src/common/result.h:70)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::FareQuote&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::FareQuote&gt;::ok() const (src/common/result.h:61)</a></td><td>called 2468 times, returned 2468 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;rrs::FareQuote&gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::FareQuote&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 2477 times, returned 2477 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;rrs::FareQuote&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::PasswordDigest&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::PasswordDigest&gt;::Result(rrs::PasswordDigest) (src/common/result.h:54)</a></td><td>called 71 times, returned 71 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::PasswordDigest&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::PasswordDigest&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::PasswordDigest&gt;::ok() const (src/common/result.h:61)</a></td><td>called 71 times, returned 71 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;rrs::PasswordDigest&gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 142 times, returned 142 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::ReleaseResult&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 53 times, returned 53 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::ReleaseResult&gt;::Result(rrs::ReleaseResult) (src/common/result.h:54)</a></td><td>called 224 times, returned 224 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::ReleaseResult&gt;::code() const (src/common/result.h:71)</a></td><td>called 10 times, returned 10 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::ReleaseResult&gt;::error() const (src/common/result.h:70)</a></td><td>called 43 times, returned 43 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::ReleaseResult&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 49 times, returned 49 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::ReleaseResult&gt;::ok() const (src/common/result.h:61)</a></td><td>called 554 times, returned 554 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::ReleaseResult&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 477 times, returned 477 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::Reservation&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 486 times, returned 486 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::Reservation&gt;::Result(rrs::Reservation) (src/common/result.h:54)</a></td><td>called 969 times, returned 969 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::Reservation&gt;::code() const (src/common/result.h:71)</a></td><td>called 222 times, returned 222 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::Reservation&gt;::error() const (src/common/result.h:70)</a></td><td>called 262 times, returned 262 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::Reservation&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 44 times, returned 44 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::Reservation&gt;::ok() const (src/common/result.h:61)</a></td><td>called 3309 times, returned 3309 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;rrs::Reservation&gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 39 times, returned 39 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::Reservation&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 2307 times, returned 2307 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::Session&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 25 times, returned 25 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::Session&gt;::Result(rrs::Session) (src/common/result.h:54)</a></td><td>called 1075 times, returned 1075 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::Session&gt;::code() const (src/common/result.h:71)</a></td><td>called 15 times, returned 15 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::Session&gt;::error() const (src/common/result.h:70)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::Session&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 25 times, returned 25 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::Session&gt;::ok() const (src/common/result.h:61)</a></td><td>called 80 times, returned 80 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;rrs::Session&gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::Session&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 30 times, returned 30 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;rrs::Session&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 1043 times, returned 1043 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::StatusDecision&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 406 times, returned 406 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::StatusDecision&gt;::Result(rrs::StatusDecision) (src/common/result.h:54)</a></td><td>called 814 times, returned 814 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::StatusDecision&gt;::code() const (src/common/result.h:71)</a></td><td>called 2 times, returned 2 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::StatusDecision&gt;::error() const (src/common/result.h:70)</a></td><td>called 404 times, returned 404 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::StatusDecision&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 406 times, returned 406 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::StatusDecision&gt;::ok() const (src/common/result.h:61)</a></td><td>called 1220 times, returned 1220 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::StatusDecision&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 1629 times, returned 1629 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::Train&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::Train&gt;::Result(rrs::Train) (src/common/result.h:54)</a></td><td>called 52 times, returned 52 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;rrs::Train&gt;::code() const (src/common/result.h:71)</a></td><td>called 2 times, returned 2 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::Train&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;rrs::Train&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::Train&gt;::ok() const (src/common/result.h:61)</a></td><td>called 48 times, returned 48 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;rrs::Train&gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 17 times, returned 17 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::Train&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 24 times, returned 24 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::TripOccupancy&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::TripOccupancy&gt;::Result(rrs::TripOccupancy) (src/common/result.h:54)</a></td><td>called 1523 times, returned 1523 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::TripOccupancy&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::TripOccupancy&gt;::ok() const (src/common/result.h:61)</a></td><td>called 1519 times, returned 1519 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::TripOccupancy&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 3263 times, returned 3263 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;rrs::TripOccupancy&gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;rrs::perf::LargeData&gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;rrs::perf::LargeData&gt;::Result(rrs::perf::LargeData) (src/common/result.h:54)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;rrs::perf::LargeData&gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;rrs::perf::LargeData&gt;::ok() const (src/common/result.h:61)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;rrs::perf::LargeData&gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 580 times, returned 580 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::Result(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:54)</a></td><td>called 11978 times, returned 11978 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 4 times, returned 4 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 11977 times, returned 11977 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 22038 times, returned 22038 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 5 times, returned 5 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::optional&lt;rrs::Account&gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::optional&lt;rrs::Account&gt; &gt;::Result(std::optional&lt;rrs::Account&gt;) (src/common/result.h:54)</a></td><td>called 2189 times, returned 2189 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::optional&lt;rrs::Account&gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::optional&lt;rrs::Account&gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 2178 times, returned 2178 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::optional&lt;rrs::Account&gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 1348 times, returned 1348 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::optional&lt;rrs::Account&gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 11 times, returned 11 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::optional&lt;rrs::ClassConfig&gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::optional&lt;rrs::ClassConfig&gt; &gt;::Result(std::optional&lt;rrs::ClassConfig&gt;) (src/common/result.h:54)</a></td><td>called 5155 times, returned 5155 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::optional&lt;rrs::ClassConfig&gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::optional&lt;rrs::ClassConfig&gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 4228 times, returned 4228 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::optional&lt;rrs::ClassConfig&gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 8435 times, returned 8435 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::optional&lt;rrs::ClassConfig&gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 927 times, returned 927 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::Result(std::optional&lt;rrs::Reservation&gt;) (src/common/result.h:54)</a></td><td>called 5470 times, returned 5470 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::error() const (src/common/result.h:70)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 5422 times, returned 5422 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 8527 times, returned 8527 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::optional&lt;rrs::Reservation&gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 50 times, returned 50 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::optional&lt;rrs::Train&gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::optional&lt;rrs::Train&gt; &gt;::Result(std::optional&lt;rrs::Train&gt;) (src/common/result.h:54)</a></td><td>called 6710 times, returned 6710 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::optional&lt;rrs::Train&gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::optional&lt;rrs::Train&gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 6708 times, returned 6708 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::optional&lt;rrs::Train&gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 15864 times, returned 15864 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::optional&lt;rrs::Train&gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDataStore, std::default_delete&lt;rrs::SqliteDataStore&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDataStore, std::default_delete&lt;rrs::SqliteDataStore&gt; &gt; &gt;::Result(std::unique_ptr&lt;rrs::SqliteDataStore, std::default_delete&lt;rrs::SqliteDataStore&gt; &gt;) (src/common/result.h:54)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDataStore, std::default_delete&lt;rrs::SqliteDataStore&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDataStore, std::default_delete&lt;rrs::SqliteDataStore&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDataStore, std::default_delete&lt;rrs::SqliteDataStore&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 204 times, returned 204 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt; &gt;::Result(std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt;) (src/common/result.h:54)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt; &gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 468 times, returned 468 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt; &gt;::Result(std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt;) (src/common/result.h:54)</a></td><td>called 9 times, returned 9 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 7 times, returned 7 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 7 times, returned 7 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::vector&lt;rrs::ClassConfig, std::allocator&lt;rrs::ClassConfig&gt; &gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt; &gt;::Result(std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt;) (src/common/result.h:54)</a></td><td>called 35 times, returned 35 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 33 times, returned 33 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 56 times, returned 56 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::vector&lt;rrs::Date, std::allocator&lt;rrs::Date&gt; &gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 6 times, returned 6 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::Result(std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt;) (src/common/result.h:54)</a></td><td>called 5 times, returned 5 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 6 times, returned 6 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 8 times, returned 8 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 6 times, returned 6 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 3 times, returned 3 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::Result(std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt;) (src/common/result.h:54)</a></td><td>called 3153 times, returned 3153 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 1 time, returned 1 time</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 3136 times, returned 3136 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 1 time, returned 1 time</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 3557 times, returned 3557 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 33 times, returned 33 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; &gt;::Result(std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt;) (src/common/result.h:54)</a></td><td>called 5694 times, returned 5694 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 5694 times, returned 5694 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 5694 times, returned 5694 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt; &gt;::Result(std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt;) (src/common/result.h:54)</a></td><td>called 28 times, returned 28 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 28 times, returned 28 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt; &gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 60 times, returned 60 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::Station, std::allocator&lt;rrs::Station&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 15 times, returned 15 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::Result(std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt;) (src/common/result.h:54)</a></td><td>called 919 times, returned 919 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 2 times, returned 2 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 907 times, returned 907 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 2 times, returned 2 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 118 times, returned 118 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l66">rrs::Result&lt;std::vector&lt;rrs::Train, std::allocator&lt;rrs::Train&gt; &gt; &gt;::value() &amp;&amp; (src/common/result.h:66)</a></td><td>called 12 times, returned 12 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 6 times, returned 6 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::Result(std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt;) (src/common/result.h:54)</a></td><td>called 9 times, returned 9 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 6 times, returned 6 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 6 times, returned 6 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 15 times, returned 15 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l68">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::operator-&gt;() (src/common/result.h:68)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::TrainSummary, std::allocator&lt;rrs::TrainSummary&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 5 times, returned 5 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 6 times, returned 6 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; &gt;::Result(std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt;) (src/common/result.h:54)</a></td><td>called 3 times, returned 3 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 6 times, returned 6 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 9 times, returned 9 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 9 times, returned 9 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l55">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::Result(rrs::Error) (src/common/result.h:55)</a></td><td>called 34 times, returned 34 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l54">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::Result(std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;) (src/common/result.h:54)</a></td><td>called 26164 times, returned 26164 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l71">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::code() const (src/common/result.h:71)</a></td><td>called 32 times, returned 32 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l70">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::error() const (src/common/result.h:70)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l57">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:57)</a></td><td>called 6 times, returned 6 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l61">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::ok() const (src/common/result.h:61)</a></td><td>called 26199 times, returned 26199 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l65">rrs::Result&lt;std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::value() &amp; (src/common/result.h:65)</a></td><td>called 51506 times, returned 51506 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l81">rrs::Result&lt;void&gt;::Result() (src/common/result.h:81)</a></td><td>called 236927 times, returned 236927 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l82">rrs::Result&lt;void&gt;::Result(rrs::Error) (src/common/result.h:82)</a></td><td>called 543 times, returned 543 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l92">rrs::Result&lt;void&gt;::code() const (src/common/result.h:92)</a></td><td>called 474 times, returned 474 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l91">rrs::Result&lt;void&gt;::error() const (src/common/result.h:91)</a></td><td>called 110 times, returned 110 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l85">rrs::Result&lt;void&gt;::failure(rrs::ErrorCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/common/result.h:85)</a></td><td>called 248 times, returned 248 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l89">rrs::Result&lt;void&gt;::ok() const (src/common/result.h:89)</a></td><td>called 239904 times, returned 239904 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.result.h.18514aee17f264cbb657de74371b46bd.html#l84">rrs::Result&lt;void&gt;::success() (src/common/result.h:84)</a></td><td>called 233931 times, returned 233931 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l26">rrs::ScheduleCoachService::ScheduleCoachService(rrs::DataAccess, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/admin/schedule_coach_service.cpp:26)</a></td><td>called 46 times, returned 46 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l77">rrs::ScheduleCoachService::addSchedules(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, rrs::Date const&amp;) (src/admin/schedule_coach_service.cpp:77)</a></td><td>called 21 times, returned 21 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l57">rrs::ScheduleCoachService::checkFits(rrs::ClassConfig const&amp;, rrs::Date const&amp;) (src/admin/schedule_coach_service.cpp:57)</a></td><td>called 31 times, returned 31 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l138">rrs::ScheduleCoachService::configureClass[abi:cxx11](rrs::Session const&amp;, rrs::ClassConfig const&amp;) (src/admin/schedule_coach_service.cpp:138)</a></td><td>called 51 times, returned 51 times</td><td>53.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l188">rrs::ScheduleCoachService::listClassConfigs(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/schedule_coach_service.cpp:188)</a></td><td>called 2 times, returned 2 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l131">rrs::ScheduleCoachService::listSchedules(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/schedule_coach_service.cpp:131)</a></td><td>called 2 times, returned 2 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l104">rrs::ScheduleCoachService::removeSchedule(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/admin/schedule_coach_service.cpp:104)</a></td><td>called 16 times, returned 16 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l29">rrs::ScheduleCoachService::requireAdmin(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/schedule_coach_service.cpp:29)</a></td><td>called 92 times, returned 92 times</td><td>62.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l35">rrs::ScheduleCoachService::validateConfig(rrs::ClassConfig const&amp;) (src/admin/schedule_coach_service.cpp:35)</a></td><td>called 43 times, returned 43 times</td><td>66.0%</td></tr>
+  <tr><td><a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html#l56">rrs::SeatAllocator::allocate(rrs::ClassConfig const&amp;, std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt; const&amp;, int) (src/booking/seat_allocator.cpp:56)</a></td><td>called 25898 times, returned 25898 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.seat_release_service.cpp.2cd980a54d5422edfa9237060ff5c692.html#l9">rrs::SeatReleaseService::SeatReleaseService(rrs::DataAccess, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/cancel/seat_release_service.cpp:9)</a></td><td>called 110 times, returned 110 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.seat_release_service.cpp.2cd980a54d5422edfa9237060ff5c692.html#l47">rrs::SeatReleaseService::cancelAndRelease(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::optional&lt;rrs::Money&gt;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/cancel/seat_release_service.cpp:47)</a></td><td>called 277 times, returned 277 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.seat_release_service.cpp.2cd980a54d5422edfa9237060ff5c692.html#l12">rrs::SeatReleaseService::releaseInTransaction(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::optional&lt;rrs::Money&gt;) (src/cancel/seat_release_service.cpp:12)</a></td><td>called 277 times, returned 277 times</td><td>63.0%</td></tr>
+  <tr><td><a href="coverage.session.cpp.b12d53e43effe86f53fe264fc596cca5.html#l10">rrs::Session::issue(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Role, rrs::IClock const&amp;) (src/common/session.cpp:10)</a></td><td>called 1075 times, returned 1075 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.session.cpp.b12d53e43effe86f53fe264fc596cca5.html#l19">rrs::Session::revoke() const (src/common/session.cpp:19)</a></td><td>called 23 times, returned 23 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html#l38">rrs::SqliteConfigRepository::SqliteConfigRepository(rrs::SqliteDatabase&amp;) (src/dal/sqlite_repositories.h:38)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_config_repository.cpp.1fe547c5cfb59bb9ebffeab7a287872e.html#l43">rrs::SqliteConfigRepository::findClassConfig(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::ClassCode) (src/dal/sqlite_config_repository.cpp:43)</a></td><td>called 4126 times, returned 4126 times</td><td>54.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_config_repository.cpp.1fe547c5cfb59bb9ebffeab7a287872e.html#l56">rrs::SqliteConfigRepository::listClassConfigs(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_config_repository.cpp:56)</a></td><td>called 5 times, returned 5 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_config_repository.cpp.1fe547c5cfb59bb9ebffeab7a287872e.html#l26">rrs::SqliteConfigRepository::saveClassConfig(rrs::ClassConfig const&amp;) (src/dal/sqlite_config_repository.cpp:26)</a></td><td>called 1564 times, returned 1564 times</td><td>76.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l103">rrs::SqliteDataStore::SqliteDataStore(std::unique_ptr&lt;rrs::SqliteDatabase, std::default_delete&lt;rrs::SqliteDatabase&gt; &gt;) (src/dal/sqlite_user_repository.cpp:103)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html#l99">rrs::SqliteDataStore::access() (src/dal/sqlite_repositories.h:99)</a></td><td>called 172 times, returned 172 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html#l100">rrs::SqliteDataStore::database() (src/dal/sqlite_repositories.h:100)</a></td><td>called 55 times, returned 55 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l111">rrs::SqliteDataStore::open(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_user_repository.cpp:111)</a></td><td>called 156 times, returned 156 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.h.705510b01a20a0a95978848dd2f2c147.html#l80">rrs::SqliteDatabase::SqliteDatabase(sqlite3*) (src/dal/sqlite_database.h:80)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l156">rrs::SqliteDatabase::changes() const (src/dal/sqlite_database.cpp:156)</a></td><td>called 589 times, returned 589 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l125">rrs::SqliteDatabase::exec(char const*) (src/dal/sqlite_database.cpp:125)</a></td><td>called 3227 times, returned 3227 times</td><td>23.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.h.705510b01a20a0a95978848dd2f2c147.html#l76">rrs::SqliteDatabase::handle() (src/dal/sqlite_database.h:76)</a></td><td>called 165444 times, returned 165444 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l148">rrs::SqliteDatabase::integrityCheck() (src/dal/sqlite_database.cpp:148)</a></td><td>called 158 times, returned 158 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l160">rrs::SqliteDatabase::lastErrorMessage[abi:cxx11]() const (src/dal/sqlite_database.cpp:160)</a></td><td>called 8 times, returned 8 times</td><td>77.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l136">rrs::SqliteDatabase::migrate() (src/dal/sqlite_database.cpp:136)</a></td><td>called 157 times, returned 157 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l95">rrs::SqliteDatabase::open(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_database.cpp:95)</a></td><td>called 156 times, returned 156 times</td><td>33.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l121">rrs::SqliteDatabase::~SqliteDatabase() (src/dal/sqlite_database.cpp:121)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html#l51">rrs::SqliteReservationRepository::SqliteReservationRepository(rrs::SqliteDatabase&amp;) (src/dal/sqlite_repositories.h:51)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l224">rrs::SqliteReservationRepository::countActiveForTrain(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/dal/sqlite_reservation_repository.cpp:224)</a></td><td>called 7 times, returned 7 times</td><td>45.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l141">rrs::SqliteReservationRepository::findByPnr(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_reservation_repository.cpp:141)</a></td><td>called 376 times, returned 376 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l151">rrs::SqliteReservationRepository::findByRequestId(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_reservation_repository.cpp:151)</a></td><td>called 2015 times, returned 2015 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l41">rrs::SqliteReservationRepository::insert(rrs::Reservation const&amp;) (src/dal/sqlite_reservation_repository.cpp:41)</a></td><td>called 25749 times, returned 25749 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l198">rrs::SqliteReservationRepository::listActiveForTrip(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, rrs::ClassCode) (src/dal/sqlite_reservation_repository.cpp:198)</a></td><td>called 380 times, returned 380 times</td><td>63.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l216">rrs::SqliteReservationRepository::listByJourneyDate(rrs::Date const&amp;, rrs::Date const&amp;) (src/dal/sqlite_reservation_repository.cpp:216)</a></td><td>called 20 times, returned 20 times</td><td>62.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l208">rrs::SqliteReservationRepository::listForAccount(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_reservation_repository.cpp:208)</a></td><td>called 31 times, returned 31 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l111">rrs::SqliteReservationRepository::loadTravellers(rrs::Reservation&amp;) (src/dal/sqlite_reservation_repository.cpp:111)</a></td><td>called 3594 times, returned 3594 times</td><td>74.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l234">rrs::SqliteReservationRepository::nextQueueSeq() (src/dal/sqlite_reservation_repository.cpp:234)</a></td><td>called 664 times, returned 664 times</td><td>41.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l170">rrs::SqliteReservationRepository::occupancy(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, rrs::ClassCode) (src/dal/sqlite_reservation_repository.cpp:170)</a></td><td>called 1253 times, returned 1253 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l162">rrs::SqliteReservationRepository::pnrExists(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_reservation_repository.cpp:162)</a></td><td>called 654 times, returned 654 times</td><td>46.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l130">rrs::SqliteReservationRepository::query(rrs::Statement&amp;) (src/dal/sqlite_reservation_repository.cpp:130)</a></td><td>called 2822 times, returned 2822 times</td><td>54.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_reservation_repository.cpp.c6b626a5dfc333877d02d95d0a33f8a2.html#l76">rrs::SqliteReservationRepository::update(rrs::Reservation const&amp;) (src/dal/sqlite_reservation_repository.cpp:76)</a></td><td>called 551 times, returned 551 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html#l16">rrs::SqliteTrainRepository::SqliteTrainRepository(rrs::SqliteDatabase&amp;) (src/dal/sqlite_repositories.h:16)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l137">rrs::SqliteTrainRepository::addSchedule(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/dal/sqlite_train_repository.cpp:137)</a></td><td>called 48904 times, returned 48904 times</td><td>69.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l82">rrs::SqliteTrainRepository::findTrain(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_train_repository.cpp:82)</a></td><td>called 5701 times, returned 5701 times</td><td>59.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l113">rrs::SqliteTrainRepository::findTrains(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/dal/sqlite_train_repository.cpp:113)</a></td><td>called 901 times, returned 901 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l150">rrs::SqliteTrainRepository::hasSchedule(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/dal/sqlite_train_repository.cpp:150)</a></td><td>called 1241 times, returned 1241 times</td><td>47.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l159">rrs::SqliteTrainRepository::listSchedules(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_train_repository.cpp:159)</a></td><td>called 18 times, returned 18 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l23">rrs::SqliteTrainRepository::listStations() (src/dal/sqlite_train_repository.cpp:23)</a></td><td>called 17 times, returned 17 times</td><td>51.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l99">rrs::SqliteTrainRepository::listTrains() (src/dal/sqlite_train_repository.cpp:99)</a></td><td>called 5 times, returned 5 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l62">rrs::SqliteTrainRepository::loadStops(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_train_repository.cpp:62)</a></td><td>called 5692 times, returned 5692 times</td><td>66.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l144">rrs::SqliteTrainRepository::removeSchedule(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/dal/sqlite_train_repository.cpp:144)</a></td><td>called 4 times, returned 4 times</td><td>69.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l16">rrs::SqliteTrainRepository::saveStation(rrs::Station const&amp;) (src/dal/sqlite_train_repository.cpp:16)</a></td><td>called 725 times, returned 725 times</td><td>82.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l31">rrs::SqliteTrainRepository::saveTrain(rrs::Train const&amp;) (src/dal/sqlite_train_repository.cpp:31)</a></td><td>called 785 times, returned 785 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_train_repository.cpp.ccfb4312e4d767a839564016a95034f1.html#l57">rrs::SqliteTrainRepository::setTrainActive(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, bool) (src/dal/sqlite_train_repository.cpp:57)</a></td><td>called 3 times, returned 3 times</td><td>79.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.h.705510b01a20a0a95978848dd2f2c147.html#l87">rrs::SqliteUnitOfWork::SqliteUnitOfWork(rrs::SqliteDatabase&amp;) (src/dal/sqlite_database.h:87)</a></td><td>called 194 times, returned 194 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l166">rrs::SqliteUnitOfWork::begin() (src/dal/sqlite_database.cpp:166)</a></td><td>called 1457 times, returned 1457 times</td><td>42.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l173">rrs::SqliteUnitOfWork::commit() (src/dal/sqlite_database.cpp:173)</a></td><td>called 1053 times, returned 1053 times</td><td>48.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l180">rrs::SqliteUnitOfWork::rollback() (src/dal/sqlite_database.cpp:180)</a></td><td>called 404 times, returned 404 times</td><td>75.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_repositories.h.1ddc7c02af8e801abc3484dc8fbaeb0e.html#l78">rrs::SqliteUserRepository::SqliteUserRepository(rrs::SqliteDatabase&amp;) (src/dal/sqlite_repositories.h:78)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l73">rrs::SqliteUserRepository::findById(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_user_repository.cpp:73)</a></td><td>called 1330 times, returned 1330 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l69">rrs::SqliteUserRepository::findByLoginId(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_user_repository.cpp:69)</a></td><td>called 59 times, returned 59 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l58">rrs::SqliteUserRepository::findOne(char const*, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_user_repository.cpp:58)</a></td><td>called 1389 times, returned 1389 times</td><td>56.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l36">rrs::SqliteUserRepository::insert(rrs::Account const&amp;) (src/dal/sqlite_user_repository.cpp:36)</a></td><td>called 653 times, returned 653 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l77">rrs::SqliteUserRepository::updateAttempts(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, int, long) (src/dal/sqlite_user_repository.cpp:77)</a></td><td>called 55 times, returned 55 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_user_repository.cpp.7db7eb84e3c91e5884dfd3dbce560b9e.html#l83">rrs::SqliteUserRepository::updateProfile(rrs::Account const&amp;) (src/dal/sqlite_user_repository.cpp:83)</a></td><td>called 6 times, returned 6 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l18">rrs::Statement::Statement(rrs::SqliteDatabase&amp;, char const*) (src/dal/sqlite_database.cpp:18)</a></td><td>called 165444 times, returned 165444 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.h.705510b01a20a0a95978848dd2f2c147.html#l34">rrs::Statement::bind(int, int) (src/dal/sqlite_database.h:34)</a></td><td>called 126370 times, returned 126370 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l39">rrs::Statement::bind(int, long) (src/dal/sqlite_database.cpp:39)</a></td><td>called 204496 times, returned 204496 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l30">rrs::Statement::bind(int, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_database.cpp:30)</a></td><td>called 826683 times, returned 826683 times</td><td>71.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l47">rrs::Statement::bindNull(int) (src/dal/sqlite_database.cpp:47)</a></td><td>called 85040 times, returned 85040 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l55">rrs::Statement::bindOptional(int, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/dal/sqlite_database.cpp:55)</a></td><td>called 107322 times, returned 107322 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l67">rrs::Statement::execute() (src/dal/sqlite_database.cpp:67)</a></td><td>called 135111 times, returned 135111 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l85">rrs::Statement::integer(int) const (src/dal/sqlite_database.cpp:85)</a></td><td>called 173964 times, returned 173964 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l89">rrs::Statement::isNull(int) const (src/dal/sqlite_database.cpp:89)</a></td><td>called 64498 times, returned 64498 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l73">rrs::Statement::status() const (src/dal/sqlite_database.cpp:73)</a></td><td>called 154525 times, returned 154525 times</td><td>62.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l59">rrs::Statement::step() (src/dal/sqlite_database.cpp:59)</a></td><td>called 260850 times, returned 260850 times</td><td>89.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l80">rrs::Statement::text[abi:cxx11](int) const (src/dal/sqlite_database.cpp:80)</a></td><td>called 168194 times, returned 168194 times</td><td>75.0%</td></tr>
+  <tr><td><a href="coverage.sqlite_database.cpp.e4036fe0d872a8af70b440357cc93f92.html#l26">rrs::Statement::~Statement() (src/dal/sqlite_database.cpp:26)</a></td><td>called 165444 times, returned 165444 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.clock.cpp.7b4047398857f662f86435ca3da32dd3.html#l26">rrs::SystemClock::localSecondsSinceMidnight() const (src/common/clock.cpp:26)</a></td><td>not called</td><td>0.0%</td></tr>
+  <tr><td><a href="coverage.clock.cpp.7b4047398857f662f86435ca3da32dd3.html#l10">rrs::SystemClock::now() const (src/common/clock.cpp:10)</a></td><td>called 387 times, returned 387 times</td><td>78.0%</td></tr>
+  <tr><td><a href="coverage.clock.cpp.7b4047398857f662f86435ca3da32dd3.html#l15">rrs::SystemClock::today() const (src/common/clock.cpp:15)</a></td><td>called 91 times, returned 91 times</td><td>89.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.h.0d8ac124e99122d4efca9adff41b63ab.html#l7">rrs::TrainAdminService::TrainAdminService(rrs::DataAccess, rrs::IClock const&amp;, rrs::IAuditLogger&amp;) (src/admin/train_admin_service.h:7)</a></td><td>called 16 times, returned 16 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l66">rrs::TrainAdminService::activateTrain(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:66)</a></td><td>called 2 times, returned 2 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.h.0d8ac124e99122d4efca9adff41b63ab.html#l21">rrs::TrainAdminService::addSchedule(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/admin/train_admin_service.h:21)</a></td><td>called 5 times, returned 5 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l43">rrs::TrainAdminService::addTrain(rrs::Session const&amp;, rrs::Train const&amp;) (src/admin/train_admin_service.cpp:43)</a></td><td>called 7 times, returned 7 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l45">rrs::TrainAdminService::addTrain(rrs::Session const&amp;, rrs::Train const&amp;)::{lambda(char)#1}::operator()(char) const (src/admin/train_admin_service.cpp:45)</a></td><td>called 25 times, returned 25 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l57">rrs::TrainAdminService::deactivateTrain(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:57)</a></td><td>called 6 times, returned 6 times</td><td>53.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l81">rrs::TrainAdminService::getRoute(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:81)</a></td><td>called 2 times, returned 2 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l37">rrs::TrainAdminService::getTrain(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:37)</a></td><td>called 37 times, returned 37 times</td><td>57.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.h.0d8ac124e99122d4efca9adff41b63ab.html#l13">rrs::TrainAdminService::listTrains(rrs::Session const&amp;) (src/admin/train_admin_service.h:13)</a></td><td>called 6 times, returned 6 times</td><td>73.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.h.0d8ac124e99122d4efca9adff41b63ab.html#l22">rrs::TrainAdminService::removeSchedule(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (src/admin/train_admin_service.h:22)</a></td><td>called 4 times, returned 4 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l30">rrs::TrainAdminService::save(rrs::Session const&amp;, rrs::Train const&amp;) (src/admin/train_admin_service.cpp:30)</a></td><td>called 7 times, returned 7 times</td><td>58.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l70">rrs::TrainAdminService::setRoute(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:70)</a></td><td>called 15 times, returned 15 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l52">rrs::TrainAdminService::updateTrainName(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:52)</a></td><td>called 2 times, returned 2 times</td><td>47.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l6">rrs::TrainAdminService::validateRoute(std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; const&amp;) (src/admin/train_admin_service.cpp:6)</a></td><td>called 15 times, returned 15 times</td><td>70.0%</td></tr>
+  <tr><td><a href="coverage.train_admin_service.cpp.dd79f0d610b3651ef21e0758d6f8448c.html#l13">rrs::TrainAdminService::validateRoute(std::vector&lt;rrs::RouteStop, std::allocator&lt;rrs::RouteStop&gt; &gt; const&amp;)::{lambda(rrs::Station const&amp;)#1}::operator()(rrs::Station const&amp;) const (src/admin/train_admin_service.cpp:13)</a></td><td>called 82 times, returned 82 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l134">rrs::TransactionGuard::TransactionGuard(rrs::IUnitOfWork&amp;) (src/dal/repositories.h:134)</a></td><td>called 1874 times, returned 1874 times</td><td>75.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l142">rrs::TransactionGuard::commit() (src/dal/repositories.h:142)</a></td><td>called 1385 times, returned 1385 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l141">rrs::TransactionGuard::started() const (src/dal/repositories.h:141)</a></td><td>called 1872 times, returned 1872 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.repositories.h.956fd8e7de8eb9dd8ebb9eb1044620be.html#l135">rrs::TransactionGuard::~TransactionGuard() (src/dal/repositories.h:135)</a></td><td>called 1874 times, returned 1874 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.waitlist_manager.h.d7105d7bb904830901a06c9fdfc93253.html#l40">rrs::WaitlistManager::WaitlistManager(rrs::IReservationRepository&amp;, rrs::IConfigRepository&amp;) (src/cancel/waitlist_manager.h:40)</a></td><td>called 156 times, returned 156 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.waitlist_manager.cpp.fdd762e0b2cf44a147a5d085e83ddff8.html#l99">rrs::WaitlistManager::promote(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, rrs::ClassCode) (src/cancel/waitlist_manager.cpp:99)</a></td><td>called 249 times, returned 249 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l45">rrs::canTransitionTicketStatus(rrs::TicketStatus, rrs::TicketStatus) (src/common/domain.cpp:45)</a></td><td>called 813 times, returned 813 times</td><td>94.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l7">rrs::classCodeString[abi:cxx11](rrs::ClassCode) (src/common/domain.cpp:7)</a></td><td>called 110333 times, returned 110333 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l11">rrs::className[abi:cxx11](rrs::ClassCode) (src/common/domain.cpp:11)</a></td><td>called 63 times, returned 63 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.retention.cpp.2c911d62127dc10483d00b0a027c09a9.html#l3">rrs::clearExpiredTravellerIds(rrs::SqliteDatabase&amp;, rrs::Date const&amp;) (src/dal/retention.cpp:3)</a></td><td>called 38 times, returned 38 times</td><td>46.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l21">rrs::coachPrefix[abi:cxx11](rrs::ClassCode) (src/common/domain.cpp:21)</a></td><td>called 183595 times, returned 183595 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.availability.cpp.a0d5e1d2bc152d6db73b8c86e0c62961.html#l9">rrs::computeAvailability(rrs::ClassConfig const&amp;, rrs::Date const&amp;, rrs::TripOccupancy const&amp;) (src/booking/availability.cpp:9)</a></td><td>called 1491 times, returned 1491 times</td><td>90.0%</td></tr>
+  <tr><td><a href="coverage.availability.cpp.a0d5e1d2bc152d6db73b8c86e0c62961.html#l24">rrs::decideStatus(rrs::Availability const&amp;, int, int) (src/booking/availability.cpp:24)</a></td><td>called 1220 times, returned 1220 times</td><td>76.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l12">rrs::demo::(anonymous namespace)::hhmm(int) (tools/demo_adapters.cpp:12)</a></td><td>called 18 times, returned 18 times</td><td>70.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.h.5fbf2e0d9b03d7a7f01c9c0a1606c0ee.html#l56">rrs::demo::CancellationAdapter::CancellationAdapter(rrs::CancellationService&amp;) (tools/demo_adapters.h:56)</a></td><td>called 47 times, returned 47 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l99">rrs::demo::CancellationAdapter::cancel(rrs::Session const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (tools/demo_adapters.cpp:99)</a></td><td>called 5 times, returned 5 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.h.5fbf2e0d9b03d7a7f01c9c0a1606c0ee.html#l33">rrs::demo::RepositoryBookingHistory::RepositoryBookingHistory(rrs::IReservationRepository&amp;, rrs::IClock const&amp;) (tools/demo_adapters.h:33)</a></td><td>called 12 times, returned 12 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l65">rrs::demo::RepositoryBookingHistory::history(rrs::Session const&amp;) (tools/demo_adapters.cpp:65)</a></td><td>called 2 times, returned 2 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.h.5fbf2e0d9b03d7a7f01c9c0a1606c0ee.html#l44">rrs::demo::RepositoryProfile::RepositoryProfile(rrs::IUserRepository&amp;, rrs::IClock const&amp;) (tools/demo_adapters.h:44)</a></td><td>called 12 times, returned 12 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l80">rrs::demo::RepositoryProfile::update(rrs::Session const&amp;, rrs::Account const&amp;) (tools/demo_adapters.cpp:80)</a></td><td>called 1 time, returned 1 time</td><td>33.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l71">rrs::demo::RepositoryProfile::view(rrs::Session const&amp;) (tools/demo_adapters.cpp:71)</a></td><td>called 2 times, returned 2 times</td><td>48.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.h.5fbf2e0d9b03d7a7f01c9c0a1606c0ee.html#l21">rrs::demo::RepositoryTrainSearch::RepositoryTrainSearch(rrs::ITrainRepository&amp;, rrs::IClock const*) (tools/demo_adapters.h:21)</a></td><td>called 49 times, returned 49 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l58">rrs::demo::RepositoryTrainSearch::route(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (tools/demo_adapters.cpp:58)</a></td><td>called 17 times, returned 17 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l40">rrs::demo::RepositoryTrainSearch::search(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;) (tools/demo_adapters.cpp:40)</a></td><td>called 15 times, returned 15 times</td><td>63.0%</td></tr>
+  <tr><td><a href="coverage.demo_adapters.cpp.f3fcee2fa9a5891f2bcec24a48bb66b6.html#l20">rrs::demo::summarize(rrs::Train const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (tools/demo_adapters.cpp:20)</a></td><td>called 6 times, returned 6 times</td><td>88.0%</td></tr>
+  <tr><td><a href="coverage.schedule_coach_service.cpp.e0d5d01477d5abf596b109961c95d51f.html#l19">rrs::describeConfig[abi:cxx11](rrs::ClassConfig const&amp;) (src/admin/schedule_coach_service.cpp:19)</a></td><td>called 51 times, returned 51 times</td><td>45.0%</td></tr>
+  <tr><td><a href="coverage.result.cpp.4a80f1565f1889e228d4e18761535ad2.html#l8">rrs::errorCodeString[abi:cxx11](rrs::ErrorCode) (src/common/result.cpp:8)</a></td><td>called 26 times, returned 26 times</td><td>78.0%</td></tr>
+  <tr><td><a href="coverage.result.cpp.4a80f1565f1889e228d4e18761535ad2.html#l34">rrs::errorMessage[abi:cxx11](rrs::ErrorCode) (src/common/result.cpp:34)</a></td><td>called 39 times, returned 39 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.result.cpp.4a80f1565f1889e228d4e18761535ad2.html#l12">rrs::errorName[abi:cxx11](rrs::ErrorCode) (src/common/result.cpp:12)</a></td><td>called 17 times, returned 17 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.fare_policy.cpp.ee498e334c82233cc397a5cead5fb5f1.html#l7">rrs::farePerTraveller(int, int, rrs::FareRules const&amp;) (src/booking/fare_policy.cpp:7)</a></td><td>called 2476 times, returned 2476 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.ticket_view.cpp.0740969d99a9c0d682f652c2fd328d00.html#l9">rrs::formatAvailability[abi:cxx11](rrs::Availability const&amp;) (src/ui/ticket_view.cpp:9)</a></td><td>called 17 times, returned 17 times</td><td>77.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l9">rrs::formatBasisPoints[abi:cxx11](int) (src/admin/report_service.cpp:9)</a></td><td>called 18 times, returned 18 times</td><td>59.0%</td></tr>
+  <tr><td><a href="coverage.report_view.cpp.a16126a5ddaf291ea5bbcf2930905366.html#l23">rrs::formatBookingStatistics[abi:cxx11](rrs::BookingStatistics const&amp;) (src/ui/report_view.cpp:23)</a></td><td>called 3 times, returned 3 times</td><td>71.0%</td></tr>
+  <tr><td><a href="coverage.result.cpp.4a80f1565f1889e228d4e18761535ad2.html#l56">rrs::formatError[abi:cxx11](rrs::Error const&amp;) (src/common/result.cpp:56)</a></td><td>called 25 times, returned 25 times</td><td>65.0%</td></tr>
+  <tr><td><a href="coverage.ticket_view.cpp.0740969d99a9c0d682f652c2fd328d00.html#l19">rrs::formatFareQuote[abi:cxx11](rrs::FareQuote const&amp;) (src/ui/ticket_view.cpp:19)</a></td><td>called 15 times, returned 15 times</td><td>74.0%</td></tr>
+  <tr><td><a href="coverage.report_view.cpp.a16126a5ddaf291ea5bbcf2930905366.html#l37">rrs::formatSeatOccupancy[abi:cxx11](std::vector&lt;rrs::OccupancyRow, std::allocator&lt;rrs::OccupancyRow&gt; &gt; const&amp;) (src/ui/report_view.cpp:37)</a></td><td>called 2 times, returned 2 times</td><td>54.0%</td></tr>
+  <tr><td><a href="coverage.ticket_view.cpp.0740969d99a9c0d682f652c2fd328d00.html#l39">rrs::formatTicket(rrs::Reservation const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/ui/ticket_view.cpp:39)</a></td><td>called 29 times, returned 29 times</td><td>68.0%</td></tr>
+  <tr><td><a href="coverage.report_view.cpp.a16126a5ddaf291ea5bbcf2930905366.html#l52">rrs::formatTrainWiseCounts[abi:cxx11](std::vector&lt;rrs::TrainWiseRow, std::allocator&lt;rrs::TrainWiseRow&gt; &gt; const&amp;, rrs::DateRange const&amp;) (src/ui/report_view.cpp:52)</a></td><td>called 3 times, returned 3 times</td><td>53.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l43">rrs::isActive(rrs::TicketStatus) (src/common/domain.cpp:43)</a></td><td>called 10473 times, returned 10473 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l84">rrs::maskIdProof(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/domain.cpp:84)</a></td><td>called 62 times, returned 62 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l15">rrs::parseClassCode(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/domain.cpp:15)</a></td><td>called 7748 times, returned 7748 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l76">rrs::parseRole(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/domain.cpp:76)</a></td><td>called 96 times, returned 96 times</td><td>88.0%</td></tr>
+  <tr><td><a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html#l40">rrs::parseSeatLabel(rrs::ClassCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/seat_allocator.cpp:40)</a></td><td>called 132700 times, returned 132700 times</td><td>82.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l35">rrs::parseTicketStatus(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/common/domain.cpp:35)</a></td><td>called 5981 times, returned 5981 times</td><td>88.0%</td></tr>
+  <tr><td><a href="coverage.waitlist_manager.cpp.fdd762e0b2cf44a147a5d085e83ddff8.html#l24">rrs::planPromotion(rrs::ClassConfig const&amp;, std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; const&amp;) (src/cancel/waitlist_manager.cpp:24)</a></td><td>called 256 times, returned 256 times</td><td>81.0%</td></tr>
+  <tr><td><a href="coverage.waitlist_manager.cpp.fdd762e0b2cf44a147a5d085e83ddff8.html#l44">rrs::planPromotion(rrs::ClassConfig const&amp;, std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; const&amp;)::{lambda(rrs::Reservation const*, rrs::Reservation const*)#1}::operator()(rrs::Reservation const*, rrs::Reservation const*) const (src/cancel/waitlist_manager.cpp:44)</a></td><td>called 23 times, returned 23 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.waitlist_manager.cpp.fdd762e0b2cf44a147a5d085e83ddff8.html#l45">rrs::planPromotion(rrs::ClassConfig const&amp;, std::vector&lt;rrs::Reservation, std::allocator&lt;rrs::Reservation&gt; &gt; const&amp;)::{lambda(rrs::Reservation const*, rrs::Reservation const*)#2}::operator()(rrs::Reservation const*, rrs::Reservation const*) const (src/cancel/waitlist_manager.cpp:45)</a></td><td>called 1246 times, returned 1246 times</td><td>75.0%</td></tr>
+  <tr><td><a href="coverage.passenger_menu.cpp.66d65333a49410b0b1525b34f57e16fc.html#l30">rrs::randomRequestId[abi:cxx11]() (src/ui/passenger_menu.cpp:30)</a></td><td>called 11 times, returned 11 times</td><td>72.0%</td></tr>
+  <tr><td><a href="coverage.report_service.cpp.b184271ae1d9f0e8fdb8eb59da94bd7e.html#l15">rrs::ratioBasisPoints(long, long) (src/admin/report_service.cpp:15)</a></td><td>called 22 times, returned 22 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.session.cpp.b12d53e43effe86f53fe264fc596cca5.html#l20">rrs::requireRole(rrs::Session const&amp;, std::initializer_list&lt;rrs::Role&gt;, rrs::IClock const&amp;) (src/common/session.cpp:20)</a></td><td>called 1770 times, returned 1770 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l66">rrs::roleString[abi:cxx11](rrs::Role) (src/common/domain.cpp:66)</a></td><td>called 698 times, returned 698 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.management_menu.cpp.5ec0088ed3cefc6204a1ed69d26ad9e2.html#l16">rrs::runManagementMenu(rrs::ConsoleIO&amp;, rrs::Session const&amp;, rrs::DataAccess const&amp;, rrs::IClock const&amp;, rrs::IAuditLogger&amp;, rrs::IBookingService&amp;, rrs::CancellationService&amp;) (tools/management_menu.cpp:16)</a></td><td>called 4 times, returned 4 times</td><td>40.0%</td></tr>
+  <tr><td><a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html#l51">rrs::seatExists(rrs::ClassConfig const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;) (src/booking/seat_allocator.cpp:51)</a></td><td>called 2501 times, returned 2501 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.seat_allocator.cpp.3546b51f39276931ea0243db37253d51.html#l33">rrs::seatLabel[abi:cxx11](rrs::ClassCode, int, int, int) (src/booking/seat_allocator.cpp:33)</a></td><td>called 50806 times, returned 50806 times</td><td>60.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l42">rrs::seed::(anonymous namespace)::account(char const*, rrs::Role, char const*, char const*, char const*) (tools/seed_data.cpp:42)</a></td><td>called 1040 times, returned 1040 times</td><td>91.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l13">rrs::seed::(anonymous namespace)::at(int, int) (tools/seed_data.cpp:13)</a></td><td>called 2496 times, returned 2496 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l29">rrs::seed::(anonymous namespace)::cls(char const*, rrs::ClassCode, int, int, int, int) (tools/seed_data.cpp:29)</a></td><td>called 1664 times, returned 1664 times</td><td>89.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l57">rrs::seed::(anonymous namespace)::ensureAccount(rrs::DataAccess&amp;, rrs::Account const&amp;) (tools/seed_data.cpp:57)</a></td><td>called 1040 times, returned 1040 times</td><td>63.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l256">rrs::seed::(anonymous namespace)::ensureReservation(rrs::DataAccess&amp;, rrs::Reservation) (tools/seed_data.cpp:256)</a></td><td>called 32 times, returned 32 times</td><td>46.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l182">rrs::seed::(anonymous namespace)::makeReservation(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::Date const&amp;, rrs::ClassCode, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; const&amp;, rrs::TicketStatus, int, rrs::Money, long, rrs::Traveller const&amp;) (tools/seed_data.cpp:182)</a></td><td>called 32 times, returned 32 times</td><td>88.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l218">rrs::seed::(anonymous namespace)::matchesSeedReservation(rrs::Reservation const&amp;, rrs::Reservation const&amp;) (tools/seed_data.cpp:218)</a></td><td>called 8 times, returned 8 times</td><td>92.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l82">rrs::seed::(anonymous namespace)::seedBaseData(rrs::DataAccess&amp;, rrs::Date const&amp;, int, bool) (tools/seed_data.cpp:82)</a></td><td>called 208 times, returned 208 times</td><td>52.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l297">rrs::seed::(anonymous namespace)::seedSampleReservations(rrs::DataAccess&amp;, rrs::Date const&amp;) (tools/seed_data.cpp:297)</a></td><td>called 8 times, returned 8 times</td><td>50.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l17">rrs::seed::(anonymous namespace)::stop(int, char const*, int, int, int, int) (tools/seed_data.cpp:17)</a></td><td>called 2080 times, returned 2080 times</td><td>83.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l374">rrs::seed::loadDemoSeedData(rrs::DataAccess&amp;, rrs::Date const&amp;, int, bool) (tools/seed_data.cpp:374)</a></td><td>called 10 times, returned 10 times</td><td>66.0%</td></tr>
+  <tr><td><a href="coverage.seed_data.cpp.38feba1be0f1786e732f1600fe2772c8.html#l361">rrs::seed::loadSeedData(rrs::DataAccess&amp;, rrs::Date const&amp;, int, bool) (tools/seed_data.cpp:361)</a></td><td>called 200 times, returned 200 times</td><td>64.0%</td></tr>
+  <tr><td><a href="coverage.ticket_view.cpp.0740969d99a9c0d682f652c2fd328d00.html#l29">rrs::statusText[abi:cxx11](rrs::Reservation const&amp;) (src/ui/ticket_view.cpp:29)</a></td><td>called 65 times, returned 65 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.domain.cpp.3522f05db8aa68b01d91725b98fd6a37.html#l25">rrs::ticketStatusString[abi:cxx11](rrs::TicketStatus) (src/common/domain.cpp:25)</a></td><td>called 27100 times, returned 27100 times</td><td>55.0%</td></tr>
+  <tr><td><a href="coverage.console_io.cpp.5f93505ba3f160e7daf27b495703f420.html#l22">rrs::toUpperAscii(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) (src/ui/console_io.cpp:22)</a></td><td>called 92 times, returned 92 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.fare_policy.cpp.ee498e334c82233cc397a5cead5fb5f1.html#l13">rrs::totalFare(int, int, int, rrs::FareRules const&amp;) (src/booking/fare_policy.cpp:13)</a></td><td>called 9 times, returned 9 times</td><td>100.0%</td></tr>
+  <tr><td><a href="coverage.booking_request_validator.cpp.6cd9111d7db2b9d78b57a09581eff0b3.html#l44">rrs::validateBookingRequest(rrs::BookingRequest const&amp;, rrs::Date const&amp;) (src/booking/booking_request_validator.cpp:44)</a></td><td>called 1235 times, returned 1235 times</td><td>67.0%</td></tr>
+  <tr><td><a href="coverage.booking_request_validator.cpp.6cd9111d7db2b9d78b57a09581eff0b3.html#l35">rrs::validateTraveller(rrs::Traveller const&amp;, int) (src/booking/booking_request_validator.cpp:35)</a></td><td>called 1775 times, returned 1775 times</td><td>59.0%</td></tr>
+  <tr><td><a href="coverage.main.cpp.36a227146cac398defd63282f9e54084.html#l46">runApplication(int, char**) (tools/main.cpp:46)</a></td><td>called 35 times, returned 35 times</td><td>55.0%</td></tr>
+</table>
+
+      <hr/>
+    </main>
+
+    <footer>
+      Generated by: <a href="http://gcovr.com/en/7.0">GCOVR (Version 7.0)</a>
+    </footer>
+  </body>
+</html>

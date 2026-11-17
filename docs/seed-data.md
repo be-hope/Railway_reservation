@@ -1,3 +1,5 @@
+> Historical sprint snapshot. For the integrated release, use README.md, test-cases.md and the four final test reports in this folder. Pending-work statements and counts below describe the earlier branch state.
+
 # Railway Reservation System - Seed Data
 
 ## Purpose

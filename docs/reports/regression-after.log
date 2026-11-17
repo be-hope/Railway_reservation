@@ -1,0 +1,18 @@
+Running main() from ./googletest/src/gtest_main.cc
+Note: Google Test filter = *FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare*:*FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied*
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from Backends/FinalIntegration
+[ RUN      ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0
+[       OK ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0 (71 ms)
+[ RUN      ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1
+[       OK ] Backends/FinalIntegration.InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1 (11 ms)
+[ RUN      ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0
+[       OK ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/0 (2 ms)
+[ RUN      ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1
+[       OK ] Backends/FinalIntegration.StaffCancelsWithRefundAndOpsIsDenied/1 (12 ms)
+[----------] 4 tests from Backends/FinalIntegration (105 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (110 ms total)
+[  PASSED  ] 4 tests.

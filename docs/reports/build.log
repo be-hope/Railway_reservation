@@ -1,0 +1,13 @@
+-- Configuring done (2.5s)
+-- Generating done (1.9s)
+-- Build files have been written to: ./build-final
+[1/10] Building CXX object CMakeFiles/rrs_tools.dir/tools/management_menu.cpp.o
+[2/10] Building CXX object CMakeFiles/rrs_app.dir/tools/main.cpp.o
+[3/10] Building CXX object CMakeFiles/rrs_passenger_demo.dir/tools/main.cpp.o
+[4/10] Linking CXX static library librrs_tools.a
+[5/10] Linking CXX executable rrs_seed_database
+[6/10] Linking CXX executable rrs_app
+[7/10] Linking CXX executable rrs_passenger_demo
+[8/10] Linking CXX executable tests/rrs_perf_tests
+[9/10] Linking CXX executable tests/rrs_security_tests
+[10/10] Linking CXX executable tests/rrs_integration_tests

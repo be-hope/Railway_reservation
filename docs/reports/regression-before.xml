@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="4" disabled="0" errors="0" time="0.044" timestamp="2026-11-17T14:06:56.016" name="AllTests">
+  <testsuite name="Backends/FinalIntegration" tests="4" failures="4" disabled="0" skipped="0" errors="0" time="0.044" timestamp="2026-11-17T14:06:56.016">
+    <testcase name="InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/0" value_param="&quot;memory&quot;" file="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp" line="60" status="run" result="completed" time="0.014" timestamp="2026-11-17T14:06:56.016" classname="Backends/FinalIntegration">
+      <failure message="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:62&#x0A;Expected equality of these values:&#x0A;  booking-&gt;checkAvailability(&quot;20001&quot;, clock.today().plusDays(3), ClassCode::SL).code()&#x0A;    Which is: 4-byte object &lt;00-00 00-00&gt;&#x0A;  ErrorCode::TrainNotFound&#x0A;    Which is: 4-byte object &lt;D1-07 00-00&gt;&#x0A;" type=""><![CDATA[/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:62
+Expected equality of these values:
+  booking->checkAvailability("20001", clock.today().plusDays(3), ClassCode::SL).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::TrainNotFound
+    Which is: 4-byte object <D1-07 00-00>
+]]></failure>
+      <failure message="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:63&#x0A;Expected equality of these values:&#x0A;  booking-&gt;quoteFare(&quot;20003&quot;, &quot;SBC&quot;, &quot;SBC&quot;, ClassCode::SL, 1).code()&#x0A;    Which is: 4-byte object &lt;00-00 00-00&gt;&#x0A;  ErrorCode::Validation&#x0A;    Which is: 4-byte object &lt;E9-03 00-00&gt;&#x0A;" type=""><![CDATA[/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:63
+Expected equality of these values:
+  booking->quoteFare("20003", "SBC", "SBC", ClassCode::SL, 1).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::Validation
+    Which is: 4-byte object <E9-03 00-00>
+]]></failure>
+    </testcase>
+    <testcase name="InactiveTrainHasNoAvailabilityAndSameStationHasNoFare/1" value_param="&quot;sqlite&quot;" file="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp" line="60" status="run" result="completed" time="0.02" timestamp="2026-11-17T14:06:56.031" classname="Backends/FinalIntegration">
+      <failure message="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:62&#x0A;Expected equality of these values:&#x0A;  booking-&gt;checkAvailability(&quot;20001&quot;, clock.today().plusDays(3), ClassCode::SL).code()&#x0A;    Which is: 4-byte object &lt;00-00 00-00&gt;&#x0A;  ErrorCode::TrainNotFound&#x0A;    Which is: 4-byte object &lt;D1-07 00-00&gt;&#x0A;" type=""><![CDATA[/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:62
+Expected equality of these values:
+  booking->checkAvailability("20001", clock.today().plusDays(3), ClassCode::SL).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::TrainNotFound
+    Which is: 4-byte object <D1-07 00-00>
+]]></failure>
+      <failure message="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:63&#x0A;Expected equality of these values:&#x0A;  booking-&gt;quoteFare(&quot;20003&quot;, &quot;SBC&quot;, &quot;SBC&quot;, ClassCode::SL, 1).code()&#x0A;    Which is: 4-byte object &lt;00-00 00-00&gt;&#x0A;  ErrorCode::Validation&#x0A;    Which is: 4-byte object &lt;E9-03 00-00&gt;&#x0A;" type=""><![CDATA[/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:63
+Expected equality of these values:
+  booking->quoteFare("20003", "SBC", "SBC", ClassCode::SL, 1).code()
+    Which is: 4-byte object <00-00 00-00>
+  ErrorCode::Validation
+    Which is: 4-byte object <E9-03 00-00>
+]]></failure>
+    </testcase>
+    <testcase name="StaffCancelsWithRefundAndOpsIsDenied/0" value_param="&quot;memory&quot;" file="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp" line="73" status="run" result="completed" time="0." timestamp="2026-11-17T14:06:56.052" classname="Backends/FinalIntegration">
+      <failure message="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:78&#x0A;Value of: cancelled.ok()&#x0A;  Actual: false&#x0A;Expected: true&#x0A;" type=""><![CDATA[/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:78
+Value of: cancelled.ok()
+  Actual: false
+Expected: true
+]]></failure>
+    </testcase>
+    <testcase name="StaffCancelsWithRefundAndOpsIsDenied/1" value_param="&quot;sqlite&quot;" file="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp" line="73" status="run" result="completed" time="0.008" timestamp="2026-11-17T14:06:56.053" classname="Backends/FinalIntegration">
+      <failure message="/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:78&#x0A;Value of: cancelled.ok()&#x0A;  Actual: false&#x0A;Expected: true&#x0A;" type=""><![CDATA[/tmp/railway-before-24gaxa2q/tests/integration/test_final_integration.cpp:78
+Value of: cancelled.ok()
+  Actual: false
+Expected: true
+]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

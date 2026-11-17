@@ -1,0 +1,174 @@
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 63 tests from 14 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from Money
+[ RUN      ] Money.FormatsRupeesWithGroupingAndTwoDecimals
+[       OK ] Money.FormatsRupeesWithGroupingAndTwoDecimals (0 ms)
+[----------] 1 test from Money (1 ms total)
+
+[----------] 3 tests from Date
+[ RUN      ] Date.ParsesIsoAndDisplayFormats
+[       OK ] Date.ParsesIsoAndDisplayFormats (0 ms)
+[ RUN      ] Date.RejectsImpossibleOrMalformedDates
+[       OK ] Date.RejectsImpossibleOrMalformedDates (0 ms)
+[ RUN      ] Date.DayArithmeticCrossesMonthAndYearEnds
+[       OK ] Date.DayArithmeticCrossesMonthAndYearEnds (0 ms)
+[----------] 3 tests from Date (4 ms total)
+
+[----------] 2 tests from ErrorCatalogue
+[ RUN      ] ErrorCatalogue.FormatsStandardErrorLine
+[       OK ] ErrorCatalogue.FormatsStandardErrorLine (1 ms)
+[ RUN      ] ErrorCatalogue.EveryCodeHasANameAndMessage
+[       OK ] ErrorCatalogue.EveryCodeHasANameAndMessage (0 ms)
+[----------] 2 tests from ErrorCatalogue (4 ms total)
+
+[----------] 5 tests from FarePolicy
+[ RUN      ] FarePolicy.UT_BKG_01_TotalFareCases
+[       OK ] FarePolicy.UT_BKG_01_TotalFareCases (0 ms)
+[ RUN      ] FarePolicy.SeedFaresFromTestPlan
+[       OK ] FarePolicy.SeedFaresFromTestPlan (0 ms)
+[ RUN      ] FarePolicy.RoundsHalfUpToThePaisa
+[       OK ] FarePolicy.RoundsHalfUpToThePaisa (0 ms)
+[ RUN      ] FarePolicy.NonPositiveInputsGiveZero
+[       OK ] FarePolicy.NonPositiveInputsGiveZero (0 ms)
+[ RUN      ] FarePolicy.RateIsConfigurable
+[       OK ] FarePolicy.RateIsConfigurable (0 ms)
+[----------] 5 tests from FarePolicy (5 ms total)
+
+[----------] 6 tests from SeatAllocator
+[ RUN      ] SeatAllocator.UT_BKG_04_AllocatesLowestFreeSeatThenExhausts
+[       OK ] SeatAllocator.UT_BKG_04_AllocatesLowestFreeSeatThenExhausts (1 ms)
+[ RUN      ] SeatAllocator.FillsGapsLeftByReleasedSeatsFirst
+[       OK ] SeatAllocator.FillsGapsLeftByReleasedSeatsFirst (0 ms)
+[ RUN      ] SeatAllocator.ContinuesIntoTheNextCoach
+[       OK ] SeatAllocator.ContinuesIntoTheNextCoach (0 ms)
+[ RUN      ] SeatAllocator.AllOrNothingWhenTooFewSeatsAreFree
+[       OK ] SeatAllocator.AllOrNothingWhenTooFewSeatsAreFree (0 ms)
+[ RUN      ] SeatAllocator.NeverReturnsAnOccupiedOrDuplicateSeat
+[       OK ] SeatAllocator.NeverReturnsAnOccupiedOrDuplicateSeat (206 ms)
+[ RUN      ] SeatAllocator.RejectsNonPositiveCount
+[       OK ] SeatAllocator.RejectsNonPositiveCount (0 ms)
+[----------] 6 tests from SeatAllocator (215 ms total)
+
+[----------] 2 tests from SeatLabel
+[ RUN      ] SeatLabel.FormatsAndParsesLabels
+[       OK ] SeatLabel.FormatsAndParsesLabels (0 ms)
+[ RUN      ] SeatLabel.SeatExistsChecksTheLayout
+[       OK ] SeatLabel.SeatExistsChecksTheLayout (0 ms)
+[----------] 2 tests from SeatLabel (3 ms total)
+
+[----------] 6 tests from PnrGenerator
+[ RUN      ] PnrGenerator.UT_BKG_03_TenThousandUniqueValidPnrs
+[       OK ] PnrGenerator.UT_BKG_03_TenThousandUniqueValidPnrs (96 ms)
+[ RUN      ] PnrGenerator.UT_BKG_03_CollisionDrawsANewValue
+[       OK ] PnrGenerator.UT_BKG_03_CollisionDrawsANewValue (0 ms)
+[ RUN      ] PnrGenerator.GivesUpAfterFiveCollisions
+[       OK ] PnrGenerator.GivesUpAfterFiveCollisions (0 ms)
+[ RUN      ] PnrGenerator.PropagatesStorageErrorsFromTheExistsCheck
+[       OK ] PnrGenerator.PropagatesStorageErrorsFromTheExistsCheck (0 ms)
+[ RUN      ] PnrGenerator.RangeCoversFirstAndLastValues
+[       OK ] PnrGenerator.RangeCoversFirstAndLastValues (0 ms)
+[ RUN      ] PnrGenerator.IsValidPnrRejectsMalformedValues
+[       OK ] PnrGenerator.IsValidPnrRejectsMalformedValues (0 ms)
+[----------] 6 tests from PnrGenerator (105 ms total)
+
+[----------] 4 tests from Availability
+[ RUN      ] Availability.UT_BKG_05_OneConfirmedLeavesOneFree
+[       OK ] Availability.UT_BKG_05_OneConfirmedLeavesOneFree (0 ms)
+[ RUN      ] Availability.UT_BKG_05_CancelledSeatsAreReleased
+[       OK ] Availability.UT_BKG_05_CancelledSeatsAreReleased (0 ms)
+[ RUN      ] Availability.ReportsRacAndWaitlist
+[       OK ] Availability.ReportsRacAndWaitlist (0 ms)
+[ RUN      ] Availability.NeverNegativeAfterACapacityChange
+[       OK ] Availability.NeverNegativeAfterACapacityChange (0 ms)
+[----------] 4 tests from Availability (6 ms total)
+
+[----------] 7 tests from StatusDecision
+[ RUN      ] StatusDecision.ConfirmedWhenSeatsFreeAndNobodyQueued
+[       OK ] StatusDecision.ConfirmedWhenSeatsFreeAndNobodyQueued (0 ms)
+[ RUN      ] StatusDecision.UT_CAN_03_SequenceUntilCapacityIsExhausted
+[       OK ] StatusDecision.UT_CAN_03_SequenceUntilCapacityIsExhausted (0 ms)
+[ RUN      ] StatusDecision.RacBeforeWaitlist
+[       OK ] StatusDecision.RacBeforeWaitlist (0 ms)
+[ RUN      ] StatusDecision.PartyLargerThanFreeSeatsIsWaitlistedWhole
+[       OK ] StatusDecision.PartyLargerThanFreeSeatsIsWaitlistedWhole (0 ms)
+[ RUN      ] StatusDecision.NewBookingDoesNotOvertakeTheWaitlist
+[       OK ] StatusDecision.NewBookingDoesNotOvertakeTheWaitlist (0 ms)
+[ RUN      ] StatusDecision.NewBookingDoesNotOvertakeRac
+[       OK ] StatusDecision.NewBookingDoesNotOvertakeRac (0 ms)
+[ RUN      ] StatusDecision.RejectsZeroTravellers
+[       OK ] StatusDecision.RejectsZeroTravellers (0 ms)
+[----------] 7 tests from StatusDecision (12 ms total)
+
+[----------] 8 tests from BookingValidator
+[ RUN      ] BookingValidator.UT_BKG_02_TravellerCountBoundaries
+[       OK ] BookingValidator.UT_BKG_02_TravellerCountBoundaries (21 ms)
+[ RUN      ] BookingValidator.UT_BKG_02_InvalidTravellerFields
+[       OK ] BookingValidator.UT_BKG_02_InvalidTravellerFields (0 ms)
+[ RUN      ] BookingValidator.AgeBoundaryValues
+[       OK ] BookingValidator.AgeBoundaryValues (0 ms)
+[ RUN      ] BookingValidator.MessageNamesTheTravellerAndField
+[       OK ] BookingValidator.MessageNamesTheTravellerAndField (0 ms)
+[ RUN      ] BookingValidator.JourneyDateWindowIsTodayToTodayPlus120
+[       OK ] BookingValidator.JourneyDateWindowIsTodayToTodayPlus120 (0 ms)
+[ RUN      ] BookingValidator.RejectsSameSourceAndDestination
+[       OK ] BookingValidator.RejectsSameSourceAndDestination (0 ms)
+[ RUN      ] BookingValidator.RejectsBadRequestIdTrainAndStation
+[       OK ] BookingValidator.RejectsBadRequestIdTrainAndStation (0 ms)
+[ RUN      ] BookingValidator.HostileInputIsRejectedCleanly
+[       OK ] BookingValidator.HostileInputIsRejectedCleanly (0 ms)
+[----------] 8 tests from BookingValidator (37 ms total)
+
+[----------] 7 tests from WaitlistPlan
+[ RUN      ] WaitlistPlan.UT_CAN_04_HeadThatDoesNotFitBlocksTheQueue
+[       OK ] WaitlistPlan.UT_CAN_04_HeadThatDoesNotFitBlocksTheQueue (0 ms)
+[ RUN      ] WaitlistPlan.HeadOfWaitlistGetsTheFreedSeat
+[       OK ] WaitlistPlan.HeadOfWaitlistGetsTheFreedSeat (0 ms)
+[ RUN      ] WaitlistPlan.RacConfirmedThenWaitlistMovesIntoRac
+[       OK ] WaitlistPlan.RacConfirmedThenWaitlistMovesIntoRac (0 ms)
+[ RUN      ] WaitlistPlan.SeveralTicketsArePromotedInQueueOrder
+[       OK ] WaitlistPlan.SeveralTicketsArePromotedInQueueOrder (0 ms)
+[ RUN      ] WaitlistPlan.GapsInWaitlistPositionsAreClosed
+[       OK ] WaitlistPlan.GapsInWaitlistPositionsAreClosed (0 ms)
+[ RUN      ] WaitlistPlan.BlockedRacHeadAlsoBlocksTheWaitlist
+[       OK ] WaitlistPlan.BlockedRacHeadAlsoBlocksTheWaitlist (0 ms)
+[ RUN      ] WaitlistPlan.NothingToDoWhenNobodyWaits
+[       OK ] WaitlistPlan.NothingToDoWhenNobodyWaits (0 ms)
+[----------] 7 tests from WaitlistPlan (14 ms total)
+
+[----------] 4 tests from RefundCalculatorTest
+[ RUN      ] RefundCalculatorTest.UT_CAN_01_RefundSlabBoundaries
+[       OK ] RefundCalculatorTest.UT_CAN_01_RefundSlabBoundaries (0 ms)
+[ RUN      ] RefundCalculatorTest.WaitlistedTicketGetsFullRefund
+[       OK ] RefundCalculatorTest.WaitlistedTicketGetsFullRefund (0 ms)
+[ RUN      ] RefundCalculatorTest.RacTicketUsesNormalRefundSlabs
+[       OK ] RefundCalculatorTest.RacTicketUsesNormalRefundSlabs (0 ms)
+[ RUN      ] RefundCalculatorTest.HandlesPaiseWithoutFloatingPoint
+[       OK ] RefundCalculatorTest.HandlesPaiseWithoutFloatingPoint (0 ms)
+[----------] 4 tests from RefundCalculatorTest (7 ms total)
+
+[----------] 4 tests from CancellationEligibilityTest
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_FutureActiveTicketsCanBeCancelled
+[       OK ] CancellationEligibilityTest.UT_CAN_02_FutureActiveTicketsCanBeCancelled (11 ms)
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_AlreadyCancelledTicketIsRejected
+[       OK ] CancellationEligibilityTest.UT_CAN_02_AlreadyCancelledTicketIsRejected (0 ms)
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_DepartedTicketIsRejected
+[       OK ] CancellationEligibilityTest.UT_CAN_02_DepartedTicketIsRejected (0 ms)
+[ RUN      ] CancellationEligibilityTest.UT_CAN_02_ExactDepartureTimeIsRejected
+[       OK ] CancellationEligibilityTest.UT_CAN_02_ExactDepartureTimeIsRejected (0 ms)
+[----------] 4 tests from CancellationEligibilityTest (21 ms total)
+
+[----------] 4 tests from TicketStatusTest
+[ RUN      ] TicketStatusTest.ValidForwardTransitionsAreAccepted
+[       OK ] TicketStatusTest.ValidForwardTransitionsAreAccepted (0 ms)
+[ RUN      ] TicketStatusTest.InvalidBackwardTransitionsAreRejected
+[       OK ] TicketStatusTest.InvalidBackwardTransitionsAreRejected (0 ms)
+[ RUN      ] TicketStatusTest.CancelledIsTerminal
+[       OK ] TicketStatusTest.CancelledIsTerminal (0 ms)
+[ RUN      ] TicketStatusTest.RepeatedStatusesAreNotTransitions
+[       OK ] TicketStatusTest.RepeatedStatusesAreNotTransitions (0 ms)
+[----------] 4 tests from TicketStatusTest (7 ms total)
+
+[----------] Global test environment tear-down
+[==========] 63 tests from 14 test suites ran. (469 ms total)
+[  PASSED  ] 63 tests.

@@ -1,3 +1,5 @@
+> Historical sprint snapshot. For the integrated release, use README.md, test-cases.md and the four final test reports in this folder. Pending-work statements and counts below describe the earlier branch state.
+
 # Performance, soak and retry test results
 
 Issue #7 (part of #42). Test cases PERF-01, PERF-02, REL-01 and REL-02 from

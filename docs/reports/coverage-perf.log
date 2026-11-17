@@ -1,0 +1,35 @@
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 8 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 4 tests from PerformanceTest
+[setup] generated 200 trains, 40 stations, 20000 reservations in 2302 ms
+[ RUN      ] PerformanceTest.LargeDatasetHasTheTestPlanSize
+[       OK ] PerformanceTest.LargeDatasetHasTheTestPlanSize (0 ms)
+[ RUN      ] PerformanceTest.PERF_01_SearchResponseTime
+[PERF-01 search] n=100  P50=0.68 ms  P95=1.09 ms  max=1.48 ms
+[       OK ] PerformanceTest.PERF_01_SearchResponseTime (68 ms)
+[ RUN      ] PerformanceTest.PERF_02_AvailabilityAndBookingLatency
+[PERF-02 availability] n=50  P50=0.18 ms  P95=0.31 ms  max=1.02 ms
+[PERF-02 booking] n=50  P50=11.32 ms  P95=16.53 ms  max=18.63 ms
+[       OK ] PerformanceTest.PERF_02_AvailabilityAndBookingLatency (605 ms)
+[ RUN      ] PerformanceTest.RepeatedSearchesDoNotDegrade
+[repeated search (first 50)] n=50  P50=0.43 ms  P95=0.58 ms  max=0.85 ms
+[repeated search (last 450)] n=450  P50=0.17 ms  P95=0.29 ms  max=0.51 ms
+[       OK ] PerformanceTest.RepeatedSearchesDoNotDegrade (106 ms)
+[----------] 4 tests from PerformanceTest (788 ms total)
+
+[----------] 4 tests from Reliability
+[ RUN      ] Reliability.REL_01_SoakOfThousandMixedOperations
+[REL-01] operations=1000 normal=1000 abnormal=0 (search 287, availability 151, booking 364, ticket 92, cancel 106)
+[       OK ] Reliability.REL_01_SoakOfThousandMixedOperations (2667 ms)
+[ RUN      ] Reliability.REL_02_RetryAfterRestartReturnsTheOriginalPnr
+[       OK ] Reliability.REL_02_RetryAfterRestartReturnsTheOriginalPnr (198 ms)
+[ RUN      ] Reliability.RetriesAfterStorageFaultsCreateExactlyOneReservation
+[       OK ] Reliability.RetriesAfterStorageFaultsCreateExactlyOneReservation (183 ms)
+[ RUN      ] Reliability.FillingATrainLeavesNoDuplicatesAndAContiguousWaitlist
+[       OK ] Reliability.FillingATrainLeavesNoDuplicatesAndAContiguousWaitlist (222 ms)
+[----------] 4 tests from Reliability (3283 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 2 test suites ran. (6614 ms total)
+[  PASSED  ] 8 tests.

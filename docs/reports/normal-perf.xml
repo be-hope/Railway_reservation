@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="8" failures="0" disabled="0" errors="0" time="7.22" timestamp="2026-11-17T13:36:58.348" name="AllTests">
+  <testsuite name="PerformanceTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.91" timestamp="2026-11-17T13:37:00.930">
+    <testcase name="LargeDatasetHasTheTestPlanSize" file="./tests/perf/test_performance.cpp" line="73" status="run" result="completed" time="0." timestamp="2026-11-17T13:37:00.931" classname="PerformanceTest" />
+    <testcase name="PERF_01_SearchResponseTime" file="./tests/perf/test_performance.cpp" line="84" status="run" result="completed" time="0.056" timestamp="2026-11-17T13:37:00.933" classname="PerformanceTest">
+      <properties>
+        <property name="PERF-01 search_p95_ms" value="1.012259"/>
+      </properties>
+    </testcase>
+    <testcase name="PERF_02_AvailabilityAndBookingLatency" file="./tests/perf/test_performance.cpp" line="108" status="run" result="completed" time="0.586" timestamp="2026-11-17T13:37:00.992" classname="PerformanceTest">
+      <properties>
+        <property name="PERF-02 availability_p95_ms" value="0.480363"/>
+        <property name="PERF-02 booking_p95_ms" value="14.549899"/>
+      </properties>
+    </testcase>
+    <testcase name="RepeatedSearchesDoNotDegrade" file="./tests/perf/test_performance.cpp" line="143" status="run" result="completed" time="0.259" timestamp="2026-11-17T13:37:01.580" classname="PerformanceTest">
+      <properties>
+        <property name="repeated search (first 50)_p95_ms" value="0.856792"/>
+        <property name="repeated search (last 450)_p95_ms" value="1.117630"/>
+      </properties>
+    </testcase>
+  </testsuite>
+  <testsuite name="Reliability" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="3.719" timestamp="2026-11-17T13:37:01.847">
+    <testcase name="REL_01_SoakOfThousandMixedOperations" file="./tests/perf/test_reliability.cpp" line="64" status="run" result="completed" time="2.977" timestamp="2026-11-17T13:37:01.848" classname="Reliability" />
+    <testcase name="REL_02_RetryAfterRestartReturnsTheOriginalPnr" file="./tests/perf/test_reliability.cpp" line="164" status="run" result="completed" time="0.228" timestamp="2026-11-17T13:37:04.828" classname="Reliability" />
+    <testcase name="RetriesAfterStorageFaultsCreateExactlyOneReservation" file="./tests/perf/test_reliability.cpp" line="203" status="run" result="completed" time="0.202" timestamp="2026-11-17T13:37:05.057" classname="Reliability" />
+    <testcase name="FillingATrainLeavesNoDuplicatesAndAContiguousWaitlist" file="./tests/perf/test_reliability.cpp" line="246" status="run" result="completed" time="0.305" timestamp="2026-11-17T13:37:05.261" classname="Reliability" />
+  </testsuite>
+</testsuites>
