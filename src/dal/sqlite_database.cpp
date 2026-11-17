@@ -3,6 +3,11 @@
 #include "dal/sqlite_database.h"
 
 #include <sqlite3.h>
+#ifndef _WIN32
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#endif
 
 #include "dal/schema.h"
 
@@ -88,6 +93,15 @@ bool Statement::isNull(int column) const {
 // ---------------------------------------------------------------- SqliteDatabase
 
 Result<std::unique_ptr<SqliteDatabase>> SqliteDatabase::open(const std::string& path) {
+#ifndef _WIN32
+    if (path != ":memory:") {
+        const int fd = ::open(path.c_str(), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+        if (fd < 0) return Result<std::unique_ptr<SqliteDatabase>>::failure(ErrorCode::Database, "Cannot open database file.");
+        const int protectedFile = fchmod(fd, S_IRUSR | S_IWUSR);
+        ::close(fd);
+        if (protectedFile != 0) return Result<std::unique_ptr<SqliteDatabase>>::failure(ErrorCode::Database, "Cannot protect database file.");
+    }
+#endif
     sqlite3* raw = nullptr;
     int rc = sqlite3_open_v2(path.c_str(), &raw,
                              SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr);

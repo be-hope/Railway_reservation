@@ -1,10 +1,11 @@
 // test_sqlite_schema.cpp - database constraints of rrs.db (issue #21,
 // IT-BKG-05 backstop, SRS §5.2): duplicate PNRs, request tokens and seats
 // cannot be inserted even if the application logic has a defect.
+#include <algorithm>
+#include <cstdio>
 
 #include <gtest/gtest.h>
-
-#include <cstdio>
+#include <algorithm>
 
 #include "dal/sqlite_database.h"
 #include "dal/sqlite_repositories.h"

@@ -7,11 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(RRS_WERROR "Treat warnings as errors" ON)
+option(RRS_BUILD_TESTS "Build GoogleTest suites" ON)
 option(RRS_SANITIZE "Build with AddressSanitizer + UBSan" OFF)
 option(RRS_COVERAGE "Build with gcov instrumentation" OFF)
 option(RRS_BUILD_TESTS "Build the GoogleTest suites" ON)
 
 include(FetchContent)
+find_package(OpenSSL REQUIRED COMPONENTS Crypto)
 
 # ---------------------------------------------------------------------------
 # SQLite (ADR-002). Use a vendored amalgamation in third_party/sqlite if it is
@@ -37,9 +39,17 @@ endif()
 # Common compile options for our own code only (not third-party sources).
 # ---------------------------------------------------------------------------
 add_library(rrs_options INTERFACE)
-target_compile_options(rrs_options INTERFACE -Wall -Wextra -Wpedantic)
+if(MSVC)
+  target_compile_options(rrs_options INTERFACE /W4)
+else()
+  target_compile_options(rrs_options INTERFACE -Wall -Wextra -Wpedantic -fstack-protector-strong)
+endif()
 if(RRS_WERROR)
-  target_compile_options(rrs_options INTERFACE -Werror)
+  if(MSVC)
+    target_compile_options(rrs_options INTERFACE /WX)
+  else()
+    target_compile_options(rrs_options INTERFACE -Werror)
+  endif()
 endif()
 if(RRS_SANITIZE)
   target_compile_options(rrs_options INTERFACE -fsanitize=address,undefined -fno-omit-frame-pointer)
@@ -58,6 +68,12 @@ add_library(rrs_core STATIC
   src/common/money.cpp
   src/common/result.cpp
   src/common/session.cpp
+  src/auth/password_hasher.cpp
+  src/auth/auth_service.cpp
+  src/auth/profile_service.cpp
+  src/admin/reservation_admin_service.cpp
+  src/security/input_validator.cpp
+  src/security/access_control.cpp
   src/booking/fare_policy.cpp
   src/booking/seat_allocator.cpp
   src/booking/pnr_generator.cpp
@@ -66,17 +82,20 @@ add_library(rrs_core STATIC
   src/booking/booking_service.cpp
   src/cancel/waitlist_manager.cpp
   src/cancel/seat_release_service.cpp
+  src/cancel/refund_calculator.cpp
+  src/cancel/cancellation_service.cpp
   src/admin/schedule_coach_service.cpp
   src/admin/train_admin_service.cpp
   src/admin/report_service.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
-target_link_libraries(rrs_core PUBLIC rrs_options)
+target_link_libraries(rrs_core PUBLIC rrs_options OpenSSL::Crypto)
 
 # Data access layer (C7) and file-backed audit log.
 add_library(rrs_dal STATIC
   src/common/audit.cpp
   src/dal/schema.cpp
+  src/dal/retention.cpp
   src/dal/sqlite_database.cpp
   src/dal/sqlite_train_repository.cpp
   src/dal/sqlite_config_repository.cpp
@@ -97,19 +116,23 @@ target_link_libraries(rrs_ui PUBLIC rrs_core)
 # Seed data and interim port adapters, shared by the demo and the tests.
 add_library(rrs_tools STATIC
   tools/demo_adapters.cpp
+  tools/management_menu.cpp
   tools/seed_data.cpp
 )
 target_include_directories(rrs_tools PUBLIC tools)
 target_link_libraries(rrs_tools PUBLIC rrs_ui rrs_core)
 
 # Interactive demo of the passenger menu on the seed data.
-add_executable(rrs_passenger_demo tools/passenger_demo.cpp)
+add_executable(rrs_passenger_demo tools/main.cpp)
 target_link_libraries(rrs_passenger_demo PRIVATE rrs_tools rrs_dal)
 
 # Full integrated application: login + role-based menus (closes #43, #55).
 # Usage: rrs_app [path/to/rrs.db]
 add_executable(rrs_app tools/main.cpp)
 target_link_libraries(rrs_app PRIVATE rrs_tools rrs_dal)
+# Standalone utility for creating a reproducible demo database.
+add_executable(rrs_seed_database tools/seed_database.cpp)
+target_link_libraries(rrs_seed_database PRIVATE rrs_tools rrs_dal)
 
 if(RRS_BUILD_TESTS)
   enable_testing()

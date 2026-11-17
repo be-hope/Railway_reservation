@@ -15,6 +15,7 @@ class IClock {
 public:
     virtual ~IClock() = default;
     virtual EpochSeconds now() const = 0;   // seconds since the Unix epoch
+    virtual int localSecondsSinceMidnight() const { return static_cast<int>((now() % 86400 + 86400) % 86400); }
     virtual Date today() const = 0;         // local calendar date
 };
 
@@ -22,6 +23,7 @@ class SystemClock : public IClock {
 public:
     EpochSeconds now() const override;
     Date today() const override;
+    int localSecondsSinceMidnight() const override;
 };
 
 // Test clock: fixed date/time that tests can move forward.

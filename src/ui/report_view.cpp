@@ -9,7 +9,7 @@ namespace rrs {
 namespace {
 
 std::string pad(std::string s, std::size_t width) {
-    if (s.size() > width) s = s.substr(0, width);
+    if (s.size() > width) s.resize(width);
     if (s.size() < width) s.append(width - s.size(), ' ');
     return s;
 }

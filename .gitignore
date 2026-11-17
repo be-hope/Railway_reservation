@@ -1,7 +1,12 @@
-build/
-build-*/
+build*/
+tmp/
 *.db
+*.db-*
 audit.log
 *.gcov
 *.gcda
 *.gcno
+
+# Generated CI coverage reports
+# Generated coverage reports
+/artifacts/
