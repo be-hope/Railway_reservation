@@ -65,9 +65,4 @@ The before/fix comparison uses archived pre-fix service fixtures with the curren
 
 Known limits: the verified deployment is one local process with SQLite and file audit, WSL/GCC is the recorded platform, a separately hosted Jenkins/SonarQube service and native Windows build were not exercised, and there is no real railway/payment integration. Audit truncation needs an external anchor; Windows ACLs remain relevant on mounted drives.
 ''')
-facts=f'\nFinal measured facts: **{len(rows)} C++ executions** ({counts["unit"]} unit, {counts["integration"]} integration, {counts["security"]} security, {counts["perf"]} performance/reliability), plus **{len(system["tests"])} system scenarios**. Business line coverage: **{metric(business,"line")}**; business decision branch coverage: **{metric(business,"branch")}**. See the reports for the whole-production raw metrics and filtering definitions.\n'
-guide=(docs/'viva-guide.md').read_text(encoding='utf-8')
-guide=re.sub(r'\n<!-- FINAL_FACTS_START -->.*?<!-- FINAL_FACTS_END -->\n','\n',guide,flags=re.S)
-guide=guide.replace('## 10. Show and explain one test','<!-- FINAL_FACTS_START -->\n'+facts+'<!-- FINAL_FACTS_END -->\n\n## 10. Show and explain one test')
-write('viva-guide.md',guide)
 print(f'Generated reports for {len(rows)} C++ tests and {len(system["tests"])} system scenarios')
