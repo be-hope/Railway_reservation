@@ -7,7 +7,7 @@ if root.as_posix().startswith('/mnt/'):
     windows=parts[2].upper()+':/'+'/'.join(parts[3:])
     paths.update({windows,windows.replace('/','\\'),windows.replace('/','\\\\')})
 for file in (root/'docs/reports').rglob('*'):
-    if not file.is_file() or file.suffix not in {'.log','.xml','.json','.html','.txt','.css'}: continue
+    if not file.is_file() or file.suffix not in {'.log','.xml','.json','.html','.txt','.css','.csv'}: continue
     text=file.read_text(encoding='utf-8-sig')
     for path in sorted(paths,key=len,reverse=True): text=re.sub(re.escape(path),'.',text,flags=re.I)
     file.write_text(text,encoding='utf-8')
