@@ -53,7 +53,7 @@ The accounts use separate random salts; passwords are not stored as plaintext. S
 - Administrator: add/rename/activate/deactivate trains, configure ordered routes, add/remove schedule dates, configure class capacity and inspect reports. Active future bookings protect route/schedule/train integrity. Class capacity reductions below booked load are rejected.
 - Operations: booking statistics, train-wise counts and occupancy; no administrator modifications.
 
-See [the demo walkthrough](docs/final-demo.md), [the beginner viva guide](docs/viva-guide.md) and [the test-case document](docs/test-cases.md).
+See [the application walkthrough](docs/final-demo.md) and [the test-case document](docs/test-cases.md).
 
 ## Architecture and backend
 
