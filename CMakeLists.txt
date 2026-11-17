@@ -67,6 +67,7 @@ add_library(rrs_core STATIC
   src/cancel/waitlist_manager.cpp
   src/cancel/seat_release_service.cpp
   src/admin/schedule_coach_service.cpp
+  src/admin/train_admin_service.cpp
   src/admin/report_service.cpp
 )
 target_include_directories(rrs_core PUBLIC src)
@@ -104,6 +105,11 @@ target_link_libraries(rrs_tools PUBLIC rrs_ui rrs_core)
 # Interactive demo of the passenger menu on the seed data.
 add_executable(rrs_passenger_demo tools/passenger_demo.cpp)
 target_link_libraries(rrs_passenger_demo PRIVATE rrs_tools rrs_dal)
+
+# Full integrated application: login + role-based menus (closes #43, #55).
+# Usage: rrs_app [path/to/rrs.db]
+add_executable(rrs_app tools/main.cpp)
+target_link_libraries(rrs_app PRIVATE rrs_tools rrs_dal)
 
 if(RRS_BUILD_TESTS)
   enable_testing()
