@@ -25,6 +25,9 @@ protected:
     BookingRequest request() { return test::bookingRequest(*booking, "integrated", "20001", clock.today().plusDays(3), "SBC", "MAS", ClassCode::SL, {test::traveller("Asha")}); }
 };
 TEST_P(FinalIntegration, AdminAddsRenamesAndTogglesTrain) {
+    EXPECT_EQ(admin->listTrains(p).code(), ErrorCode::Forbidden);
+    ASSERT_TRUE(admin->listTrains(a).ok());
+    EXPECT_EQ(admin->listTrains(a)->size(), 4u);
     Train t; t.number = "77777"; t.name = "New Train";
     EXPECT_EQ(admin->addTrain(p, t).code(), ErrorCode::Forbidden);
     ASSERT_TRUE(admin->addTrain(a, t).ok()); EXPECT_EQ(admin->addTrain(a, t).code(), ErrorCode::Validation);

@@ -49,7 +49,7 @@ void runManagementMenu(ConsoleIO& io, const Session& s, DataAccess data, const I
             continue;
         }
         if (*choice == 10) {
-            auto rows = data.trains.listTrains();
+            auto rows = trains.listTrains(s);
             if (!rows.ok()) { io.line(formatError(rows.error())); continue; }
             for (const auto& t : rows.value()) io.line(t.number + " " + t.name + (t.active ? " ACTIVE" : " INACTIVE"));
             continue;

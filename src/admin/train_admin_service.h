@@ -10,6 +10,11 @@ public:
     Status updateTrainName(const Session&, const std::string&, const std::string&);
     Status deactivateTrain(const Session&, const std::string&);
     Status activateTrain(const Session&, const std::string&);
+    Result<std::vector<Train>> listTrains(const Session& s) {
+        auto allowed = access_.require(s, Permission::ManageTrains);
+        if (!allowed.ok()) return allowed.error();
+        return data_.trains.listTrains();
+    }
     Result<Train> getTrain(const Session&, const std::string&);
     Status setRoute(const Session&, const std::string&, const std::vector<RouteStop>&);
     Result<std::vector<RouteStop>> getRoute(const Session&, const std::string&);
