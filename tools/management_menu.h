@@ -5,5 +5,5 @@
 #include "admin/reservation_admin_service.h"
 #include "cancel/cancellation_service.h"
 namespace rrs {
-void runManagementMenu(ConsoleIO&, const Session&, DataAccess, const IClock&, IAuditLogger&, IBookingService&, CancellationService&);
+void runManagementMenu(ConsoleIO&, const Session&, const DataAccess&, const IClock&, IAuditLogger&, IBookingService&, CancellationService&);
 }

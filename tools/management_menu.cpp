@@ -13,7 +13,7 @@ void report(ConsoleIO& io, ReportService& reports, const Session& s, const ICloc
     if (rows.ok()) io.line(formatTrainWiseCounts(rows.value(), {clock.today(), clock.today().plusDays(120)})); else io.line(formatError(rows.error()));
 }
 }
-void runManagementMenu(ConsoleIO& io, const Session& s, DataAccess data, const IClock& clock, IAuditLogger& audit, IBookingService& booking, CancellationService& cancellation) {
+void runManagementMenu(ConsoleIO& io, const Session& s, const DataAccess& data, const IClock& clock, IAuditLogger& audit, IBookingService& booking, CancellationService& cancellation) {
     ReservationAdminService corrections(data, booking, clock, audit);
     TrainAdminService trains(data, clock, audit); ScheduleCoachService schedules(data, clock, audit); ReportService reports(data, clock);
     while (true) {
