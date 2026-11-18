@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Railway · Your next journey</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/" aria-label="Railway home"><span class="mark">R</span> railway<span class="dot">.</span></a><span class="header-note">A simpler way to get there</span><button id="logout" class="quiet" hidden>Log out</button></header>
+<main>
+<section id="auth" class="auth-layout">
+ <div class="intro"><div class="eyebrow">YOUR NEXT JOURNEY</div><h1>Good journeys<br>start here.</h1><p>Find your train. Choose your seat.<br>Let the journey take it from there.</p><div class="route-art" aria-hidden="true"><span class="station">SBC</span><span class="rail-line"></span><span class="station">MAS</span></div><span class="local-label">Railway reservation · Local demo</span></div>
+ <div class="panel auth-panel"><div class="eyebrow">WELCOME ABOARD</div><h2 id="auth-title">Sign in to Railway</h2><p class="muted" id="auth-caption">Your bookings, all in one place.</p>
+ <form id="login-form"><label>Mobile number or email<input name="login" autocomplete="username" required placeholder="9876500001"></label><label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></label><button class="primary full">Sign in <span>→</span></button></form>
+ <form id="register-form" hidden><label>Your name<input name="name" autocomplete="name" required maxlength="100"></label><label>Mobile number<input name="mobile" autocomplete="tel" required></label><label>Email (optional)<input name="email" type="email" autocomplete="email"></label><label>Password<input name="password" type="password" autocomplete="new-password" required></label><button class="primary full">Create account →</button></form>
+ <button id="auth-toggle" class="text-button">New here? Create an account</button><div class="demo-note">Demo passenger<br><strong>9876500001</strong> <span> / </span> <strong>Test@1234</strong></div>
+ </div>
+</section>
+<section id="dashboard" hidden>
+ <div class="dashboard-heading"><div><div class="eyebrow">LET’S GET YOU MOVING</div><h1>Where to next?</h1></div><span id="welcome" class="muted"></span></div>
+ <nav aria-label="Passenger sections"><button id="search-tab" class="tab active">Find a train</button><button id="bookings-tab" class="tab">My bookings</button></nav>
+ <section id="search-section"><form id="search-form" class="search-panel panel"><label>From<select name="source" required></select></label><span class="direction" aria-hidden="true">→</span><label>To<select name="destination" required></select></label><label>Journey date<input name="date" type="date" required></label><label>Travel class<select name="classCode"><option value="SL">Sleeper · SL</option><option value="3A">AC 3 Tier · 3A</option></select></label><button class="primary">Search trains →</button></form>
+ <div id="results" class="results"><div class="empty"><span class="empty-symbol">↗</span><h3>A new journey awaits</h3><p>Choose your stations and a date to see available trains.</p></div></div></section>
+ <section id="bookings-section" hidden><div class="section-title"><h2>Your journeys</h2><button id="refresh" class="quiet">Refresh ↻</button></div><div id="bookings"></div></section>
+</section>
+<p id="notice" role="status" aria-live="polite" hidden></p>
+</main>
+<dialog id="booking-dialog"><div class="dialog-heading"><div><div class="eyebrow">ONE STEP CLOSER</div><h2 id="booking-title">Passenger details</h2></div><button class="close quiet" aria-label="Close booking">✕</button></div><p id="journey-summary" class="muted"></p><form id="booking-form"><div id="travellers"></div><button type="button" id="add-traveller" class="text-button">+ Add another traveller</button><div class="fare-box"><span>Total fare <small id="fare-count"></small></span><strong id="total-fare">—</strong></div><p class="muted small">Seats are allocated when you confirm. A full train may result in RAC or a waitlisted ticket.</p><button class="primary full" id="confirm-booking">Confirm & book →</button></form></dialog>
+<dialog id="ticket-dialog"><div class="dialog-heading"><div><div class="eyebrow">YOUR TICKET</div><h2>Journey details</h2></div><button class="close quiet" aria-label="Close ticket">✕</button></div><div id="ticket-content"></div></dialog>
+<dialog id="cancel-dialog"><h2>Cancel this journey?</h2><p>The applicable refund will be calculated using your ticket status and departure time.</p><div class="dialog-actions"><button id="keep-ticket" class="quiet">Keep ticket</button><button id="cancel-confirm" class="danger">Cancel ticket</button></div></dialog>
+<footer>Railway Reservation System <span>Plan a little. Travel a little.</span></footer>
+</body></html>

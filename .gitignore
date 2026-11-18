@@ -3,6 +3,7 @@ tmp/
 *.db
 *.db-*
 audit.log
+__pycache__/
 *.gcov
 *.gcda
 *.gcno

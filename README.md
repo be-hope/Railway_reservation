@@ -1,6 +1,6 @@
 # Railway Reservation System
 
-A C++17 console application for passenger registration/login, train search, booking, PNR lookup, cancellation/refunds, waitlist promotion, staff reservation corrections, train administration and operational reports. SQLite persists data locally. This is a coursework reservation simulation; it does not connect to a live railway or process payments.
+A C++17 application with a minimal passenger browser frontend and full role-based console menus for passenger registration/login, train search, booking, PNR lookup, cancellation/refunds, waitlist promotion, staff reservation corrections, train administration and operational reports. SQLite persists data locally. This is a coursework reservation simulation; it does not connect to a live railway or process payments.
 
 ## Start on this Windows computer
 
@@ -91,3 +91,7 @@ GitHub Actions runs normal and sanitizer tests and a Docker build/test/static-an
 Passwords use PBKDF2-HMAC-SHA256 (OpenSSL), 600,000 iterations, random 16-byte salts and constant-time comparison. Five failed logins lock an account for five minutes. Private process-local session state binds role/account/token and provides a renewable 15-minute idle deadline; logout revokes copied sessions. Profile views redact credentials and mask IDs. Reservation traveller IDs are cleared more than 90 days after the journey.
 
 SQL values use bound parameters. UTC audit entries are sanitized, append-only and hash-chained; externally anchor a final hash to detect complete replacement/truncation. Audit I/O errors are explicit operational failures; mutations committed immediately before an audit failure may need reconciliation. POSIX database/audit modes are 0600, but Windows mounted drives also depend on host ACLs. One process per database/audit pair is supported. Schedule times use the machine's local timezone. This is not a distributed or live ticketing deployment.
+
+## Minimal browser frontend
+
+Run `Start-Railway-Web.cmd` and open http://localhost:8765. The passenger frontend supports registration, login, train search, fare review, booking, tickets and cancellation using the existing C++ services. See [frontend setup](docs/web-frontend.md).

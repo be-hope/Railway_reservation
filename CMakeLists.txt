@@ -130,6 +130,10 @@ target_link_libraries(rrs_passenger_demo PRIVATE rrs_tools rrs_dal)
 # Usage: rrs_app [path/to/rrs.db]
 add_executable(rrs_app tools/main.cpp)
 target_link_libraries(rrs_app PRIVATE rrs_tools rrs_dal)
+
+# Local browser transport; business rules remain in the existing services.
+add_executable(rrs_web_bridge tools/web_bridge.cpp)
+target_link_libraries(rrs_web_bridge PRIVATE rrs_tools rrs_dal)
 # Standalone utility for creating a reproducible demo database.
 add_executable(rrs_seed_database tools/seed_database.cpp)
 target_link_libraries(rrs_seed_database PRIVATE rrs_tools rrs_dal)
